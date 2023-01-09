@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>MoonBookKK | Giriş Yap</title>
+    <title>MoonBook | Giriş Yap</title>
 
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="{{ asset('css/fontawesome-free/css/all.min.css') }}">
