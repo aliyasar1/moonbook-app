@@ -1,0 +1,247 @@
+@extends('layouts.kullanicilar.master')
+
+@section('hero')
+    <header class=" py-5">
+        <div class="container px-5">
+            <div class="row gx-5 align-items-center justify-content-center">
+                <div class="col-lg-8 col-xl-7 col-xxl-6">
+                    <div class="my-5 text-center text-xl-start">
+                        <h1 class="display-5 fw-bolder text-black text-center mb-2">MoonBook</h1>
+                        <h3 class="text-black text-center mb-2">Al, Oku, Yaşa</h3>
+                        <p class="lead fw-normal text-center text-black mb-4">İnsan ancak kitap okuyarak dünyaya
+                            daha farklı bir pencereden bakabilir. Kitaplar sayesinde hayal dünyamızı daha da
+                            geliştirir.
+                            Kendimizi başka insanların
+                            yerine koyarak empati kurma becerisine sahip oluruz. Söz dağarcığımız gelişir . Konuşma
+                            ve
+                            dinleme yeteneğimiz gelişir.</p>
+                        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                            <a class="btn btn-dark text-warning btn-lg px-4 me-sm-3" href="{{ route('kitaplar') }}">Kitaplar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5"
+                                                                                   src="{{ asset('storage/bookface.jpg') }}"
+                                                                                   alt="..."/></div>
+            </div>
+        </div>
+    </header>
+@endsection
+
+@section('content')
+    <!-- Features section-->
+    <section class="py-5" id="features">
+        <div class="container px-5 my-5">
+            <div class="row gx-5">
+                <div class="col-lg-4 mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">Sizin İçin Seçilmiş Kategoriler</h2></div>
+                <div class="col-lg-8">
+                    <div class="row gx-5 row-cols-1 row-cols-md-2">
+                        <div class="col mb-5 px-1 h-100">
+                            <div class="bd-example">
+                                <div class="carousel-inner">
+                                    <div class="row">
+                                        @foreach($kitapRoman as $kitap)
+                                            <img src="{{ asset('storage/saticilar/kitaplar/'. $kitap->fotograf) }}"
+                                                 class="d-block w-25 h-25" alt="...">
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feature text-white rounded-3 mb-1"><span
+                                    class="badge text-bg-warning">Roman</span></div>
+                            <p class="mb-0"> @foreach($kitapRoman as $kitap)
+                                    {{ $kitap->adi. ', ' }}
+                                @endforeach</p>
+                        </div>
+
+                        <div class="col mb-5 px-1 h-100">
+                            <div class="bd-example">
+                                <div class="carousel-inner">
+                                    <div class="row">
+                                        @foreach($kitapKG as $kitap)
+                                            <img src="{{ asset('storage/saticilar/kitaplar/'. $kitap->fotograf) }}"
+                                                 class="d-block w-25 h-25 mb-2" alt="...">
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feature text-white rounded-3 mb-1"><span
+                                    class="badge text-bg-warning">Kişisel Gelişim</span></div>
+                            <p class="mb-0"> @foreach($kitapKG as $kitap)
+                                    {{ $kitap->adi. ', ' }}
+                                @endforeach</p>
+                        </div>
+
+
+                        <div class="col mb-5 px-1 h-100">
+                            <div class="bd-example">
+                                <div class="carousel-inner">
+                                    <div class="row">
+                                        @foreach($kitapCR as $kitap)
+                                            <img src="{{ asset('storage/saticilar/kitaplar/'. $kitap->fotograf) }}"
+                                                 class="d-block w-25 h-25 mb-2" alt="...">
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feature text-white rounded-3 mb-1"><span
+                                    class="badge text-bg-warning">Çizgi Roman</span></div>
+                            <p class="mb-0"> @foreach($kitapCR as $kitap)
+                                    {{ $kitap->adi. ', ' }}
+                                @endforeach</p>
+                        </div>
+
+                        <div class="col mb-5 px-1 h-100">
+                            <div class="bd-example">
+                                <div class="carousel-inner">
+                                    <div class="row">
+                                        @foreach($kitapAT as $kitap)
+                                            <img src="{{ asset('storage/saticilar/kitaplar/'. $kitap->fotograf) }}"
+                                                 class="d-block w-25 h-25 mb-2" alt="...">
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feature text-white rounded-3 mb-1"><span
+                                    class="badge text-bg-warning">Araştırma - Tarih</span></div>
+                            <p class="mb-0"> @foreach($kitapAT as $kitap)
+                                    {{ $kitap->adi. ', ' }}
+                                @endforeach</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Testimonial section-->
+    <div class="py-5 bg-light">
+        <div class="container px-5 my-5">
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-10 col-xl-7">
+                    <div class="text-center">
+                        <div class="fs-4 mb-4 fst-italic">"Kitaplar kendinize ve başkalarına saygı duymayı öğretecek,
+                            yüreği ve aklı, dünya ve insanlık sevgisiyle dolduracaktır."
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <img class="rounded-circle me-3" src="{{ asset('storage/maksimgorki.jpg') }}" alt="..."/>
+                            <div class="fw-bold">
+                                Maksim Gorki
+                                <span class="fw-bold text-warning mx-1">/</span>
+                                Yazar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Blog preview section-->
+    <section class="py-5">
+        <div class="container px-5 my-5">
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-8 col-xl-6">
+                    <div class="text-center">
+                        <h2 class="fw-bolder">Son Yorumlar</h2>
+                        <p class="lead fw-normal text-muted mb-5">İstediğiniz kitabı almadan önce, kitap hakkında
+                            yapılan yorumları okuyarak fikir sahibi olabilirsiniz.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row gx-5">
+                <div class="col-lg-4 mb-5">
+                    <div class="card h-100 shadow border-0">
+                        <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..."/>
+                        <div class="card-body p-4">
+                            <div class="badge bg-warning bg-gradient text-dark rounded-pill mb-2">Yorum</div>
+                            <a class="text-decoration-none link-dark stretched-link" href="#"><h5
+                                    class="card-title mb-3">Kitap Adı</h5></a>
+                            <p class="card-text mb-0">Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum
+                                Yorum Yorum Yorum Yorum Yorum Yorum</p>
+                        </div>
+                        <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                            <div class="d-flex align-items-end justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d"
+                                         alt="..."/>
+                                    <div class="small">
+                                        <div class="fw-bold">Kelly Rowan</div>
+                                        <div class="text-muted">March 12, 2022 &middot; 6 min read</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-5">
+                    <div class="card h-100 shadow border-0">
+                        <img class="card-img-top" src="https://dummyimage.com/600x350/adb5bd/495057" alt="..."/>
+                        <div class="card-body p-4">
+                            <div class="badge bg-warning bg-gradient text-dark rounded-pill mb-2">Yorum</div>
+                            <a class="text-decoration-none link-dark stretched-link" href="#"><h5
+                                    class="card-title mb-3">Kitap Adı</h5></a>
+                            <p class="card-text mb-0">Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum
+                                Yorum Yorum Yorum Yorum Yorum Yorum</p>
+                        </div>
+                        <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                            <div class="d-flex align-items-end justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d"
+                                         alt="..."/>
+                                    <div class="small">
+                                        <div class="fw-bold">Josiah Barclay</div>
+                                        <div class="text-muted">March 23, 2022 &middot; 4 min read</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-5">
+                    <div class="card h-100 shadow border-0">
+                        <img class="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40" alt="..."/>
+                        <div class="card-body p-4">
+                            <div class="badge bg-warning bg-gradient text-dark rounded-pill mb-2">Yorum</div>
+                            <a class="text-decoration-none link-dark stretched-link" href="#"><h5
+                                    class="card-title mb-3">Kitap Adı</h5></a>
+                            <p class="card-text mb-0">Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum
+                                Yorum Yorum Yorum Yorum Yorum Yorum</p>
+                        </div>
+                        <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                            <div class="d-flex align-items-end justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d"
+                                         alt="..."/>
+                                    <div class="small">
+                                        <div class="fw-bold">Evelyn Martinez</div>
+                                        <div class="text-muted">April 2, 2022 &middot; 10 min read</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Call to action-->
+            <aside class="bg-warning bg-gradient rounded-3 p-4 p-sm-5 mt-5">
+                <div
+                    class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
+                    <div class="mb-4 mb-xl-0">
+                        <div class="fs-3 fw-bold text-dark">Yeni Kitaplardan Haberdar Olmak İçin</div>
+                        <div class="text-dark-50">Sitemize kaydolarak son güncellemeleri takip edebilirsiniz.</div>
+                    </div>
+                    <div class="ms-xl-4">
+                        <div class="input-group mb-2">
+                            <input class="form-control" type="text" placeholder="Email adresiniz..."
+                                   aria-label="Email address..." aria-describedby="button-newsletter"/>
+                            <button class="btn btn-outline-dark" id="button-newsletter" type="button">Kaydol</button>
+                        </div>
+                        <div class="small text-dark-50">Gizliliği önemsiyoruz ve bilgilerinizi asla paylaşmayacağız.
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </section>
+@endsection
