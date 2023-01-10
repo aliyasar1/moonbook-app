@@ -54,14 +54,14 @@
             <p class="my-3"><b>Açıklama: </b> {{ $kitap->aciklama }}</p>
             <div class="d-block justify-content-center">
                 <label for="yorum" class="px-0" style="font-size: 24px">Yorum Ekle</label>
-                <span class="stars">
-    <i class="star1-hover fa fa-star-o"></i>
-    <i class="star2-hover fa fa-star-o"></i>
-    <i class="star3-hover fa fa-star-o"></i>
-    <i class="star4-hover fa fa-star-o"></i>
-    <i class="star5-hover fa fa-star-o"></i>
-    <span class="average"></span>
-</span>
+                <span class="stars mx-2">
+                    <i class="star1 fa-regular fa-star" title="1"></i>
+                    <i class="star2 fa-regular fa-star" title="2"></i>
+                    <i class="star3 fa-regular fa-star" title="3"></i>
+                    <i class="star4 fa-regular fa-star" title="4"></i>
+                    <i class="star5 fa-regular fa-star" title="5"></i>
+                    <span class="average"></span>
+                </span>
                 <textarea name="yorum" class="form-control" style="resize: none;" id="yorum" cols="30" rows="5"
                           placeholder="Yorum..."></textarea>
                 <button class="btn bg-warning mt-2" style="width: 10%;">
@@ -74,32 +74,29 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            $(".star1-hover").hover(function () {
-                $(".star1-hover").removeClass("fa-star-o").addClass("fa-star");
-                $(".star2-hover,.star3-hover,.star4-hover,.star5-hover").removeClass("fa-star").addClass("fa-star-o");
-            }, function () {
-                $(".star1-hover,.star2-hover,.star3-hover,.star4-hover,.star5-hover").removeClass("fa-star").addClass("fa-star-o");
+            $(".star1").click(function () {
+                $(".star1").removeClass("fa-regular").addClass("fa-solid");
+                $(".average").text("1 puan verdiniz...")
             });
 
-            $(".star2-hover").hover(function () {
-                $(".star1-hover,.star2-hover").removeClass("fa-star-o").addClass("fa-star");
-                $(".star3-hover,.star4-hover,.star5-hover").removeClass("fa-star").addClass("fa-star-o");
-            }, function () {
-                $(".star1-hover,.star2-hover,.star3-hover,.star4-hover,.star5-hover").removeClass("fa-star").addClass("fa-star-o");
+            $(".star2").click(function () {
+                $(".star1,.star2").removeClass("fa-regular").addClass("fa-solid");
+                $(".average").text("2 puan verdiniz...")
             });
 
-            $(".star3-hover").hover(function () {
-                $(".star1-hover,.star2-hover,.star3-hover").removeClass("fa-star-o").addClass("fa-star");
-                $(".star4-hover,.star5-hover").removeClass("fa-star").addClass("fa-star-o");
-            }, function () {
-                $(".star1-hover,.star2-hover,.star3-hover,.star4-hover,.star5-hover").removeClass("fa-star").addClass("fa-star-o");
+            $(".star3").click(function () {
+                $(".star1,.star2,.star3").removeClass("fa-regular").addClass("fa-solid");
+                $(".average").text("3 puan verdiniz...")
             });
 
-            $(".star4-hover").hover(function () {
-                $(".star1-hover,.star2-hover,.star3-hover,.star4-hover").removeClass("fa-star-o").addClass("fa-star");
-                $(".star5-hover").removeClass("fa-star").addClass("fa-star-o");
-            }, function () {
-                $(".star1-hover,.star2-hover,.star3-hover,.star4-hover,.star5-hover").removeClass("fa-star").addClass("fa-star-o");
+            $(".star4").click(function () {
+                $(".star1,.star2,.star3,.star4").removeClass("fa-regular").addClass("fa-solid");
+                $(".average").text("4 puan verdiniz...")
+            });
+
+            $(".star5").click(function () {
+                $(".star1,.star2,.star3,.star4,.star5").removeClass("fa-regular").addClass("fa-solid");
+                $(".average").text("5 puan verdiniz...")
             });
         });
     </script>
