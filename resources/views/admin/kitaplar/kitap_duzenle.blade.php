@@ -47,7 +47,7 @@
 
                                                 <!-- Kategori -->
                                                 <div class="col px-0">
-                                                    <select name="kategori_id" id="kategori_id" class="form-control">
+                                                    <label for="kategori_id" class="mb-0" style="font-size: 14px">Kategori</label><select name="kategori_id" id="kategori_id" class="form-control">
                                                         <option value="{{ $kitap->kategoriler->id }}"
                                                                 selected>{{ $kitap->kategoriler->adi }}</option>
                                                         @foreach($kategoriler as $kategori)
@@ -63,7 +63,7 @@
 
                                                 <!-- Yazar -->
                                                 <div class="col px-0">
-                                                    <select name="yazar_id" id="yazar_id" class="form-control">
+                                                    <label for="yazar_id" class="mb-0" style="font-size: 14px">Yazar</label><select name="yazar_id" id="yazar_id" class="form-control">
                                                         <option value="{{ $kitap->yazarlar->id }}"
                                                                 selected>{{ $kitap->yazarlar->adi_soyadi }}</option>
                                                         @foreach($yazarlar as $yazar)
@@ -84,8 +84,8 @@
 
                                                 <!-- Kitap Adı -->
                                                 <div class="col px-0">
-                                                    <input type="text" class="form-control" id="adi"
-                                                           name="adi" value="{{ $kitap->adi }}">
+                                                    <label for="adi" class="mb-0" style="font-size: 14px">Kitap Adı</label><input type="text" class="form-control" id="adi"
+                                                                                    name="adi" value="{{ $kitap->adi }}">
                                                     @error('adi')
                                                     <div class="text-sm text-red-400" style="color: red;">
                                                         <small>{{ $message }}</small></div>
@@ -94,7 +94,7 @@
 
                                                 <!-- Yayın Evi -->
                                                 <div class="col px-0">
-                                                    <select name="yayin_evi_id" id="yayin_evi_id" class="form-control">
+                                                    <label for="yayin_evi_id" class="mb-0" style="font-size: 14px">Yayın Evi</label><select name="yayin_evi_id" id="yayin_evi_id" class="form-control">
                                                         <option value="{{ $kitap->yayin_evleri->id }}"
                                                                 selected>{{ $kitap->yayin_evleri->adi }}</option>
                                                         @foreach($yayin_evleri as $yayin_evi)
@@ -115,29 +115,29 @@
 
                                                 <!-- Sayfa Sayısı -->
                                                 <div class="col px-0">
-                                                    <input type="text" class="form-control" id="sayfa_sayisi"
-                                                           name="sayfa_sayisi" value="{{ $kitap->sayfa_sayisi }}">
+                                                    <label for="sayfa_sayisi" class="mb-0" style="font-size: 14px">Sayfa Sayısı</label><input type="text" class="form-control" id="sayfa_sayisi"
+                                                                                             name="sayfa_sayisi" value="{{ $kitap->sayfa_sayisi }}">
                                                 </div>
 
                                                 <!-- Yayın Yılı -->
                                                 <div class="col px-0">
-                                                    <input type="text" class="form-control" id="yayin_yili"
-                                                           name="yayin_yili" value="{{ $kitap->yayin_yili }}">
+                                                    <label for="yayin_yili" class="mb-0" style="font-size: 14px">Yayın Yılı</label><input type="text" class="form-control" id="yayin_yili"
+                                                                                           name="yayin_yili" value="{{ $kitap->yayin_yili }}">
                                                 </div>
 
                                             </div>
 
                                             <!-- Açıklama -->
                                             <div class="form-group">
-                                                <textarea class="form-control" style="resize: none" name="aciklama"
-                                                          id="aciklama" cols="30"
-                                                          rows="5">{{ $kitap->aciklama }}</textarea>
+                                                <label for="aciklama" class="mb-0" style="font-size: 14px">Açıklama</label><textarea class="form-control" style="resize: none" name="aciklama"
+                                                                                        id="aciklama" cols="30"
+                                                                                        rows="5">{{ $kitap->aciklama }}</textarea>
                                             </div>
 
                                             <!-- Fiyat -->
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="fiyat"
-                                                       name="fiyat" value="{{ $kitap->fiyat }}">
+                                                <label for="fiyat" class="mb-0" style="font-size: 14px">Fiyat</label><input type="text" class="form-control" id="fiyat"
+                                                                                  name="fiyat" value="{{ $kitap->fiyat }}">
                                                 @error('fiyat')
                                                 <div class="text-sm text-red-400" style="color: red;">
                                                     <small>{{ $message }}</small></div>
