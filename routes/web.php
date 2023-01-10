@@ -72,6 +72,11 @@ Route::get('/anasayfa', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getAnasayfa'
 ]);
 
+Route::get('/kitap-incele/{kitap}', [
+    'as' => 'kitap_incele',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getKitapIncele'
+]);
+
 Route::prefix('/satici')->as('satici.')->middleware(['admin'])->group(function () {
     Route::get('/anasayfa', [
         'as' => 'anasayfa',
