@@ -7,6 +7,7 @@ use App\Models\Ilceler;
 use App\Models\Iller;
 use App\Models\Kategori;
 use App\Models\Kitaplar;
+use App\Models\Stok;
 use App\Models\User;
 use \Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -102,5 +103,10 @@ class KullaniciController extends Controller
         $kitaplar = Kitaplar::all();
         $kategoriler = Kategori::all();
         return view('kullanicilar.kitaplar', compact('kitaplar', 'kategoriler'));
+    }
+
+    public function getKitapIncele (Kitaplar $kitap) {
+        $kitapadeti = $kitap->stok->stok_adeti;
+        return view('kullanicilar.kitap_incele', compact('kitap', 'kitapadeti'));
     }
 }

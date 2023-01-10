@@ -4,7 +4,7 @@
     <title>MoonBook | Kitaplar</title>
     @endsection
 @section('content')
-    <div class="container">
+    <div class="container my-5">
         <ul class="nav justify-content-center my-3 ">
             @foreach($kategoriler as $kategori)
                 <li class="nav-item">
@@ -47,7 +47,7 @@
                                 </p>
                             </div>
                             <div class="flex-fill d-flex gap-3 mb-0 justify-content-center">
-                                <a href="#" class="btn btn-warning w-50">İncele</a>
+                                <a href="{{ route('kitap_incele', $kitap->id) }}" class="btn btn-warning w-50">İncele</a>
                                 <a href="#" class="btn btn-warning w-50">Sepete Ekle</a>
                             </div>
                         </div>

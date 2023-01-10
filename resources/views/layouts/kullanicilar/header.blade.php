@@ -12,7 +12,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <script src="https://kit.fontawesome.com/68b01077e6.js" crossorigin="anonymous"></script>
 </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100 min-vh-100">
 <main class="flex-shrink-0">
     <div class="bg-custom">
         <!-- Navigation-->
