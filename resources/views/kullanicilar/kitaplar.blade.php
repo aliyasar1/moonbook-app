@@ -17,8 +17,8 @@
             @foreach($kitaplar as $kitap)
                 <div class="max-w-12xl mx-auto sm:px-6 lg:px-8 justify-content-start">
                     <div class="card" style="width: 15rem; align-items: center; padding: 1.25rem;">
-                        <div class="fvrt-btn bg-warning d-flex justify-content-center align-items-center"><i
-                                class="fa-regular fa-heart" style="font-size: 18px"></i></div>
+                        <div class="fvrt-btn bg-warning d-flex justify-content-center align-items-center">
+                            <i class="fvrt fa-regular fa-heart" style="font-size: 18px"></i></div>
                         <div class="ratio-3x2 mb-3" style="width: 150px; height: 200px;">
                             <img class="w-100 h-100"
                                  src="{{ asset('storage/saticilar/kitaplar/'. $kitap->fotograf ) }}"
@@ -56,4 +56,14 @@
             @endforeach
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function () {
+           $(".fvrt").click(function () {
+               $(".fvrt").removeClass('fa-regular').addClass('fa-solid');
+           });
+        });
+    </script>
 @endsection
