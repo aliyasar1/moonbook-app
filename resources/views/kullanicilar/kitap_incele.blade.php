@@ -52,55 +52,111 @@
                 </div>
             </div>
             <p class="my-3"><b>Açıklama: </b> {{ $kitap->aciklama }}</p>
-            <div class="d-block justify-content-center">
-                <label for="yorum" class="px-0" style="font-size: 24px">Yorum Ekle</label>
-                <span class="stars mx-2">
-                    <i class="star1 fa-regular fa-star" title="1"></i>
-                    <i class="star2 fa-regular fa-star" title="2"></i>
-                    <i class="star3 fa-regular fa-star" title="3"></i>
-                    <i class="star4 fa-regular fa-star" title="4"></i>
-                    <i class="star5 fa-regular fa-star" title="5"></i>
+            <form method="post" action="{{ route('yorum_ekle', $kitap->id) }}">
+                @csrf
+                <input type="hidden" id="starInput" name="puan" value="1">
+                <div class="d-block justify-content-center">
+                    <label for="yorum" class="px-0" style="font-size: 24px">Yorum Ekle</label>
+                    <span class="stars mx-2" id="stars">
+                    <i class="star1 fa-regular fa-star" title="1" data-selected-value="1"></i>
+                    <i class="star2 fa-regular fa-star" title="2" data-selected-value="2"></i>
+                    <i class="star3 fa-regular fa-star" title="3" data-selected-value="3"></i>
+                    <i class="star4 fa-regular fa-star" title="4" data-selected-value="4"></i>
+                    <i class="star5 fa-regular fa-star" title="5" data-selected-value="5"></i>
                     <span class="average"></span>
                 </span>
-                <textarea name="yorum" class="form-control" style="resize: none;" id="yorum" cols="30" rows="5"
-                          placeholder="Yorum..."></textarea>
-                <button class="btn bg-warning mt-2" style="width: 10%;">
-                    <i class="fa-solid fa-comment"></i><b> Yorum Ekle</b></button>
-            </div>
+                    <textarea name="yorum" class="form-control" style="resize: none;" id="yorum" cols="30" rows="5"
+                              placeholder="Yorum..."></textarea>
+                    <button type="submit" class="btn bg-warning mt-2" style="width: 10%;">
+                        <i class="fa-solid fa-comment"></i><b> Yorum Ekle</b></button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection
 
 @section('js')
     <script>
+        let starPoint = 0;
+
         $(document).ready(function () {
-            $(".star1").click(function () {
-                $(".star1").removeClass("fa-regular").addClass("fa-solid");
-                $(".star2,.star3,.star4,.star5").removeClass("fa-solid").addClass("fa-regular");
-                $(".average").text("1 puan verdiniz...")
-            });
+            // $(".star1").click(function () {
+            //     if ($(this).hasClass('fa-regular')) {
+            //         $(".star1").removeClass("fa-regular").addClass("fa-solid");
+            //         $(".average").text("1 puan verdiniz...")
+            //
+            //         starPoint = 1;
+            //     } else if ($(this).hasClass('fa-solid')) {
+            //         $(".star1").removeClass("fa-solid").addClass("fa-regular");
+            //         $(".average").text("")
+            //
+            //         starPoint = 0;
+            //     }
+            //     $(".star2,.star3,.star4,.star5").removeClass("fa-solid").addClass("fa-regular");
+            //
+            //     console.log(starPoint);
+            // });
+            //
+            // $(".star2").click(function () {
+            //     if ($(this).hasClass('fa-regular')) {
+            //         $(".star1,.star2").removeClass("fa-regular").addClass("fa-solid");
+            //         $(".average").text("2 puan verdiniz...")
+            //
+            //         starPoint = 2;
+            //     } else if ($(this).hasClass('fa-solid')) {
+            //         $(".star2").removeClass("fa-solid").addClass("fa-regular");
+            //         $(".average").text("")
+            //
+            //         starPoint = 1;
+            //     }
+            //
+            //     $(".star3,.star4,.star5").removeClass("fa-solid").addClass("fa-regular");
+            //
+            //     console.log(starPoint)
+            // });
+            //
+            // $(".star3").click(function () {
+            //     $(".star1,.star2,.star3").removeClass("fa-regular").addClass("fa-solid");
+            //     $(".star4,.star5").removeClass("fa-solid").addClass("fa-regular");
+            //     $(".average").text("3 puan verdiniz...")
+            // });
+            //
+            // $(".star4").click(function () {
+            //     $(".star1,.star2,.star3,.star4").removeClass("fa-regular").addClass("fa-solid");
+            //     $(".star5").removeClass("fa-solid").addClass("fa-regular");
+            //     $(".average").text("4 puan verdiniz...")
+            // });
+            //
+            // $(".star5").click(function () {
+            //     $(".star1,.star2,.star3,.star4,.star5").removeClass("fa-regular").addClass("fa-solid");
+            //     $(".average").text("5 puan verdiniz...")
+            // });
 
-            $(".star2").click(function () {
-                $(".star1,.star2").removeClass("fa-regular").addClass("fa-solid");
-                $(".star3,.star4,.star5").removeClass("fa-solid").addClass("fa-regular");
-                $(".average").text("2 puan verdiniz...")
-            });
+            let $stars = $('#stars');
 
-            $(".star3").click(function () {
-                $(".star1,.star2,.star3").removeClass("fa-regular").addClass("fa-solid");
-                $(".star4,.star5").removeClass("fa-solid").addClass("fa-regular");
-                $(".average").text("3 puan verdiniz...")
-            });
+            $stars.find('i').click(function () {
+                let star = $(this);
+                let starPointData = star.data('selected-value');
 
-            $(".star4").click(function () {
-                $(".star1,.star2,.star3,.star4").removeClass("fa-regular").addClass("fa-solid");
-                $(".star5").removeClass("fa-solid").addClass("fa-regular");
-                $(".average").text("4 puan verdiniz...")
-            });
+                starPoint = starPointData;
 
-            $(".star5").click(function () {
-                $(".star1,.star2,.star3,.star4,.star5").removeClass("fa-regular").addClass("fa-solid");
-                $(".average").text("5 puan verdiniz...")
+                $(".average").text(starPointData + " puan verdiniz...")
+
+                if (star.hasClass('fa-regular')) {
+                    star.removeClass("fa-regular").addClass("fa-solid");
+                } else if (star.hasClass('fa-solid')) {
+                    star.removeClass("fa-solid").addClass("fa-regular");
+                }
+
+                $.each($stars.find('i'), function (index, item) {
+                    if (index <= star.index()) {
+                        $(item).removeClass('fa-regular').addClass('fa-solid');
+                    } else if (index > star.index()) {
+                        $(item).removeClass('fa-solid').addClass('fa-regular');
+                    }
+                });
+
+                $("#starInput").val(starPoint);
             });
         });
     </script>

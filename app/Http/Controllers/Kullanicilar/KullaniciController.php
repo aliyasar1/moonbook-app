@@ -9,6 +9,8 @@ use App\Models\Kategori;
 use App\Models\Kitaplar;
 use App\Models\Stok;
 use App\Models\User;
+use App\Models\Yorumlar;
+use Illuminate\Support\Facades\Auth;
 use \Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -108,5 +110,27 @@ class KullaniciController extends Controller
     public function getKitapIncele (Kitaplar $kitap) {
         $kitapadeti = $kitap->stok->stok_adeti;
         return view('kullanicilar.kitap_incele', compact('kitap', 'kitapadeti'));
+    }
+
+    public function postKitapYorum(Kitaplar $kitap) {
+        $validator = Validator::make(
+            request()->all(),
+            [
+                'puan' => 'required',
+                'yorum' => 'required',
+            ],
+            [
+                'puan.required' => 'En az 1 puan vermeniz gerekiyor.',
+                'yorum.required' => 'Yorum alanı boş bırakılamaz'
+            ]
+        );
+
+        $veriler = $validator->validate();
+        $veriler['kitap_id'] = $kitap->id;
+        $veriler['kullanici_id'] = Auth::user()->id;
+
+        Yorumlar::query()->create($veriler);
+
+        return redirect()->route('kitap_incele', $kitap->id);
     }
 }
