@@ -77,6 +77,11 @@ Route::get('/kitap-incele/{kitap}', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getKitapIncele'
 ]);
 
+Route::post('/kitap-incele/{kitap}/yorum-eklendi', [
+    'as' => 'yorum_ekle',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@postKitapYorum'
+]);
+
 Route::prefix('/satici')->as('satici.')->middleware(['admin'])->group(function () {
     Route::get('/anasayfa', [
         'as' => 'anasayfa',

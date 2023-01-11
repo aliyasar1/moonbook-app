@@ -11,7 +11,7 @@ class Kitaplar extends Model
 
     protected $table = 'kitaplar';
 
-    protected $fillable = ['id', 'satici_id', 'fotograf', 'kategori_id', 'adi', 'yazar_id', 'yayin_evi_id', 'sayfa_sayisi', 'yayin_yili', 'aciklama', 'puan', 'fiyat'];
+    protected $fillable = ['id', 'satici_id', 'fotograf', 'kategori_id', 'adi', 'yazar_id', 'yayin_evi_id', 'sayfa_sayisi', 'yayin_yili', 'aciklama', 'fiyat'];
 
     public function saticilar()
     {
