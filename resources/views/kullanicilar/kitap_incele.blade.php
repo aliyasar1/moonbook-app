@@ -76,21 +76,25 @@
         $(document).ready(function () {
             $(".star1").click(function () {
                 $(".star1").removeClass("fa-regular").addClass("fa-solid");
+                $(".star2,.star3,.star4,.star5").removeClass("fa-solid").addClass("fa-regular");
                 $(".average").text("1 puan verdiniz...")
             });
 
             $(".star2").click(function () {
                 $(".star1,.star2").removeClass("fa-regular").addClass("fa-solid");
+                $(".star3,.star4,.star5").removeClass("fa-solid").addClass("fa-regular");
                 $(".average").text("2 puan verdiniz...")
             });
 
             $(".star3").click(function () {
                 $(".star1,.star2,.star3").removeClass("fa-regular").addClass("fa-solid");
+                $(".star4,.star5").removeClass("fa-solid").addClass("fa-regular");
                 $(".average").text("3 puan verdiniz...")
             });
 
             $(".star4").click(function () {
                 $(".star1,.star2,.star3,.star4").removeClass("fa-regular").addClass("fa-solid");
+                $(".star5").removeClass("fa-solid").addClass("fa-regular");
                 $(".average").text("4 puan verdiniz...")
             });
 
