@@ -109,7 +109,9 @@ class KullaniciController extends Controller
 
     public function getKitapIncele (Kitaplar $kitap) {
         $kitapadeti = $kitap->stok->stok_adeti;
-        return view('kullanicilar.kitap_incele', compact('kitap', 'kitapadeti'));
+        $yorumlar = Yorumlar::query()->where('kitap_id', $kitap->id)->orderByDesc('yorum')->limit(3)->get();
+        $puanOrt = Yorumlar::query()->where('kitap_id', $kitap->id)->avg('puan');
+        return view('kullanicilar.kitap_incele', compact('kitap', 'kitapadeti','yorumlar', 'puanOrt'));
     }
 
     public function postKitapYorum(Kitaplar $kitap) {

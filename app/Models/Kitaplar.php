@@ -37,4 +37,9 @@ class Kitaplar extends Model
     {
         return $this->hasOne(Stok::class, 'kitap_id', 'id');
     }
+
+    public function yorum()
+    {
+        return $this->hasOne(Yorumlar::class,'kitap_id', 'id');
+    }
 }

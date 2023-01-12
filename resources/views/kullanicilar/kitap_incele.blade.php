@@ -34,6 +34,8 @@
                         <p class="d-inline"><b>Yayın Yılı: </b> {{ $kitap->yayin_yili }}</p>
                         <p class="d-inline"><b>Stok Durumu: </b> {{ $kitap->stok->stok_adeti }} adet</p>
                     </div>
+                    <p><b>Satıcı: </b><a href="#" class="text-decoration-none">{{ $kitap->saticilar->firma_adi }}</a>
+                    </p>
                     <div class="flex-fill d-flex gap-3 mt-5 mb-0 align-items-center">
                         <label for="exampleFormControlSelect1" style="font-size: 18px;">Adet :</label>
                         <select class="form-control" style="font-size: 18px; width: 10%" id="exampleFormControlSelect1">
@@ -63,6 +65,7 @@
                     <i class="star3 fa-regular fa-star" title="3" data-selected-value="3"></i>
                     <i class="star4 fa-regular fa-star" title="4" data-selected-value="4"></i>
                     <i class="star5 fa-regular fa-star" title="5" data-selected-value="5"></i>
+                        <small>( {{ number_format($puanOrt,2,'.') }} )</small>
                     <span class="average"></span>
                 </span>
                     <textarea name="yorum" class="form-control" style="resize: none;" id="yorum" cols="30" rows="5"
@@ -72,6 +75,40 @@
                 </div>
             </form>
         </div>
+        <h2 class="my-3 mt-5">Yorumlar</h2>
+        <div class="my-3">
+            @foreach($yorumlar as $yorum)
+                <div class="mb-5">
+                    <div class="card shadow border-0" style="height: 150px; width: 100%">
+                        <div class="card-body p-4 pb-3">
+                            <span class="stars">
+                                @for($i = 1; $i <= 5; $i++)
+                                    @if($i <= $yorum->puan)
+                                        <i class="star1 fa-solid fa-star" style="font-size: 14px;"></i>
+                                    @else
+                                        <i class="star1 fa-regular fa-star" style="font-size: 14px;"></i>
+                                    @endif
+                                @endfor
+                                </span>
+                            <p class="card-text mt-2">{{ $yorum->yorum }}</p>
+                        </div>
+                        <div class="card-footer mb-2 p-4 pt-0 bg-transparent border-top-0">
+                            <div class="d-flex align-items-end justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle me-3" style="width: 40px; height: 40px"
+                                         src="{{ asset('storage/musteriler/'. $yorum->kullanicilar->fotograf) }}"
+                                         alt="..."/>
+                                    <div class="small">
+                                        <div class="fw-bold">{{ $yorum->kullanicilar->adi_soyadi }}</div>
+                                        <div class="text-muted">{{ \Illuminate\Support\Carbon::parse($yorum->created_at)->format('d M Y') . ' - ' . $yorum->created_at->diffForHumans() }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
 @endsection
 
@@ -80,58 +117,6 @@
         let starPoint = 0;
 
         $(document).ready(function () {
-            // $(".star1").click(function () {
-            //     if ($(this).hasClass('fa-regular')) {
-            //         $(".star1").removeClass("fa-regular").addClass("fa-solid");
-            //         $(".average").text("1 puan verdiniz...")
-            //
-            //         starPoint = 1;
-            //     } else if ($(this).hasClass('fa-solid')) {
-            //         $(".star1").removeClass("fa-solid").addClass("fa-regular");
-            //         $(".average").text("")
-            //
-            //         starPoint = 0;
-            //     }
-            //     $(".star2,.star3,.star4,.star5").removeClass("fa-solid").addClass("fa-regular");
-            //
-            //     console.log(starPoint);
-            // });
-            //
-            // $(".star2").click(function () {
-            //     if ($(this).hasClass('fa-regular')) {
-            //         $(".star1,.star2").removeClass("fa-regular").addClass("fa-solid");
-            //         $(".average").text("2 puan verdiniz...")
-            //
-            //         starPoint = 2;
-            //     } else if ($(this).hasClass('fa-solid')) {
-            //         $(".star2").removeClass("fa-solid").addClass("fa-regular");
-            //         $(".average").text("")
-            //
-            //         starPoint = 1;
-            //     }
-            //
-            //     $(".star3,.star4,.star5").removeClass("fa-solid").addClass("fa-regular");
-            //
-            //     console.log(starPoint)
-            // });
-            //
-            // $(".star3").click(function () {
-            //     $(".star1,.star2,.star3").removeClass("fa-regular").addClass("fa-solid");
-            //     $(".star4,.star5").removeClass("fa-solid").addClass("fa-regular");
-            //     $(".average").text("3 puan verdiniz...")
-            // });
-            //
-            // $(".star4").click(function () {
-            //     $(".star1,.star2,.star3,.star4").removeClass("fa-regular").addClass("fa-solid");
-            //     $(".star5").removeClass("fa-solid").addClass("fa-regular");
-            //     $(".average").text("4 puan verdiniz...")
-            // });
-            //
-            // $(".star5").click(function () {
-            //     $(".star1,.star2,.star3,.star4,.star5").removeClass("fa-regular").addClass("fa-solid");
-            //     $(".average").text("5 puan verdiniz...")
-            // });
-
             let $stars = $('#stars');
 
             $stars.find('i').click(function () {
