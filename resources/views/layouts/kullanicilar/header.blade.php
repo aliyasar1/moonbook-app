@@ -34,8 +34,8 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="font-size: 16px;">
                         <li class="nav-item"><a class="nav-link text-black" href="{{ route('anasayfa') }}"><b>Anasayfa</b></a></li>
                         <li class="nav-item"><a class="nav-link text-black" href="{{ route('kitaplar') }}"><b>Kitaplar</b></a></li>
-                        <li class="nav-item"><a class="nav-link text-black" href="#"><b>Yazarlar</b></a></li>
-                        <li class="nav-item"><a class="nav-link text-black" href="#"><b>Yayın Evleri</b></a></li>
+                        <li class="nav-item"><a class="nav-link text-black" href="{{ route('yazarlar') }}"><b>Yazarlar</b></a></li>
+                        <li class="nav-item"><a class="nav-link text-black" href="{{ route('yayin_evleri') }}"><b>Yayın Evleri</b></a></li>
                         <li class="nav-item"><a class="nav-link text-black" href="#"><b>İletişim</b></a></li>
                         <li class="nav-item">
                             <a class="nav-link position-relative" role="button" href="#">
