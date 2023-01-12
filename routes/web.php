@@ -82,6 +82,16 @@ Route::post('/kitap-incele/{kitap}/yorum-eklendi', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@postKitapYorum'
 ]);
 
+Route::get('/yazarlar', [
+    'as' => 'yazarlar',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getYazarlar'
+]);
+
+Route::get('/yayin-evleri', [
+    'as' => 'yayin_evleri',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getYayinEvleri'
+]);
+
 Route::prefix('/satici')->as('satici.')->middleware(['admin'])->group(function () {
     Route::get('/anasayfa', [
         'as' => 'anasayfa',

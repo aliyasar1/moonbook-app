@@ -9,6 +9,8 @@ use App\Models\Kategori;
 use App\Models\Kitaplar;
 use App\Models\Stok;
 use App\Models\User;
+use App\Models\YayinEvleri;
+use App\Models\Yazarlar;
 use App\Models\Yorumlar;
 use Illuminate\Support\Facades\Auth;
 use \Illuminate\Support\Facades\Validator;
@@ -132,5 +134,15 @@ class KullaniciController extends Controller
         Yorumlar::query()->create($veriler);
 
         return redirect()->route('kitap_incele', $kitap->id);
+    }
+
+    public function getYazarlar() {
+        $yazarlar = Yazarlar::all();
+        return view('kullanicilar.yazarlar', compact('yazarlar'));
+    }
+
+    public function getYayinEvleri() {
+        $yayinevleri = YayinEvleri::all();
+        return view('kullanicilar.yayin_evleri', compact('yayinevleri'));
     }
 }
