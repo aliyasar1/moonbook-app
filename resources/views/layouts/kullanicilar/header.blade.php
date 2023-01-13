@@ -19,7 +19,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark shadow-lg">
             <div class="container px-3">
-                <a class="navbar-brand text-black" href="#"><img src="{{ asset('storage/logolar/moonbookSiyah.png') }}"
+                <a class="navbar-brand text-black" href="{{ route('anasayfa') }}"><img src="{{ asset('storage/logolar/moonbookSiyah.png') }}"
                                                                  width="70px"
                                                                  height="70px" alt="moonbook">MoonBook</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

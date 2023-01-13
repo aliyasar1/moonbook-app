@@ -150,78 +150,45 @@
                 </div>
             </div>
             <div class="row gx-5">
+                @foreach($anasayfaYorumlar as $anasayfaYorum)
                 <div class="col-lg-4 mb-5">
                     <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..."/>
-                        <div class="card-body p-4">
+                        <div class="d-flex justify-content-center">
+                            <div class="ratio-3x2 mb-3" style="width: 150px; height: 200px;">
+                                <img class="card-img-top" src="{{ asset('storage/saticilar/kitaplar/'. $anasayfaYorum->kitaplar->fotograf) }}" alt="..."/>
+                            </div>
+                        </div>
+                        <div class="card-body p-4 mt-2">
                             <div class="badge bg-warning bg-gradient text-dark rounded-pill mb-2">Yorum</div>
-                            <a class="text-decoration-none link-dark stretched-link" href="#"><h5
-                                    class="card-title mb-3">Kitap Adı</h5></a>
-                            <p class="card-text mb-0">Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum
-                                Yorum Yorum Yorum Yorum Yorum Yorum</p>
+                            <span class="stars mx-2">
+                                @for($i = 1; $i <= 5; $i++)
+                                    @if($i <= $anasayfaYorum->puan)
+                                        <i class="star1 fa-solid fa-star" style="font-size: 14px;"></i>
+                                    @else
+                                        <i class="star1 fa-regular fa-star" style="font-size: 14px;"></i>
+                                    @endif
+                                @endfor
+                                </span>
+                            <a class="text-decoration-none link-dark stretched-link" href="{{ route('kitap_incele', $anasayfaYorum->kitaplar->id) }}"><h5
+                                    class="card-title mb-3">{{ $anasayfaYorum->kitaplar->adi }}</h5></a>
+                            <p class="card-text mb-0">{{ $anasayfaYorum->yorum }}</p>
                         </div>
                         <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                             <div class="d-flex align-items-end justify-content-between">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d"
+                                    <img class="rounded-circle me-3" style="width: 40px; height: 40px"
+                                         src="{{ asset('storage/musteriler/'. $anasayfaYorum->kullanicilar->fotograf) }}"
                                          alt="..."/>
                                     <div class="small">
-                                        <div class="fw-bold">Kelly Rowan</div>
-                                        <div class="text-muted">March 12, 2022 &middot; 6 min read</div>
+                                        <div class="fw-bold">{{ $anasayfaYorum->kullanicilar->adi_soyadi }}</div>
+                                        <div class="text-muted">{{ \Illuminate\Support\Carbon::parse($anasayfaYorum->created_at)->format('d M Y') . ' - ' . $anasayfaYorum->created_at->diffForHumans() }}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 mb-5">
-                    <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="https://dummyimage.com/600x350/adb5bd/495057" alt="..."/>
-                        <div class="card-body p-4">
-                            <div class="badge bg-warning bg-gradient text-dark rounded-pill mb-2">Yorum</div>
-                            <a class="text-decoration-none link-dark stretched-link" href="#"><h5
-                                    class="card-title mb-3">Kitap Adı</h5></a>
-                            <p class="card-text mb-0">Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum
-                                Yorum Yorum Yorum Yorum Yorum Yorum</p>
-                        </div>
-                        <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                            <div class="d-flex align-items-end justify-content-between">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d"
-                                         alt="..."/>
-                                    <div class="small">
-                                        <div class="fw-bold">Josiah Barclay</div>
-                                        <div class="text-muted">March 23, 2022 &middot; 4 min read</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-5">
-                    <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40" alt="..."/>
-                        <div class="card-body p-4">
-                            <div class="badge bg-warning bg-gradient text-dark rounded-pill mb-2">Yorum</div>
-                            <a class="text-decoration-none link-dark stretched-link" href="#"><h5
-                                    class="card-title mb-3">Kitap Adı</h5></a>
-                            <p class="card-text mb-0">Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum Yorum
-                                Yorum Yorum Yorum Yorum Yorum Yorum</p>
-                        </div>
-                        <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                            <div class="d-flex align-items-end justify-content-between">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d"
-                                         alt="..."/>
-                                    <div class="small">
-                                        <div class="fw-bold">Evelyn Martinez</div>
-                                        <div class="text-muted">April 2, 2022 &middot; 10 min read</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
             <!-- Call to action-->
             <aside class="bg-warning bg-gradient rounded-3 p-4 p-sm-5 mt-5">
