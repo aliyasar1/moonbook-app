@@ -77,6 +77,11 @@ Route::get('/kitap-incele/{kitap}', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getKitapIncele'
 ]);
 
+Route::get('/cikis-yap', [
+    'as' => 'cikis_yap',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getCikisYap'
+]);
+
 Route::post('/kitap-incele/{kitap}/yorum-eklendi', [
     'as' => 'yorum_ekle',
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@postKitapYorum'

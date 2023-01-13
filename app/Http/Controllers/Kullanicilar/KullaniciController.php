@@ -135,4 +135,9 @@ class KullaniciController extends Controller
 
         return redirect()->route('kitap_incele', $kitap->id);
     }
+
+    public function getCikisYap() {
+        Auth::logout();
+        return redirect()->route('giris_yap');
+    }
 }
