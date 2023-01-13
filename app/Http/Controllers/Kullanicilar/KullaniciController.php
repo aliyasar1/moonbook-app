@@ -25,11 +25,11 @@ class KullaniciController extends Controller
         return view('kayit_ol', compact('user', 'iller', 'ilceler'));
     }
 
-    public function postHesap_Olustur (Request $request)
+    public function postHesap_Olustur(Request $request)
     {
         $validator = Validator::make(
             $request->all(),
-            [   'fotograf' => 'sometimes',
+            ['fotograf' => 'sometimes',
                 'adi_soyadi' => 'required',
                 'kullanici_adi' => 'required|min:8',
                 'email' => 'required|email',
@@ -43,7 +43,7 @@ class KullaniciController extends Controller
 
             [
                 'sifre.required' => 'Şifre alanı boş geçilemez.',
-                'sifre.min' => 'Şifre En az 6 karakter olmalıdır.' ,
+                'sifre.min' => 'Şifre En az 6 karakter olmalıdır.',
                 'kullanici_adi.required' => 'Kullanıcı adı alanı boş geçilemez',
                 'kullanici_adi.unique' => 'Kullanıcı adı alınmıştır.',
                 'email.required' => 'Email alanı boş geçilemez',
@@ -95,7 +95,8 @@ class KullaniciController extends Controller
         return response()->json($ilceler);
     }
 
-    public function getAnasayfa () {
+    public function getAnasayfa()
+    {
         $kitapRoman = Kitaplar::query()->where('kategori_id', 3)->limit(4)->get();
         $kitapKG = Kitaplar::query()->where('kategori_id', 4)->limit(4)->get();
         $kitapCR = Kitaplar::query()->where('kategori_id', 9)->limit(4)->get();
@@ -103,18 +104,23 @@ class KullaniciController extends Controller
         return view('kullanicilar.anasayfa', compact('kitapRoman', 'kitapKG', 'kitapCR', 'kitapAT'));
     }
 
-    public function getKitaplar () {
+    public function getKitaplar()
+    {
         $kitaplar = Kitaplar::all();
         $kategoriler = Kategori::all();
         return view('kullanicilar.kitaplar', compact('kitaplar', 'kategoriler'));
     }
 
-    public function getKitapIncele (Kitaplar $kitap) {
+    public function getKitapIncele(Kitaplar $kitap)
+    {
         $kitapadeti = $kitap->stok->stok_adeti;
-        return view('kullanicilar.kitap_incele', compact('kitap', 'kitapadeti'));
+        $yorumlar = Yorumlar::query()->where('kitap_id', $kitap->id)->orderByDesc('yorum')->limit(3)->get();
+        $puanOrt = Yorumlar::query()->where('kitap_id', $kitap->id)->avg('puan');
+        return view('kullanicilar.kitap_incele', compact('kitap', 'kitapadeti', 'yorumlar', 'puanOrt'));
     }
 
-    public function postKitapYorum(Kitaplar $kitap) {
+    public function postKitapYorum(Kitaplar $kitap)
+    {
         $validator = Validator::make(
             request()->all(),
             [
@@ -136,13 +142,21 @@ class KullaniciController extends Controller
         return redirect()->route('kitap_incele', $kitap->id);
     }
 
-    public function getYazarlar() {
+    public function getYazarlar()
+    {
         $yazarlar = Yazarlar::all();
         return view('kullanicilar.yazarlar', compact('yazarlar'));
     }
 
-    public function getYayinEvleri() {
+    public function getYayinEvleri()
+    {
         $yayinevleri = YayinEvleri::all();
         return view('kullanicilar.yayin_evleri', compact('yayinevleri'));
+    }
+
+    public function getCikisYap()
+    {
+        Auth::logout();
+        return redirect()->route('giris_yap');
     }
 }
