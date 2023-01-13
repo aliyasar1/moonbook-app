@@ -13,10 +13,10 @@
                     <div class="ratio-3x2 my-2 mx-2 d-flex justify-content-center align-items-center"
                          style="width: 300px">
                         <img
-                            style="width: 100%; height: 100%; object-fit: cover;  @if($kitapadeti == 0) filter: grayscale(100%) @endif"
-                            src="{{ \Illuminate\Support\Facades\Storage::url('public/saticilar/kitaplar/'. $kitap->fotograf) }}"
-                            alt="Varsayılan Fotoğraf"
-                            class="preview-image">
+                                style="width: 100%; height: 100%; object-fit: cover;  @if($kitapadeti == 0) filter: grayscale(100%) @endif"
+                                src="{{ \Illuminate\Support\Facades\Storage::url('public/saticilar/kitaplar/'. $kitap->fotograf) }}"
+                                alt="Varsayılan Fotoğraf"
+                                class="preview-image">
                         @if($kitapadeti==0)
                             <span class="badge bg-danger mt-3 position-absolute shadow-lg"
                                   style="font-size: 30px; transform: rotate(35deg)">Tükendi</span>
@@ -89,7 +89,7 @@
                                         <i class="star1 fa-regular fa-star" style="font-size: 14px;"></i>
                                     @endif
                                 @endfor
-                                </span>
+                            </span>
                             <p class="card-text mt-2">{{ $yorum->yorum }}</p>
                         </div>
                         <div class="card-footer mb-2 p-4 pt-0 bg-transparent border-top-0">
