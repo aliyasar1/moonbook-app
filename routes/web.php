@@ -92,6 +92,11 @@ Route::get('/yayin-evleri', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getYayinEvleri'
 ]);
 
+Route::get('/cikis-yap', [
+    'as' => 'cikis_yap',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getCikisYap'
+]);
+
 Route::prefix('/satici')->as('satici.')->middleware(['admin'])->group(function () {
     Route::get('/anasayfa', [
         'as' => 'anasayfa',
