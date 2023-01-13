@@ -94,6 +94,11 @@ Route::get('/yazarlar', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getYazarlar'
 ]);
 
+Route::get('/yazarlar/yazar-kitaplari/{yazar}', [
+    'as' => 'yazar_kitaplari',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getYazarKitaplari'
+]);
+
 Route::get('/yayin-evleri', [
     'as' => 'yayin_evleri',
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getYayinEvleri'
