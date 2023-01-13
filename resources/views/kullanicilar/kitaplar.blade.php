@@ -5,20 +5,20 @@
     @endsection
 @section('content')
     <div class="container my-5">
-        <ul class="nav justify-content-center my-3 ">
+        <ul class="nav gap-3 d-flex justify-content-center my-3 ">
             @foreach($kategoriler as $kategori)
                 <li class="nav-item">
-                    <a class="nav-link" href="#">{{ $kategori->adi }}</a>
+                    <a class="btn bg-warning" href="{{ route('kitaplar.kategori', ['kategori' => $kategori->id]) }}">{{ $kategori->adi }}</a>
                 </li>
             @endforeach
         </ul>
-        <div class="mx-2 gap-3 g-col-4 d-flex flex-wrap"
+        <div class="gap-3 g-col-4 d-flex flex-wrap"
              style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
             @foreach($kitaplar as $kitap)
-                <div class="max-w-12xl mx-auto sm:px-6 lg:px-8 justify-content-start">
+                <div class="max-w-12xl sm:px-6 lg:px-8" style="margin-right: 5px">
                     <div class="card" style="width: 15rem; align-items: center; padding: 1.25rem;">
                         <div class="fvrt-btn bg-warning d-flex justify-content-center align-items-center">
-                            <i class="fvrt fa-regular fa-heart" style="font-size: 18px"></i></div>
+                            <i class="fvrt fa-regular fa-heart" style="font-size: 18px" data-selected-value="{{ $kitap->id }}"></i></div>
                         <div class="ratio-3x2 mb-3" style="width: 150px; height: 200px;">
                             <img class="w-100 h-100"
                                  src="{{ asset('storage/saticilar/kitaplar/'. $kitap->fotograf ) }}"
