@@ -110,6 +110,14 @@ class KullaniciController extends Controller
         return view('kullanicilar.kitaplar', compact('kitaplar', 'kategoriler'));
     }
 
+    public function getKitaplarByKategori(Kategori $kategori)
+    {
+        $kitaplar = Kitaplar::query()->where('kategori_id', $kategori->id)->get();
+
+        $kategoriler = Kategori::all();
+        return view('kullanicilar.kitaplar', compact('kitaplar', 'kategoriler'));
+    }
+
     public function getKitapIncele (Kitaplar $kitap) {
         $kitapadeti = $kitap->stok->stok_adeti;
         $yorumlar = Yorumlar::query()->where('kitap_id', $kitap->id)->orderByDesc('yorum')->limit(3)->get();

@@ -67,6 +67,13 @@ Route::get('/kitaplar', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getKitaplar'
 ]);
 
+Route::prefix('/kitaplar')->as('kitaplar.')->group(function () {
+   Route::get('/kategori/{kategori}', [
+       'as' => 'kategori',
+       'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getKitaplarByKategori'
+   ]);
+});
+
 Route::get('/anasayfa', [
     'as' => 'anasayfa',
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getAnasayfa'
