@@ -62,7 +62,7 @@
                                         Siparişlerim</a>
                                 </li>
                                 <hr>
-                                <li><a class="dropdown-item" href="{{ route('cikis_yap') }}"><i
+                                <li><a class="dropdown-item" href=""><i
                                             class="fa-solid fa-arrow-right-from-bracket"></i>
                                         Çıkış Yap</a></li>
                             </ul>
