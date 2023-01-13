@@ -34,7 +34,7 @@
                                 title="{{ $kitap->adi }}">{{ $kitap->adi }}</h4>
                             <p class="card-text mb-2"
                                style="font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-                               title="{{ $kitap->yazarlar->adi_soyadi }}">{{ $kitap->yazarlar->adi_soyadi }}
+                               title="{{ $kitap->yazarlar->adi_soyadi }}"><a class="text-decoration-none" href="{{ route('yazar_kitaplari', $kitap->yazarlar->id) }}">{{ $kitap->yazarlar->adi_soyadi }}</a>
                                 <span
                                     title="{{$kitap->yayin_evleri->adi }}"> {{ ' - '. $kitap->yayin_evleri->adi }} </span>
                             </p>

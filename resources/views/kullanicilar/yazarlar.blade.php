@@ -9,7 +9,7 @@
                 <div class=" col-log-3 px-3 py-3">
                     <div class="card shadow-lg border-0" style="width: 220px;">
                         <div class="card-body text-center">
-                            {{ $yazar->adi_soyadi }}
+                            <a href="{{ route('yazar_kitaplari', $yazar->id) }}" class="text-decoration-none">{{ $yazar->adi_soyadi }}</a>
                         </div>
                     </div>
                 </div>
