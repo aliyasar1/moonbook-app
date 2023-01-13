@@ -43,7 +43,7 @@
                             <div class="feature text-white rounded-3 mb-1">
                                 <p class="card-text mb-3" style="color: black">
                                     Satıcı : <a class="text-decoration-none"
-                                                href="#">{{ $kitap->saticilar->firma_adi }}</a>
+                                                href="{{ route('saticilar', $kitap->saticilar->id) }}">{{ $kitap->saticilar->firma_adi }}</a>
                                 </p>
                             </div>
                             <div class="flex-fill d-flex gap-3 mb-0 justify-content-center">

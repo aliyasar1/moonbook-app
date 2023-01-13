@@ -104,6 +104,11 @@ Route::get('/cikis-yap', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getCikisYap'
 ]);
 
+Route::get('/saticilar/{satici}', [
+    'as' => 'saticilar',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getSaticilar'
+]);
+
 Route::prefix('/satici')->as('satici.')->middleware(['admin'])->group(function () {
     Route::get('/anasayfa', [
         'as' => 'anasayfa',
