@@ -161,4 +161,9 @@ class KullaniciController extends Controller
         Auth::logout();
         return redirect()->route('giris_yap');
     }
+
+    public function getSaticilar (User $satici) {
+        $kitaplar = Kitaplar::query()->where('satici_id', $satici->id)->get();
+        return view('kullanicilar.saticilar', compact('satici','kitaplar'));
+    }
 }

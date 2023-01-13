@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kitaplar;
 use App\Models\User;
+use App\Models\Yorumlar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +27,8 @@ class LoginController extends Controller
             $kitapKG = Kitaplar::query()->where('kategori_id', 4)->limit(4)->get();
             $kitapCR = Kitaplar::query()->where('kategori_id', 9)->limit(4)->get();
             $kitapAT = Kitaplar::query()->where('kategori_id', 6)->limit(4)->get();
-            return view('kullanicilar.anasayfa', compact('kitapRoman', 'kitapKG', 'kitapCR', 'kitapAT'));
+            $anasayfaYorumlar = Yorumlar::query()->limit(3)->get();
+            return view('kullanicilar.anasayfa', compact('kitapRoman', 'kitapKG', 'kitapCR', 'kitapAT', 'anasayfaYorumlar'));
         }
     }
 
