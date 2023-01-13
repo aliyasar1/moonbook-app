@@ -147,4 +147,9 @@ class KullaniciController extends Controller
         $yayinevleri = YayinEvleri::all();
         return view('kullanicilar.yayin_evleri', compact('yayinevleri'));
     }
+
+    public function getCikisYap() {
+        Auth::logout();
+        return redirect()->route('giris_yap');
+    }
 }
