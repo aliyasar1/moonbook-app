@@ -77,6 +77,16 @@ Route::get('/kitap-incele/{kitap}', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getKitapIncele'
 ]);
 
+Route::get('/yazarlar', [
+    'as' => 'yazarlar',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getYazarlar'
+]);
+
+Route::get('/yayin-evleri', [
+    'as' => 'yayin_evleri',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getYayinEvleri'
+]);
+
 Route::get('/cikis-yap', [
     'as' => 'cikis_yap',
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getCikisYap'
