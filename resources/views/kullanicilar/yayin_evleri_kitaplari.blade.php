@@ -1,9 +1,13 @@
 @extends('layouts.kullanicilar.master')
 
+@section('title')
+    <title>MoonBook | Yayın Evleri Kitapları</title>
+@endsection
+
 @section('content')
     <div class="container my-5">
         <div class="row d-flex flex-column align-items-center">
-            <h2 class="mt-3">{{ $yazar->adi_soyadi }}</h2>
+            <h2 class="mt-3">{{ $yayinevi->adi }}</h2>
             <hr>
             <div class="gap-3 g-col-4 d-flex flex-wrap"
                  style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
@@ -28,11 +32,9 @@
                                     title="{{ $kitap->adi }}">{{ $kitap->adi }}</h4>
                                 <p class="card-text mb-2"
                                    style="font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-                                   title="{{ $kitap->yazarlar->adi_soyadi }}">{{ $kitap->yazarlar->adi_soyadi }}
+                                   title="{{ $kitap->yazarlar->adi_soyadi }}"><a class="text-decoration-none" href="{{ route('yazar_kitaplari', $kitap->yazarlar->id) }}">{{ $kitap->yazarlar->adi_soyadi }}</a>
                                     <span
-                                            title="{{$kitap->yayin_evleri->adi }}"> <a
-                                                href="{{ route('yayin_evleri_kitaplari', $kitap->yayin_evleri->id) }}"
-                                                class="text-decoration-none">{{ ' - '. $kitap->yayin_evleri->adi }}</a> </span>
+                                            title="{{$kitap->yayin_evleri->adi }}">{{ ' - '. $kitap->yayin_evleri->adi }}</span>
                                 </p>
                                 <p class="card-text mb-1"
                                    style="font-size: 24px;"><b>{{'₺'. $kitap->fiyat }}</b></p>

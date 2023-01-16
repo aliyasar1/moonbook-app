@@ -171,4 +171,9 @@ class KullaniciController extends Controller
         $kitaplar = Kitaplar::query()->where('yazar_id', $yazar->id)->get();
         return view('kullanicilar.yazar_kitaplari', compact('yazar','kitaplar'));
     }
+
+    public function getYayinEviKitaplari (YayinEvleri $yayinevi) {
+        $kitaplar = Kitaplar::query()->where('yayin_evi_id', $yayinevi->id)->get();
+        return view('kullanicilar.yayin_evleri_kitaplari', compact('yayinevi','kitaplar'));
+    }
 }

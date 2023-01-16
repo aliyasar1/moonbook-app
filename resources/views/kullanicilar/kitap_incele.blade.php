@@ -29,7 +29,7 @@
                     <hr>
                     <div class="d-flex justify-content-lg-between">
                         <p class="d-inline"><b>Yazar: </b><a class="text-decoration-none" href="{{ route('yazar_kitaplari', $kitap->yazarlar->id) }}">{{ $kitap->yazarlar->adi_soyadi }}</a> </p>
-                        <p class="d-inline"><b>Yayınevi: </b> {{ $kitap->yayin_evleri->adi }}</p>
+                        <p class="d-inline"><b>Yayınevi: </b> <a href="{{ route('yayin_evleri_kitaplari', $kitap->yayin_evleri->id) }}" class="text-decoration-none">{{ $kitap->yayin_evleri->adi }}</a></p>
                         <p class="d-inline"><b>Sayfa Sayısı: </b> {{ $kitap->sayfa_sayisi }} sayfa</p>
                         <p class="d-inline"><b>Yayın Yılı: </b> {{ $kitap->yayin_yili }}</p>
                         <p class="d-inline"><b>Stok Durumu: </b> {{ $kitap->stok->stok_adeti }} adet</p>
