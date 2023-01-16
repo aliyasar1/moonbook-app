@@ -104,6 +104,11 @@ Route::get('/yayin-evleri', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getYayinEvleri'
 ]);
 
+Route::get('/yayin-evleri/yayin-evleri-kitaplari/{yayinevi}', [
+    'as' => 'yayin_evleri_kitaplari',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getYayinEviKitaplari'
+]);
+
 Route::get('/cikis-yap', [
     'as' => 'cikis_yap',
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getCikisYap'
