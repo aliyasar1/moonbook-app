@@ -52,10 +52,9 @@ class AdminController extends Controller
                 'sifre.required' => 'Şifre alanı boş geçilemez.',
                 'sifre.min' => 'Şifre En az 6 karakter olmalıdır.' ,
                 'kullanici_adi.required' => 'Kullanıcı adı alanı boş geçilemez',
-                'kullanici_adi.unique' => 'Kullanıcı adı alınmıştır.',
                 'email.required' => 'Email alanı boş geçilemez',
-                'email.unique' => 'Bu Email adresi kayıtlıdır.',
                 'tel_no.min' => 'Telefon Numarası 11 haneli olmalıdır.',
+                'tel_no.required' => 'Telefon Numarası alanı boş geçilemez.',
                 'sifre_tekrar.same' => 'Girilen şifreler aynı değildir.',
                 'adi_soyadi.required' => 'Ad Soyad alanı boş geçilemez.',
                 'il_id' => 'İl alanı boş geçilemez.',
@@ -80,6 +79,7 @@ class AdminController extends Controller
         }
         $inputs['sifre'] = base64_encode($request->sifre);
         $inputs['sifre_tekrar'] = base64_encode($request->sifre_tekrar);
+
         User::query()->create($inputs);
 
         return redirect()->route('satici_girisi_yap');
