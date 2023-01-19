@@ -153,9 +153,9 @@
                 @foreach($anasayfaYorumlar as $anasayfaYorum)
                     <div class="col-lg-4 mb-5">
                         <div class="card h-100 shadow border-0">
-                            <div class="d-flex justify-content-center">
+                            <div class="d-flex justify-content-center my-3">
                                 <div class="ratio-3x2 mb-3" style="width: 150px; height: 200px;">
-                                    <img class="card-img-top"
+                                    <img class="card-img-top shadow-sm"
                                          src="{{ asset('storage/saticilar/kitaplar/'. $anasayfaYorum->kitaplar->fotograf) }}"
                                          alt="..."/>
                                 </div>

@@ -6,10 +6,10 @@
     <div class="flex m-2 mx-4 p-2" style="font-size: 24px">
         {{ 'Kitaplar ('. $toplamkitap . ' adet)' }}
     </div>
-    <div class="mx-2 gap-3 g-col-4 d-flex flex-wrap"
+    <div class="gap-2 g-col-4 d-flex flex-wrap"
          style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
         @foreach($kitaplar as $kitap)
-            <div class="max-w-12xl mx-auto sm:px-6 lg:px-8 justify-content-start">
+            <div class="max-w-12xl sm:px-6 lg:px-8 mb-3" style="margin-left: 30px">
                 <div class="card" style="width: 15rem; align-items: center; padding: 1.25rem;">
                     <div class="ratio-3x2 mb-3" style="width: 150px; height: 200px;">
                         <img class="w-100 h-100"
