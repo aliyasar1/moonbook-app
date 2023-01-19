@@ -28,13 +28,18 @@
                     <h2>{{ $kitap->adi }}</h2>
                     <hr>
                     <div class="d-flex justify-content-lg-between">
-                        <p class="d-inline"><b>Yazar: </b><a class="text-decoration-none" href="{{ route('yazar_kitaplari', $kitap->yazarlar->id) }}">{{ $kitap->yazarlar->adi_soyadi }}</a> </p>
-                        <p class="d-inline"><b>Yayınevi: </b> <a href="{{ route('yayin_evleri_kitaplari', $kitap->yayin_evleri->id) }}" class="text-decoration-none">{{ $kitap->yayin_evleri->adi }}</a></p>
+                        <p class="d-inline"><b>Yazar: </b><a class="text-decoration-none"
+                                                             href="{{ route('yazar_kitaplari', $kitap->yazarlar->id) }}">{{ $kitap->yazarlar->adi_soyadi }}</a>
+                        </p>
+                        <p class="d-inline"><b>Yayınevi: </b> <a
+                                    href="{{ route('yayin_evleri_kitaplari', $kitap->yayin_evleri->id) }}"
+                                    class="text-decoration-none">{{ $kitap->yayin_evleri->adi }}</a></p>
                         <p class="d-inline"><b>Sayfa Sayısı: </b> {{ $kitap->sayfa_sayisi }} sayfa</p>
                         <p class="d-inline"><b>Yayın Yılı: </b> {{ $kitap->yayin_yili }}</p>
                         <p class="d-inline"><b>Stok Durumu: </b> {{ $kitap->stok->stok_adeti }} adet</p>
                     </div>
-                    <p><b>Satıcı: </b><a href="{{ route('saticilar', $kitap->saticilar->id) }}" class="text-decoration-none">{{ $kitap->saticilar->firma_adi }}</a>
+                    <p><b>Satıcı: </b><a href="{{ route('saticilar', $kitap->saticilar->id) }}"
+                                         class="text-decoration-none">{{ $kitap->saticilar->firma_adi }}</a>
                     </p>
                     <div class="flex-fill d-flex gap-3 mt-5 mb-0 align-items-center">
                         <label for="exampleFormControlSelect1" style="font-size: 18px;">Adet :</label>
@@ -44,11 +49,12 @@
                                 @break($adet == 10)
                             @endfor
                         </select>
-                        <button class="btn bg-warning" style="font-size: 18px"><i class="fa-solid fa-cart-shopping"></i><b>
-                                Sepete Ekle</b>
+                        <button class="btn bg-warning" style="font-size: 18px"><i class="fa-solid fa-cart-shopping"></i>
+                            <b class="mx-2">Sepete Ekle</b>
                         </button>
-                        <button type="submit" class="btn bg-warning" style="font-size: 18px" id="btn-favorilere-ekle"><i class="fa-solid fa-heart"></i><b>
-                                Favorilere Ekle</b>
+                        <button type="submit" class="btn bg-warning" style="font-size: 18px" id="btn-favorilere-ekle">
+                            <i class="@isset($favoriKitaplar) @foreach($favoriKitaplar as $favkitap) @if($kitap->id === $favkitap->kitap_id) fa-solid @break @else fa-regular @endif @endforeach fa-regular @endisset fa-heart"></i>
+                            <b class="mx-2">Favorilere Ekle</b>
                         </button>
                     </div>
                 </div>
@@ -118,6 +124,13 @@
 
         $(document).ready(function () {
             let $stars = $('#stars');
+            let $fav = $('#btn-favorilere-ekle');
+
+            if($fav.find('i').hasClass('fa-solid')) {
+                $fav.find('b').text('Favorilerden Çıkar');
+            } else if ($fav.find('i').hasClass('fa-regular')){
+                $fav.find('b').text('Favorilere Ekle');
+            }
 
             $stars.find('i').click(function () {
                 let star = $(this);
@@ -145,30 +158,49 @@
             });
 
             let kitapID = '{{ $kitap->id ?? null }}';
+            $fav.click(function () {
+                let favkitap = $fav.find('i');
+                let urlEkle = '{{ route('favorilere_ekle', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', kitapID);
+                let urlSil = '{{ route('favorilerden_sil', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', kitapID);
 
-            $('#btn-favorilere-ekle').click(function () {
-                if (! kitapID) {
-                    return false;
-                }
-
-                let url = '{{ route('favorilere_ekle', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', kitapID);
-
-                $.ajax({
-                    url: url,
-                    method: "POST",
-                    dataType: "JSON",
-                    headers: {
-                        'X-CSRF-TOKEN': "{{csrf_token()}}",
-                    },
-                    success: function (data) {
-                        if (data.status) {
-                            window.location.reload();
+                if (favkitap.hasClass('fa-solid')) {
+                    favkitap.removeClass("fa-solid").addClass("fa-regular");
+                    $.ajax({
+                        url: urlSil,
+                        method: "DELETE",
+                        dataType: "JSON",
+                        headers: {
+                            'X-CSRF-TOKEN': "{{csrf_token()}}",
+                        },
+                        success: function (data) {
+                            if (data.status) {
+                                window.location.reload();
+                            }
+                        },
+                        error: function (xhr) {
+                            console.log('E => ', xhr)
                         }
-                    },
-                    error: function (xhr) {
-                        console.log('E => ', xhr)
-                    }
-                });
+                    });
+                } else if (favkitap.hasClass('fa-regular')) {
+                    favkitap.removeClass("fa-regular").addClass("fa-solid");
+
+                    $.ajax({
+                        url: urlEkle,
+                        method: "POST",
+                        dataType: "JSON",
+                        headers: {
+                            'X-CSRF-TOKEN': "{{csrf_token()}}",
+                        },
+                        success: function (data) {
+                            if (data.status) {
+                                window.location.reload();
+                            }
+                        },
+                        error: function (xhr) {
+                            console.log('E => ', xhr)
+                        }
+                    });
+                }
             });
         });
     </script>

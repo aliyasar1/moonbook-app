@@ -129,7 +129,8 @@ class KullaniciController extends Controller
         $yorumlar = Yorumlar::query()->where('kitap_id', $kitap->id)->orderByDesc('yorum')->limit(3)->get();
         $puanOrt = Yorumlar::query()->where('kitap_id', $kitap->id)->avg('puan');
         $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
-        return view('kullanicilar.kitap_incele', compact('kitap', 'kitapadeti','yorumlar', 'puanOrt','favorikitapsayisi'));
+        $favoriKitaplar = Favoriler::query()->where('kullanici_id', Auth::user()->id)->get();
+        return view('kullanicilar.kitap_incele', compact('kitap', 'kitapadeti','yorumlar', 'puanOrt','favorikitapsayisi', 'favoriKitaplar'));
     }
 
     public function postKitapYorum(Kitaplar $kitap) {
