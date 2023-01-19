@@ -215,4 +215,10 @@ class KullaniciController extends Controller
             'message' => 'Favorilerden Silindi'
         ]);
     }
+
+    public function getFavoriler () {
+        $favoriKitaplar = Favoriler::query()->where('kullanici_id', Auth::user()->id)->get();
+        $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
+        return view('kullanicilar.favoriler', compact('favorikitapsayisi', 'favoriKitaplar'));
+    }
 }

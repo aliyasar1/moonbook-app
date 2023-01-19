@@ -44,7 +44,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link position-relative" role="button" href="#">
+                            <a class="nav-link position-relative" role="button" href="{{ route('favoriler') }}">
                                 <i class="fa-solid fa-heart" style="color: black; font-size: 20px"></i>
                                 <span class="position-absolute top-5 start-95 translate-middle badge rounded-pill bg-danger" style="font-size: 0.5rem;">{{ $favorikitapsayisi }}</span>
                             </a>
