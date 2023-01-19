@@ -30,4 +30,10 @@ class User extends Authenticatable
         'ADMIN' => 'admin',
         'USER' => 'user'
     ];
+
+    // Relations
+    public function favori_kitaplar()
+    {
+        return $this->hasMany(Favoriler::class, 'kullanici_id');
+    }
 }

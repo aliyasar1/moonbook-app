@@ -47,7 +47,7 @@
                         <button class="btn bg-warning" style="font-size: 18px"><i class="fa-solid fa-cart-shopping"></i><b>
                                 Sepete Ekle</b>
                         </button>
-                        <button class="btn bg-warning" style="font-size: 18px"><i class="fa-solid fa-heart"></i><b>
+                        <button type="submit" class="btn bg-warning" style="font-size: 18px" id="btn-favorilere-ekle"><i class="fa-solid fa-heart"></i><b>
                                 Favorilere Ekle</b>
                         </button>
                     </div>
@@ -142,6 +142,33 @@
                 });
 
                 $("#starInput").val(starPoint);
+            });
+
+            let kitapID = '{{ $kitap->id ?? null }}';
+
+            $('#btn-favorilere-ekle').click(function () {
+                if (! kitapID) {
+                    return false;
+                }
+
+                let url = '{{ route('favorilere_ekle', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', kitapID);
+
+                $.ajax({
+                    url: url,
+                    method: "POST",
+                    dataType: "JSON",
+                    headers: {
+                        'X-CSRF-TOKEN': "{{csrf_token()}}",
+                    },
+                    success: function (data) {
+                        if (data.status) {
+                            window.location.reload();
+                        }
+                    },
+                    error: function (xhr) {
+                        console.log('E => ', xhr)
+                    }
+                });
             });
         });
     </script>

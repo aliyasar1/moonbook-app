@@ -13,6 +13,7 @@ class Kitaplar extends Model
 
     protected $fillable = ['id', 'satici_id', 'fotograf', 'kategori_id', 'adi', 'yazar_id', 'yayin_evi_id', 'sayfa_sayisi', 'yayin_yili', 'aciklama', 'fiyat'];
 
+    // Relations
     public function saticilar()
     {
         return $this->belongsTo(User::class, 'satici_id', 'id');
@@ -41,5 +42,10 @@ class Kitaplar extends Model
     public function yorum()
     {
         return $this->hasOne(Yorumlar::class,'kitap_id', 'id');
+    }
+
+    public function favoriler()
+    {
+        return $this->hasOne(Favoriler::class, 'kitap_id');
     }
 }

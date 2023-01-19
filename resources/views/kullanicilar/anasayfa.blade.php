@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                             <div class="feature text-white rounded-3 mb-1"><span
-                                    class="badge text-bg-warning">Roman</span></div>
+                                        class="badge text-bg-warning">Roman</span></div>
                             <p class="mb-0"> @foreach($kitapRoman as $kitap)
                                     {{ $kitap->adi. ', ' }}
                                 @endforeach</p>
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                             <div class="feature text-white rounded-3 mb-1"><span
-                                    class="badge text-bg-warning">Kişisel Gelişim</span></div>
+                                        class="badge text-bg-warning">Kişisel Gelişim</span></div>
                             <p class="mb-0"> @foreach($kitapKG as $kitap)
                                     {{ $kitap->adi. ', ' }}
                                 @endforeach</p>
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                             <div class="feature text-white rounded-3 mb-1"><span
-                                    class="badge text-bg-warning">Çizgi Roman</span></div>
+                                        class="badge text-bg-warning">Çizgi Roman</span></div>
                             <p class="mb-0"> @foreach($kitapCR as $kitap)
                                     {{ $kitap->adi. ', ' }}
                                 @endforeach</p>
@@ -103,7 +103,7 @@
                                 </div>
                             </div>
                             <div class="feature text-white rounded-3 mb-1"><span
-                                    class="badge text-bg-warning">Araştırma - Tarih</span></div>
+                                        class="badge text-bg-warning">Araştırma - Tarih</span></div>
                             <p class="mb-0"> @foreach($kitapAT as $kitap)
                                     {{ $kitap->adi. ', ' }}
                                 @endforeach</p>
@@ -151,64 +151,48 @@
             </div>
             <div class="row gx-5">
                 @foreach($anasayfaYorumlar as $anasayfaYorum)
-                <div class="col-lg-4 mb-5">
-                    <div class="card h-100 shadow border-0">
-                        <div class="d-flex justify-content-center">
-                            <div class="ratio-3x2 mb-3" style="width: 150px; height: 200px;">
-                                <img class="card-img-top" src="{{ asset('storage/saticilar/kitaplar/'. $anasayfaYorum->kitaplar->fotograf) }}" alt="..."/>
-                            </div>
-                        </div>
-                        <div class="card-body p-4 mt-2">
-                            <div class="badge bg-warning bg-gradient text-dark rounded-pill mb-2">Yorum</div>
-                            <span class="stars mx-2">
-                                @for($i = 1; $i <= 5; $i++)
-                                    @if($i <= $anasayfaYorum->puan)
-                                        <i class="star1 fa-solid fa-star" style="font-size: 14px;"></i>
-                                    @else
-                                        <i class="star1 fa-regular fa-star" style="font-size: 14px;"></i>
-                                    @endif
-                                @endfor
-                                </span>
-                            <a class="text-decoration-none link-dark stretched-link" href="{{ route('kitap_incele', $anasayfaYorum->kitaplar->id) }}"><h5
-                                    class="card-title mb-3">{{ $anasayfaYorum->kitaplar->adi }}</h5></a>
-                            <p class="card-text mb-0">{{ $anasayfaYorum->yorum }}</p>
-                        </div>
-                        <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                            <div class="d-flex align-items-end justify-content-between">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" style="width: 40px; height: 40px"
-                                         src="{{ asset('storage/musteriler/'. $anasayfaYorum->kullanicilar->fotograf) }}"
+                    <div class="col-lg-4 mb-5">
+                        <div class="card h-100 shadow border-0">
+                            <div class="d-flex justify-content-center">
+                                <div class="ratio-3x2 mb-3" style="width: 150px; height: 200px;">
+                                    <img class="card-img-top"
+                                         src="{{ asset('storage/saticilar/kitaplar/'. $anasayfaYorum->kitaplar->fotograf) }}"
                                          alt="..."/>
-                                    <div class="small">
-                                        <div class="fw-bold">{{ $anasayfaYorum->kullanicilar->adi_soyadi }}</div>
-                                        <div class="text-muted">{{ \Illuminate\Support\Carbon::parse($anasayfaYorum->created_at)->format('d M Y') . ' - ' . $anasayfaYorum->created_at->diffForHumans() }}</div>
+                                </div>
+                            </div>
+                            <div class="card-body p-4 mt-2">
+                                <div class="badge bg-warning bg-gradient text-dark rounded-pill mb-2">Yorum</div>
+                                <span class="stars mx-2">
+                                @for($i = 1; $i <= 5; $i++)
+                                        @if($i <= $anasayfaYorum->puan)
+                                            <i class="star1 fa-solid fa-star" style="font-size: 14px;"></i>
+                                        @else
+                                            <i class="star1 fa-regular fa-star" style="font-size: 14px;"></i>
+                                        @endif
+                                    @endfor
+                                </span>
+                                <a class="text-decoration-none link-dark stretched-link"
+                                   href="{{ route('kitap_incele', $anasayfaYorum->kitaplar->id) }}"><h5
+                                            class="card-title mb-3">{{ $anasayfaYorum->kitaplar->adi }}</h5></a>
+                                <p class="card-text mb-0">{{ $anasayfaYorum->yorum }}</p>
+                            </div>
+                            <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                <div class="d-flex align-items-end justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <img class="rounded-circle me-3" style="width: 40px; height: 40px"
+                                             src="{{ asset('storage/musteriler/'. $anasayfaYorum->kullanicilar->fotograf) }}"
+                                             alt="..."/>
+                                        <div class="small">
+                                            <div class="fw-bold">{{ $anasayfaYorum->kullanicilar->adi_soyadi }}</div>
+                                            <div class="text-muted">{{ \Illuminate\Support\Carbon::parse($anasayfaYorum->created_at)->format('d M Y') . ' - ' . $anasayfaYorum->created_at->diffForHumans() }}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 @endforeach
             </div>
-            <!-- Call to action-->
-            <aside class="bg-warning bg-gradient rounded-3 p-4 p-sm-5 mt-5">
-                <div
-                    class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
-                    <div class="mb-4 mb-xl-0">
-                        <div class="fs-3 fw-bold text-dark">Yeni Kitaplardan Haberdar Olmak İçin</div>
-                        <div class="text-dark-50">Sitemize kaydolarak son güncellemeleri takip edebilirsiniz.</div>
-                    </div>
-                    <div class="ms-xl-4">
-                        <div class="input-group mb-2">
-                            <input class="form-control" type="text" placeholder="Email adresiniz..."
-                                   aria-label="Email address..." aria-describedby="button-newsletter"/>
-                            <button class="btn btn-outline-dark" id="button-newsletter" type="button">Kaydol</button>
-                        </div>
-                        <div class="small text-dark-50">Gizliliği önemsiyoruz ve bilgilerinizi asla paylaşmayacağız.
-                        </div>
-                    </div>
-                </div>
-            </aside>
         </div>
     </section>
 @endsection
