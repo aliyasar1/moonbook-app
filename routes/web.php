@@ -84,6 +84,16 @@ Route::get('/kitap-incele/{kitap}', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getKitapIncele'
 ]);
 
+Route::post('/kitap-incele/{kitap}/favorilere-eklendi', [
+    'as' => 'favorilere_ekle',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@postFavoriEkle'
+]);
+
+Route::delete('/kitap-incele/{kitap}/favorilerden-silindi', [
+    'as' => 'favorilerden_sil',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@deleteFavoriSil'
+]);
+
 Route::post('/kitap-incele/{kitap}/yorum-eklendi', [
     'as' => 'yorum_ekle',
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@postKitapYorum'

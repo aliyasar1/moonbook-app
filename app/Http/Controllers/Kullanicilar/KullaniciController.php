@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Kullanicilar;
 
 use App\Http\Controllers\Controller;
+use App\Models\Favoriler;
 use App\Models\Ilceler;
 use App\Models\Iller;
 use App\Models\Kategori;
@@ -101,28 +102,34 @@ class KullaniciController extends Controller
         $kitapCR = Kitaplar::query()->where('kategori_id', 9)->limit(4)->get();
         $kitapAT = Kitaplar::query()->where('kategori_id', 6)->limit(4)->get();
         $anasayfaYorumlar = Yorumlar::query()->limit(3)->get();
-        return view('kullanicilar.anasayfa', compact('kitapRoman', 'kitapKG', 'kitapCR', 'kitapAT', 'anasayfaYorumlar'));
+        $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
+        return view('kullanicilar.anasayfa', compact('kitapRoman', 'kitapKG', 'kitapCR', 'kitapAT', 'anasayfaYorumlar', 'favorikitapsayisi'));
     }
 
     public function getKitaplar () {
-        $kitaplar = Kitaplar::all();
+        $kitaplar = Kitaplar::query()->with(['favoriler'])->get();
         $kategoriler = Kategori::all();
-        return view('kullanicilar.kitaplar', compact('kitaplar', 'kategoriler'));
+        $favoriKitaplar = Favoriler::query()->where('kullanici_id', Auth::user()->id)->get();
+
+        $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
+        return view('kullanicilar.kitaplar', compact('kitaplar', 'kategoriler', 'favorikitapsayisi', 'favoriKitaplar'));
     }
 
     public function getKitaplarByKategori(Kategori $kategori)
     {
         $kitaplar = Kitaplar::query()->where('kategori_id', $kategori->id)->get();
-
         $kategoriler = Kategori::all();
-        return view('kullanicilar.kitaplar', compact('kitaplar', 'kategoriler'));
+        $favoriKitaplar = Favoriler::query()->where('kullanici_id', Auth::user()->id)->get();
+        $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
+        return view('kullanicilar.kitaplar', compact('kitaplar', 'kategoriler','favorikitapsayisi', 'favoriKitaplar'));
     }
 
     public function getKitapIncele (Kitaplar $kitap) {
         $kitapadeti = $kitap->stok->stok_adeti;
         $yorumlar = Yorumlar::query()->where('kitap_id', $kitap->id)->orderByDesc('yorum')->limit(3)->get();
         $puanOrt = Yorumlar::query()->where('kitap_id', $kitap->id)->avg('puan');
-        return view('kullanicilar.kitap_incele', compact('kitap', 'kitapadeti','yorumlar', 'puanOrt'));
+        $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
+        return view('kullanicilar.kitap_incele', compact('kitap', 'kitapadeti','yorumlar', 'puanOrt','favorikitapsayisi'));
     }
 
     public function postKitapYorum(Kitaplar $kitap) {
@@ -149,12 +156,14 @@ class KullaniciController extends Controller
 
     public function getYazarlar() {
         $yazarlar = Yazarlar::all();
-        return view('kullanicilar.yazarlar', compact('yazarlar'));
+        $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
+        return view('kullanicilar.yazarlar', compact('yazarlar','favorikitapsayisi'));
     }
 
     public function getYayinEvleri() {
         $yayinevleri = YayinEvleri::all();
-        return view('kullanicilar.yayin_evleri', compact('yayinevleri'));
+        $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
+        return view('kullanicilar.yayin_evleri', compact('yayinevleri','favorikitapsayisi'));
     }
 
     public function getCikisYap() {
@@ -164,16 +173,45 @@ class KullaniciController extends Controller
 
     public function getSaticilar (User $satici) {
         $kitaplar = Kitaplar::query()->where('satici_id', $satici->id)->get();
-        return view('kullanicilar.saticilar', compact('satici','kitaplar'));
+        $favoriKitaplar = Favoriler::query()->where('kullanici_id', Auth::user()->id)->get();
+        $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
+        return view('kullanicilar.saticilar', compact('satici','kitaplar','favorikitapsayisi','favoriKitaplar'));
     }
 
     public function getYazarKitaplari (Yazarlar $yazar) {
         $kitaplar = Kitaplar::query()->where('yazar_id', $yazar->id)->get();
-        return view('kullanicilar.yazar_kitaplari', compact('yazar','kitaplar'));
+        $favoriKitaplar = Favoriler::query()->where('kullanici_id', Auth::user()->id)->get();
+        $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
+        return view('kullanicilar.yazar_kitaplari', compact('yazar','kitaplar','favorikitapsayisi', 'favoriKitaplar'));
     }
 
     public function getYayinEviKitaplari (YayinEvleri $yayinevi) {
         $kitaplar = Kitaplar::query()->where('yayin_evi_id', $yayinevi->id)->get();
-        return view('kullanicilar.yayin_evleri_kitaplari', compact('yayinevi','kitaplar'));
+        $favoriKitaplar = Favoriler::query()->where('kullanici_id', Auth::user()->id)->get();
+        $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
+        return view('kullanicilar.yayin_evleri_kitaplari', compact('yayinevi','kitaplar','favorikitapsayisi', 'favoriKitaplar'));
+    }
+
+    public function postFavoriEkle (Kitaplar $kitap) {
+
+        $veriler['kullanici_id'] = Auth::user()->id;
+        $veriler['kitap_id'] = $kitap->id;
+
+        Favoriler::query()->create($veriler);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Favorilere Eklendi'
+        ]);
+    }
+
+    public function deleteFavoriSil (Kitaplar $kitap) {
+
+        Favoriler::query()->where('kitap_id', $kitap->id)->where('kullanici_id', Auth::user()->id)->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Favorilerden Silindi'
+        ]);
     }
 }

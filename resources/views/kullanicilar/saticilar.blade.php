@@ -34,7 +34,7 @@
                     <div class="max-w-12xl sm:px-6 lg:px-8" style="margin-right: 5px">
                         <div class="card" style="width: 15rem; align-items: center; padding: 1.25rem;">
                             <div class="fvrt-btn bg-warning d-flex justify-content-center align-items-center">
-                                <i class="fvrt fa-regular fa-heart" style="font-size: 18px" data-selected-value="{{ $kitap->id }}"></i></div>
+                                <i class="@foreach($favoriKitaplar as $favkitap) @if($kitap->id === $favkitap->kitap_id) fa-solid @break @else fa-regular @endif @endforeach fa-heart" style="font-size: 18px" data-selected-value="{{ $kitap->id }}"></i></div>
                             <div class="ratio-3x2 mb-3" style="width: 150px; height: 200px;">
                                 <img class="w-100 h-100"
                                      src="{{ asset('storage/saticilar/kitaplar/'. $kitap->fotograf ) }}"
@@ -72,4 +72,58 @@
                 @endforeach
             </div>
     </div>
+@endsection
+
+@section('js')
+            <script>
+                $(document).ready(function () {
+                    let $fav = $('.fvrt-btn');
+
+                    $fav.find('i').click(function () {
+                        let favkitap = $(this);
+                        let favkitapID = favkitap.data('selected-value');
+                        let urlEkle = '{{ route('favorilere_ekle', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', favkitapID);
+                        let urlSil = '{{ route('favorilerden_sil', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', favkitapID);
+
+                        if (favkitap.hasClass('fa-solid')) {
+                            favkitap.removeClass("fa-solid").addClass("fa-regular");
+                            $.ajax({
+                                url: urlSil,
+                                method: "DELETE",
+                                dataType: "JSON",
+                                headers: {
+                                    'X-CSRF-TOKEN': "{{csrf_token()}}",
+                                },
+                                success: function (data) {
+                                    if (data.status) {
+                                        window.location.reload();
+                                    }
+                                },
+                                error: function (xhr) {
+                                    console.log('E => ', xhr)
+                                }
+                            });
+                        } else if (favkitap.hasClass('fa-regular')) {
+                            favkitap.removeClass("fa-regular").addClass("fa-solid");
+
+                            $.ajax({
+                                url: urlEkle,
+                                method: "POST",
+                                dataType: "JSON",
+                                headers: {
+                                    'X-CSRF-TOKEN': "{{csrf_token()}}",
+                                },
+                                success: function (data) {
+                                    if (data.status) {
+                                        window.location.reload();
+                                    }
+                                },
+                                error: function (xhr) {
+                                    console.log('E => ', xhr)
+                                }
+                            });
+                        }
+                    });
+                });
+            </script>
 @endsection

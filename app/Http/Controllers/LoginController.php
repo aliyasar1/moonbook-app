@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Favoriler;
 use App\Models\Kitaplar;
 use App\Models\User;
 use App\Models\Yorumlar;
@@ -28,7 +29,8 @@ class LoginController extends Controller
             $kitapCR = Kitaplar::query()->where('kategori_id', 9)->limit(4)->get();
             $kitapAT = Kitaplar::query()->where('kategori_id', 6)->limit(4)->get();
             $anasayfaYorumlar = Yorumlar::query()->limit(3)->get();
-            return view('kullanicilar.anasayfa', compact('kitapRoman', 'kitapKG', 'kitapCR', 'kitapAT', 'anasayfaYorumlar'));
+            $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
+            return view('kullanicilar.anasayfa', compact('kitapRoman', 'kitapKG', 'kitapCR', 'kitapAT', 'anasayfaYorumlar','favorikitapsayisi'));
         }
     }
 
