@@ -67,6 +67,11 @@ Route::get('/kitaplar', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getKitaplar'
 ]);
 
+Route::get('/favoriler', [
+    'as' => 'favoriler',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getFavoriler'
+]);
+
 Route::get('/anasayfa', [
     'as' => 'anasayfa',
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getAnasayfa'
