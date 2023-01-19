@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container my-5" style="max-width: 1450px;">
-        <table class="table">
+        <table class="table" style="border: 1px #f4b122">
             <thead class="bg-warning text-center">
             <tr>
                 <th scope="col">Kitap ID</th>
@@ -26,7 +26,7 @@
             @foreach($favoriKitaplar as $favkitap)
                 <tr class="text-center">
                     <td class="align-middle">{{ $favkitap->kitaplar->id }}</td>
-                    <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <td class="py-2 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <img class="ratio3x2" style="width: 70px"
                              src="{{ Storage::url('public/saticilar/kitaplar/'. $favkitap->kitaplar->fotograf )}}"
                              alt="{{ $favkitap->kitaplar->adi }}"></td>
