@@ -1,5 +1,9 @@
 @extends('layouts.kullanicilar.master')
 
+@section('title')
+    <title>MoonBook | {{ $satici->firma_adi }}</title>
+@endsection
+
 @section('content')
     <div class="container my-5">
         <div class="row d-flex flex-column align-items-center">

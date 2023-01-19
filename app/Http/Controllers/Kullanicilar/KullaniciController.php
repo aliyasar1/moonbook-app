@@ -101,7 +101,7 @@ class KullaniciController extends Controller
         $kitapKG = Kitaplar::query()->where('kategori_id', 4)->limit(4)->get();
         $kitapCR = Kitaplar::query()->where('kategori_id', 9)->limit(4)->get();
         $kitapAT = Kitaplar::query()->where('kategori_id', 6)->limit(4)->get();
-        $anasayfaYorumlar = Yorumlar::query()->limit(3)->get();
+        $anasayfaYorumlar = Yorumlar::query()->orderByDesc('id')->limit(3)->get();
         $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
         return view('kullanicilar.anasayfa', compact('kitapRoman', 'kitapKG', 'kitapCR', 'kitapAT', 'anasayfaYorumlar', 'favorikitapsayisi'));
     }
@@ -110,7 +110,6 @@ class KullaniciController extends Controller
         $kitaplar = Kitaplar::query()->with(['favoriler'])->get();
         $kategoriler = Kategori::all();
         $favoriKitaplar = Favoriler::query()->where('kullanici_id', Auth::user()->id)->get();
-
         $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
         return view('kullanicilar.kitaplar', compact('kitaplar', 'kategoriler', 'favorikitapsayisi', 'favoriKitaplar'));
     }

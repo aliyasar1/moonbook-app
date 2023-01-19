@@ -28,10 +28,11 @@ class LoginController extends Controller
             $kitapKG = Kitaplar::query()->where('kategori_id', 4)->limit(4)->get();
             $kitapCR = Kitaplar::query()->where('kategori_id', 9)->limit(4)->get();
             $kitapAT = Kitaplar::query()->where('kategori_id', 6)->limit(4)->get();
-            $anasayfaYorumlar = Yorumlar::query()->limit(3)->get();
+            $anasayfaYorumlar = Yorumlar::query()->orderByDesc('id')->limit(3)->get();
             $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
             return view('kullanicilar.anasayfa', compact('kitapRoman', 'kitapKG', 'kitapCR', 'kitapAT', 'anasayfaYorumlar','favorikitapsayisi'));
         }
+        return abort(404);
     }
 
     public function Satici_Girisi_Yap()
@@ -50,5 +51,6 @@ class LoginController extends Controller
         } elseif ($user->type === User::USER_TYPE['USER']) {
             abort(403);
         }
+        return abort(404);
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.kullanicilar.master')
 
 @section('title')
-    <title>MoonBook | Yayın Evleri Kitapları</title>
+    <title>MoonBook | {{ $yayinevi->adi }}</title>
 @endsection
 
 @section('content')

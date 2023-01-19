@@ -1,5 +1,8 @@
 @extends('layouts.kullanicilar.master')
 
+@section('title')
+    <title>MoonBook | Yazarlar</title>
+@endsection
 @section('content')
     <div class="container my-5">
         <h2>Yazarlar</h2>
