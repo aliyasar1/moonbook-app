@@ -220,4 +220,9 @@ class KullaniciController extends Controller
         $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
         return view('kullanicilar.favoriler', compact('favorikitapsayisi', 'favoriKitaplar'));
     }
+
+    public function getSepet () {
+        $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
+        return view('kullanicilar.sepet', compact('favorikitapsayisi'));
+    }
 }
