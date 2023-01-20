@@ -17,8 +17,8 @@
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="{{ asset('css/fontawesome-free/css/all.min.css') }}">
     <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/admin/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -46,10 +46,10 @@
                                     <div class="col-lg-12 d-flex mb-3" style="justify-content: center;">
                                         <div class="ratio-1x1" style="width: 300px; height: 300px">
                                             <img
-                                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%"
-                                                src="{{ asset('storage/musteriler/default.png') }}"
-                                                alt="Varsayılan Fotoğraf"
-                                                class="preview-image">
+                                                    style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%"
+                                                    src="{{ asset('storage/musteriler/default.png') }}"
+                                                    alt="Varsayılan Fotoğraf"
+                                                    class="preview-image">
                                         </div>
                                     </div>
                                     <div class="col-lg-8">
