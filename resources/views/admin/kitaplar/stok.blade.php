@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="container" style="max-width: 1750px;">
+    <div class="container" style="max-width: 1600px;">
         <table class="table">
             <thead class="bg-danger text-white text-center">
             <tr>
@@ -38,9 +38,11 @@
                     <td class="align-middle">{{ $stok->kitap->yayin_evleri->adi }}</td>
                     <td class="align-middle">{{ $stok->kitap->sayfa_sayisi }}</td>
                     <td class="align-middle">{{ $stok->kitap->yayin_yili }}</td>
-                    <td class="align-middle" title="{{ $stok->kitap->aciklama }}">{{ \Illuminate\Support\Str::limit($stok->kitap->aciklama, 30) }}</td>
+                    <td class="align-middle"
+                        title="{{ $stok->kitap->aciklama }}">{{ \Illuminate\Support\Str::limit($stok->kitap->aciklama, 30) }}</td>
                     <td class="align-middle">{{ '₺ '. $stok->kitap->fiyat }}</td>
                     <form method="post" action="{{ route('satici.kitaplar.stok_put', ['stok' => $stok->id]) }}"
+                          onsubmit="return confirm('Stok Güncellendi!')"
                           enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
