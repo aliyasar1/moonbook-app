@@ -172,7 +172,7 @@
                                     @endfor
                                 </span>
                                 <a class="text-decoration-none link-dark stretched-link"
-                                   href="{{ route('kitap_incele', $anasayfaYorum->kitaplar->id) }}"><h5
+                                   href="{{ route('kitaplar.kitap_incele', $anasayfaYorum->kitaplar->id) }}"><h5
                                             class="card-title mb-3">{{ $anasayfaYorum->kitaplar->adi }}</h5></a>
                                 <p class="card-text mb-0">{{ $anasayfaYorum->yorum }}</p>
                             </div>

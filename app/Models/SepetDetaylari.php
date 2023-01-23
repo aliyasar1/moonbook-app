@@ -11,7 +11,7 @@ class SepetDetaylari extends Model
 
     protected $table = 'sepet_detaylari';
 
-    protected $fillable = ['id', 'sepet_id', 'kitap_id', 'miktar'];
+    protected $fillable = ['sepet_id', 'kitap_id', 'miktar'];
 
     public function sepetler() {
         return $this->belongsTo(Sepet::class,'sepet_id', 'id');

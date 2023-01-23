@@ -38,9 +38,9 @@
                         <li class="nav-item"><a class="nav-link text-black" href="{{ route('yayin_evleri') }}"><b>Yayın Evleri</b></a></li>
                         <li class="nav-item"><a class="nav-link text-black" href="#"><b>İletişim</b></a></li>
                         <li class="nav-item">
-                            <a class="nav-link position-relative" role="button" href="{{ route('sepet') }}">
+                            <a class="nav-link position-relative" role="button" href="{{ route('kitaplar.sepet') }}">
                                 <i class="fa-solid fa-cart-shopping" style="color: black; font-size: 20px"></i>
-                                <span class="position-absolute top-5 start-95 translate-middle badge rounded-pill bg-danger" style="font-size: 0.5rem;">0</span>
+                                <span class="position-absolute top-5 start-95 translate-middle badge rounded-pill bg-danger" style="font-size: 0.5rem;">{{ $sepettekiKitapSayisi ?? 0 }}</span>
                             </a>
                         </li>
                         <li class="nav-item">

@@ -48,4 +48,8 @@ class Kitaplar extends Model
     {
         return $this->hasOne(Favoriler::class, 'kitap_id');
     }
+
+    public function sepet_detaylari() {
+        return $this->hasOne(SepetDetaylari::class, 'kitap_id');
+    }
 }

@@ -36,4 +36,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Favoriler::class, 'kullanici_id');
     }
+
+    public function sepetler () {
+        return $this->hasMany(Sepet::class, 'kullanici_id');
+    }
 }

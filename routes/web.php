@@ -72,35 +72,12 @@ Route::get('/favoriler', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getFavoriler'
 ]);
 
-Route::get('/sepet', [
-    'as' => 'sepet',
-    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getSepet'
-]);
 
 Route::get('/anasayfa', [
     'as' => 'anasayfa',
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getAnasayfa'
 ]);
 
-Route::get('/kitap-incele/{kitap}', [
-    'as' => 'kitap_incele',
-    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getKitapIncele'
-]);
-
-Route::post('/kitap-incele/{kitap}/favorilere-eklendi', [
-    'as' => 'favorilere_ekle',
-    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@postFavoriEkle'
-]);
-
-Route::delete('/kitap-incele/{kitap}/favorilerden-silindi', [
-    'as' => 'favorilerden_sil',
-    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@deleteFavoriSil'
-]);
-
-Route::post('/kitap-incele/{kitap}/yorum-eklendi', [
-    'as' => 'yorum_ekle',
-    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@postKitapYorum'
-]);
 
 Route::get('/yazarlar', [
     'as' => 'yazarlar',
@@ -136,6 +113,40 @@ Route::prefix('/kitaplar')->as('kitaplar.')->group(function () {
     Route::get('/kategori/{kategori}', [
         'as' => 'kategori',
         'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getKitaplarByKategori'
+    ]);
+    Route::get('/kitap-incele/{kitap}', [
+        'as' => 'kitap_incele',
+        'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getKitapIncele'
+    ]);
+
+    Route::post('/kitap-incele/{kitap}/favorilere-eklendi', [
+        'as' => 'favorilere_ekle',
+        'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@postFavoriEkle'
+    ]);
+
+    Route::delete('/kitap-incele/{kitap}/favorilerden-silindi', [
+        'as' => 'favorilerden_sil',
+        'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@deleteFavoriSil'
+    ]);
+
+    Route::post('/kitap-incele/{kitap}/yorum-eklendi', [
+        'as' => 'yorum_ekle',
+        'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@postKitapYorum'
+    ]);
+
+    Route::get('/sepet', [
+        'as' => 'sepet',
+        'uses' => 'App\Http\Controllers\Kullanicilar\SepetController@getSepet'
+    ]);
+
+    Route::post('/sepet/sepete-eklendi/{kitap}', [
+        'as' => 'sepete_ekle',
+        'uses' => 'App\Http\Controllers\Kullanicilar\SepetController@postSepeteEkle'
+    ]);
+
+    Route::get('/sepet/{sepet}/sepetten-silindi/{kitap}', [
+        'as' => 'sepetten_sil',
+        'uses' => 'App\Http\Controllers\Kullanicilar\SepetController@deleteSepettenSil'
     ]);
 });
 
