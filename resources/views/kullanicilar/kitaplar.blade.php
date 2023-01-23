@@ -59,10 +59,10 @@
                             </div>
 
                             <div class="flex-fill d-flex gap-3 mb-0 justify-content-center">
-                                <a href="{{ route('kitap_incele', $kitap->id) }}"
-                                   class="btn btn-warning w-50">İncele</a>
+                                <a href="{{ route('kitaplar.kitap_incele', $kitap->id) }}"
+                                   class="btn btn-warning w-50"><b>İncele</b></a>
 
-                                <a href="#" class="btn btn-warning w-50">Sepete Ekle</a>
+                                <button class="sepete-ekle btn btn-warning w-50" data-selected-value="{{ $kitap->id }}"><b>Sepete Ekle</b></button>
                             </div>
                         </div>
                     </div>
@@ -80,8 +80,8 @@
             $fav.find('i').click(function () {
                 let favkitap = $(this);
                 let favkitapID = favkitap.data('selected-value');
-                let urlEkle = '{{ route('favorilere_ekle', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', favkitapID);
-                let urlSil = '{{ route('favorilerden_sil', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', favkitapID);
+                let urlEkle = '{{ route('kitaplar.favorilere_ekle', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', favkitapID);
+                let urlSil = '{{ route('kitaplar.favorilerden_sil', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', favkitapID);
 
                 if (favkitap.hasClass('fa-solid')) {
                     favkitap.removeClass("fa-solid").addClass("fa-regular");
@@ -121,6 +121,30 @@
                         }
                     });
                 }
+            });
+
+            let $sepeteEkle = $('.sepete-ekle');
+
+            $sepeteEkle.click(function () {
+                let sepeteEklenecekKitapID = $(this).data('selected-value');
+                let url = '{{ route('kitaplar.sepete_ekle', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', sepeteEklenecekKitapID);
+
+                $.ajax({
+                    url: url,
+                    method: "POST",
+                    dataType: "JSON",
+                    headers: {
+                        'X-CSRF-TOKEN': "{{csrf_token()}}",
+                    },
+                    success: function (data) {
+                        if (data.status) {
+                            window.location.reload();
+                        }
+                    },
+                    error: function (xhr) {
+                        console.log('E => ', xhr)
+                    }
+                });
             });
         });
     </script>

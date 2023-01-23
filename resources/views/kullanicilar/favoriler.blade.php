@@ -59,7 +59,7 @@
 
             $fav.click(function () {
                 let favButton = $(this).data('selected-value');
-                let urlSil = '{{ route('favorilerden_sil', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', favButton);
+                let urlSil = '{{ route('kitaplar.favorilerden_sil', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', favButton);
 
                 $.ajax({
                     url: urlSil,

@@ -41,26 +41,30 @@
                     <p><b>Satıcı: </b><a href="{{ route('saticilar', $kitap->saticilar->id) }}"
                                          class="text-decoration-none">{{ $kitap->saticilar->firma_adi }}</a>
                     </p>
-                    <div class="flex-fill d-flex gap-3 mt-5 mb-0 align-items-center">
-                        <label for="exampleFormControlSelect1" style="font-size: 18px;">Adet :</label>
-                        <select class="form-control" style="font-size: 18px; width: 10%" id="exampleFormControlSelect1">
-                            @for($adet = 1; $adet<=$kitapadeti; $adet++)
-                                <option value="{{ $adet }}">{{ $adet }}</option>
-                                @break($adet == 10)
-                            @endfor
-                        </select>
-                        <button class="btn bg-warning" style="font-size: 18px"><i class="fa-solid fa-cart-shopping"></i>
-                            <b class="mx-2">Sepete Ekle</b>
-                        </button>
-                        <button type="submit" class="btn bg-warning" style="font-size: 18px" id="btn-favorilere-ekle">
-                            <i class="@isset($favoriKitaplar) @foreach($favoriKitaplar as $favkitap) @if($kitap->id === $favkitap->kitap_id) fa-solid @break @else fa-regular @endif @endforeach fa-regular @endisset fa-heart"></i>
-                            <b class="mx-2">Favorilere Ekle</b>
-                        </button>
-                    </div>
+                    <form id="form-sepete-ekle">
+                        <div class="form-group flex-fill d-flex gap-3 mt-5 mb-0 align-items-center">
+                            <label for="adet" style="font-size: 18px;" class="form-label">Adet :</label>
+
+                            <select class="form-control" style="font-size: 18px; width: 10%" id="adet" name="adet">
+                                @for($adet = 1; $adet<=$kitapadeti; $adet++)
+                                    <option value="{{ $adet }}">{{ $adet }}</option>
+                                    @break($adet == 10)
+                                @endfor
+                            </select>
+                            <button type="button" class="sepete-ekle btn bg-warning" style="font-size: 18px"
+                                    data-selected-value="{{ $kitap->id }}"><i class="fa-solid fa-cart-shopping"></i>
+                                <b class="mx-2">Sepete Ekle</b>
+                            </button>
+                            <button type="button" class="btn bg-warning" style="font-size: 18px" id="btn-favorilere-ekle">
+                                <i class="@isset($favoriKitaplar) @foreach($favoriKitaplar as $favkitap) @if($kitap->id === $favkitap->kitap_id) fa-solid @break @else fa-regular @endif @endforeach fa-regular @endisset fa-heart"></i>
+                                <b class="mx-2">Favorilere Ekle</b>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <p class="my-3"><b>Açıklama: </b> {{ $kitap->aciklama }}</p>
-            <form method="post" action="{{ route('yorum_ekle', $kitap->id) }}">
+            <form method="post" action="{{ route('kitaplar.yorum_ekle', $kitap->id) }}">
                 @csrf
                 <input type="hidden" id="starInput" name="puan" value="1">
                 <div class="d-block justify-content-center">
@@ -126,9 +130,9 @@
             let $stars = $('#stars');
             let $fav = $('#btn-favorilere-ekle');
 
-            if($fav.find('i').hasClass('fa-solid')) {
+            if ($fav.find('i').hasClass('fa-solid')) {
                 $fav.find('b').text('Favorilerden Çıkar');
-            } else if ($fav.find('i').hasClass('fa-regular')){
+            } else if ($fav.find('i').hasClass('fa-regular')) {
                 $fav.find('b').text('Favorilere Ekle');
             }
 
@@ -160,8 +164,8 @@
             let kitapID = '{{ $kitap->id ?? null }}';
             $fav.click(function () {
                 let favkitap = $fav.find('i');
-                let urlEkle = '{{ route('favorilere_ekle', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', kitapID);
-                let urlSil = '{{ route('favorilerden_sil', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', kitapID);
+                let urlEkle = '{{ route('kitaplar.favorilere_ekle', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', kitapID);
+                let urlSil = '{{ route('kitaplar.favorilerden_sil', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', kitapID);
 
                 if (favkitap.hasClass('fa-solid')) {
                     favkitap.removeClass("fa-solid").addClass("fa-regular");
@@ -201,6 +205,30 @@
                         }
                     });
                 }
+            });
+            let $sepeteEkle = $('.sepete-ekle');
+
+            $sepeteEkle.click(function () {
+                let sepeteEklenecekKitapID = $(this).data('selected-value');
+                let url = '{{ route('kitaplar.sepete_ekle', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', sepeteEklenecekKitapID);
+
+                $.ajax({
+                    url: url,
+                    method: "POST",
+                    data: $('#form-sepete-ekle').serializeArray(),
+                    dataType: "JSON",
+                    headers: {
+                        'X-CSRF-TOKEN': "{{csrf_token()}}",
+                    },
+                    success: function (data) {
+                        if (data.status) {
+                            window.location.reload();
+                        }
+                    },
+                    error: function (xhr) {
+                        console.log('E => ', xhr)
+                    }
+                });
             });
         });
     </script>

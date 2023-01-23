@@ -67,7 +67,7 @@
                                     </p>
                                 </div>
                                 <div class="flex-fill d-flex gap-3 mb-0 justify-content-center">
-                                    <a href="{{ route('kitap_incele', $kitap->id) }}" class="btn btn-warning w-50">İncele</a>
+                                    <a href="{{ route('kitaplar.kitap_incele', $kitap->id) }}" class="btn btn-warning w-50">İncele</a>
                                     <a href="#" class="btn btn-warning w-50">Sepete Ekle</a>
                                 </div>
                             </div>
@@ -86,8 +86,8 @@
                     $fav.find('i').click(function () {
                         let favkitap = $(this);
                         let favkitapID = favkitap.data('selected-value');
-                        let urlEkle = '{{ route('favorilere_ekle', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', favkitapID);
-                        let urlSil = '{{ route('favorilerden_sil', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', favkitapID);
+                        let urlEkle = '{{ route('kitaplar.favorilere_ekle', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', favkitapID);
+                        let urlSil = '{{ route('kitaplar.favorilerden_sil', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', favkitapID);
 
                         if (favkitap.hasClass('fa-solid')) {
                             favkitap.removeClass("fa-solid").addClass("fa-regular");

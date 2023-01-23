@@ -17,6 +17,8 @@
 
 @yield('js')
 
+<script src="{{ asset('js/notify.js') }}"></script>
+
 </body>
 
 </html>
