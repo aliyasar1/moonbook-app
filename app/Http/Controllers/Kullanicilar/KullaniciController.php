@@ -243,4 +243,12 @@ class KullaniciController extends Controller
         return view('kullanicilar.favoriler', compact('favorikitapsayisi', 'sepettekiKitapSayisi', 'favoriKitaplar'));
     }
 
+    public function getKVKK () {
+        $favoriKitaplar = Favoriler::query()->where('kullanici_id', Auth::user()->id)->get();
+        $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
+        $sepet = Sepet::query()->where('kullanici_id', Auth::user()->id)->first();
+        $sepettekiKitapSayisi = count(SepetDetaylari::query()->where('sepet_id', $sepet->id)->get());
+        return view('kullanicilar.kvkk', compact('sepettekiKitapSayisi', 'favorikitapsayisi', 'favoriKitaplar'));
+    }
+
 }
