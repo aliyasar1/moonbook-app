@@ -109,6 +109,11 @@ Route::get('/saticilar/{satici}', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getSaticilar'
 ]);
 
+Route::get('/kvkk', [
+    'as' => 'kvkk',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getKVKK'
+]);
+
 Route::prefix('/kitaplar')->as('kitaplar.')->group(function () {
     Route::get('/kategori/{kategori}', [
         'as' => 'kategori',
