@@ -2,13 +2,24 @@
 
 namespace App\Http\Controllers\Kullanicilar;
 
+use App\Helpers\IyzicoAdresHelper;
+use App\Helpers\IyzicoBuyerHelper;
+use App\Helpers\IyzicoOptionsHelper;
+use App\Helpers\IyzicoPaymentCardHelper;
+use App\Helpers\IyzicoRequestHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Favoriler;
 use App\Models\Kitaplar;
+use App\Models\KrediKarti;
 use App\Models\Sepet;
 use App\Models\SepetDetaylari;
+use App\Models\Siparisler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Iyzipay\Model\BasketItem;
+use Iyzipay\Model\BasketItemType;
+use Iyzipay\Model\Payment;
 
 class SepetController extends Controller
 {
@@ -17,7 +28,7 @@ class SepetController extends Controller
         $sepet = Sepet::query()->where('kullanici_id', Auth::user()->id)->first();
         $sepettekiKitapSayisi = count(SepetDetaylari::query()->where('sepet_id', $sepet->id)->get());
         $sepet_detaylari = SepetDetaylari::query()->where('sepet_id', $sepet->id)->get();
-        $sepetTutari = $this->SepetiHesapla();
+        $sepetTutari = $this->SepetiHesapla($sepet);
         return view('kullanicilar.sepet', compact('sepet_detaylari', 'sepetTutari', 'favorikitapsayisi', 'sepettekiKitapSayisi', 'sepet'));
     }
 
@@ -50,13 +61,122 @@ class SepetController extends Controller
         ]);
     }
 
-    private function SepetiHesapla () {
+    public function putSepet (SepetDetaylari $sepetDetaylari) {
+
+        $sepetDetaylari->update();
+
+        return response()->json([
+           'status' => true,
+           'message' => 'Sepet Güncellendi'
+        ]);
+    }
+
+    public function postSepetiOnayla(Request $request) {
+        $krediKarti = new KrediKarti();
+
+        $kart = $this->prepare($request, $krediKarti->getFillable());
+        $krediKarti->fill($kart);
+
+        $sepet = $this->getKullaniciSepeti();
+
+        $sepetTutari = $this->SepetiHesapla($sepet);
+
+        $request = IyzicoRequestHelper::createRequest($sepet, $sepetTutari);
+
+        $paymentCard = IyzicoPaymentCardHelper::getPaymentCard($krediKarti);
+        $request->setPaymentCard($paymentCard);
+
+        $buyer = IyzicoBuyerHelper::getBuyer();
+        $request->setBuyer($buyer);
+
+        $kargoAdresi = IyzicoAdresHelper::getAdres();
+        $request->setShippingAddress($kargoAdresi);
+
+        $sepettekiKitaplar = $this->getSepettekiKitaplar($sepet);
+        $request->setBasketItems($sepettekiKitaplar);
+
+        $options = IyzicoOptionsHelper::getTestOptions();
+
+        $payment = Payment::create($request, $options);
+
+        if ($payment->getStatus() == "success") {
+            // Sepeti sona erdir.
+            $this->SepetiKapat($sepet);
+
+            // Sipariş oluştur
+            $this->createSiparisOlustur($sepet);
+
+            return view("kullanicilar.odeme_alindi");
+        } else {
+            $errorMessage = $payment->getErrorMessage();
+            return view("kullanicilar.odeme_hatali", ["message" => $errorMessage]);
+        }
+    }
+
+    private function SepetiKapat(Sepet $sepet)
+    {
+        $sepet->update([
+            'is_active' => false,
+        ]);
+    }
+
+    private function SepetiHesapla (Sepet $sepet) {
         $toplam = 0;
-        $sepet = Sepet::query()->where('kullanici_id', Auth::user()->id)->first();
         $sepet_detaylari = SepetDetaylari::query()->with(['kitaplar'])->where('sepet_id', $sepet->id)->get();
         foreach ($sepet_detaylari as $sepet_detayi) {
             $toplam += $sepet_detayi->kitaplar->fiyat * $sepet_detayi->miktar;
         }
         return $toplam;
+    }
+
+    private function getKullaniciSepeti()
+    {
+        $kullanici = Auth::user();
+        $sepetolustur = Sepet::query()->firstOrCreate(
+            ['kullanici_id' => $kullanici->id, 'is_active' => true],
+            ['kod' => Str::random(8)]
+        );
+        return $sepetolustur;
+    }
+
+    private function getSepettekiKitaplar(Sepet $sepet): array
+    {
+        $basketItems = [];
+
+        $sepetDetaylari = SepetDetaylari::query()->with(['kitaplar'])->where('sepet_id', $sepet->id)->get();
+
+        foreach ($sepetDetaylari as $detay) {
+            $item = new BasketItem();
+            $item->setId($detay->kitaplar->id);
+            $item->setName($detay->kitaplar->adi);
+            $item->setCategory1($detay->kitaplar->kategoriler->adi);
+            $item->setItemType(BasketItemType::PHYSICAL);
+            $item->setPrice($detay->kitaplar->fiyat);
+
+            for ($i = 0; $i < $detay->miktar; $i++) {
+                $basketItems[] = $item;
+            }
+        }
+
+        return $basketItems;
+    }
+
+    private function createSiparisOlustur(Sepet $sepet): Siparisler
+    {
+        $siparis = new Siparisler([
+            "cart_id" => $sepet->sepet_id,
+            "code" => $sepet->kod
+        ]);
+        $siparis->save();
+
+        foreach ($sepet->sepet_detaylari as $detaylar) {
+            $siparis->siparis_detaylari()->create([
+                'siparis_id' => $siparis->order_id,
+                'kitap_id' => $detaylar->kitap_id,
+                'miktar' => $detaylar->miktar
+            ]);
+        }
+
+        return $siparis;
     }
 }

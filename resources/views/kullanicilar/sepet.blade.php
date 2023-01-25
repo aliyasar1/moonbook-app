@@ -19,27 +19,40 @@
                     <th scope="col">Sepet</th>
                 </tr>
                 </thead>
+
                 <tbody>
                 @foreach($sepet_detaylari as $sepetDetay)
                     <tr class="text-center">
                         <td class="align-middle">{{ $sepetDetay->kitaplar->id }}</td>
+
                         <td class="py-2 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             <img class="ratio3x2" style="width: 70px"
                                  src="{{ Storage::url('public/saticilar/kitaplar/'. $sepetDetay->kitaplar->fotograf )}}"
-                                 alt="{{ $sepetDetay->kitaplar->adi }}"></td>
-                        <td class="align-middle">{{ $sepetDetay->kitaplar->kategoriler->adi }}</td>
-                        <td class="align-middle">{{ $sepetDetay->kitaplar->adi }}</td>
-                        <td class="align-middle">{{ '₺ '. $sepetDetay->kitaplar->fiyat }}</td>
-                        <td class="align-middle">
-                            <div class="sepet-input-group mx-auto">
-                                <span class="btn-azalt input-group-text"><i class="fa-solid fa-minus"></i></span>
-                                <label for="adet" hidden></label>
-                                <input type="text" id="adet" class="form-control text-center bg-white"
-                                       style="font-size: 16px" value="{{ $sepetDetay->miktar }}"
-                                       data-secilen-kitap="{{ $sepetDetay->kitaplar->id }}" readonly>
-                                <span class=" btn-arttir input-group-text"><i class="fa-solid fa-plus"></i></span>
-                            </div>
+                                 alt="{{ $sepetDetay->kitaplar->adi }}">
                         </td>
+
+                        <td class="align-middle">{{ $sepetDetay->kitaplar->kategoriler->adi }}</td>
+
+                        <td class="align-middle">{{ $sepetDetay->kitaplar->adi }}</td>
+
+                        <td class="align-middle">{{ '₺ '. $sepetDetay->kitaplar->fiyat }}</td>
+
+                        <td class="align-middle">
+                            <form method="POST" class="form-sepet-guncelle">
+                                @csrf
+                                @method('PUT')
+                                <div class="sepet-input-group mx-auto">
+                                    <span class="btn-azalt input-group-text"><i class="fa-solid fa-minus"></i></span>
+
+                                    <input type="text" id="adet" class="form-control text-center bg-white adet"
+                                           style="font-size: 16px" value="{{ $sepetDetay->miktar }}"
+                                           data-secilen-kitap="{{ $sepetDetay->kitaplar->id }}" readonly>
+
+                                    <span class="btn-arttir input-group-text"><i class="fa-solid fa-plus"></i></span>
+                                </div>
+                            </form>
+                        </td>
+
                         <td class="align-middle">
                             <button type="button" class="sepetten-sil btn bg-warning" style="font-size: 18px"
                                     data-selected-value="{{ $sepetDetay->kitaplar->id ?? null }}">
@@ -50,7 +63,11 @@
                 @endforeach
                 </tbody>
             </table>
+            {{--            <button class="btn-guncelle btn btn-warning ">--}}
+            {{--                <b>Güncelle</b>--}}
+            {{--            </button>--}}
         </div>
+
         <div style="max-height: 500px">
             <div class="sepet-box" style="max-height: 250px">
                 <h3>Sepetim ({{ $sepettekiKitapSayisi }})</h3>
@@ -64,79 +81,103 @@
                 <button class="btn bg-warning w-100" id="sepetiOnayla"><b style="font-size: 20px">Sepeti Onayla</b>
                 </button>
             </div>
-        </div>
-    </div>
-    <div class="container my-5 w-25" id="kartBilgileri" hidden>
-        <h1 class="h3 mb-3 fw-normal">Kredi Kartı Bilgileri</h1>
+            <form method="post" action="{{ route('kitaplar.siparis') }}">
+                @csrf
+                <div class="sepet-box my-3" id="kartBilgileri" hidden>
+                    <h1 class="h3 mb-3 fw-normal">Kredi Kartı Bilgileri</h1>
 
-        <div class="form-group mt-2">
-            <input label="Ad Soyad" class="form-control" placeholder="Kart üzerindeki ad soyad" field="name"/>
-        </div>
+                    <div class="form-group mt-2">
+                        <input label="Ad Soyad" name="adi_soyadi" class="form-control bg-white" placeholder="Ad Soyad"/>
+                    </div>
 
-        <div class="form-group mt-2">
-            <input label="Kart No" class="form-control" placeholder="16 haneli kart numaranızı giriniz"
-                   field="card_no"/>
-        </div>
+                    <div class="form-group mt-2">
+                        <input label="Kart No" name="kart_no" class="form-control bg-white"
+                               placeholder="Kart Numarası"/>
+                    </div>
 
-        <div class="form-group mt-2">
-            <input label="Son Kullanım Ay" class="form-control" placeholder="Son kullanım ay giriniz"
-                   field="expire_month"
-                   type="number"/>
-        </div>
+                    <div class="form-group mt-2">
+                        <div class="d-flex justify-content-between">
+                            <input label="Son Kullanım Ay" name="sk_ay" class="form-control bg-white me-1"
+                                   placeholder="Ay" type="number"/>
+                            <input label="Son Kullanım Yılı" name="sk_yil" class="form-control bg-white me-1"
+                                   placeholder="Yıl" type="number"/>
+                            <input label="Cvc" class="form-control bg-white" placeholder="CVC" name="cvc"
+                                   type="number"/>
+                        </div>
+                    </div>
 
-        <div class="form-group mt-2">
-            <input label="Son Kullanım Yılı" class="form-control" placeholder="Son kullanım yılını giriniz"
-                   field="expire_year"
-                   type="number"/>
+                    <button class="w-100 btn btn-lg btn-warning mt-4" type="submit">Satın Al</button>
+                </div>
+            </form>
         </div>
-
-        <div class="form-group mt-2">
-            <input label="Cvc" class="form-control" placeholder="Cvc kodunu giriniz" field="cvc" type="number"/>
-        </div>
-
-        <button class="w-100 btn btn-lg btn-warning mt-4" type="submit">Satın Al</button>
     </div>
 @endsection
 
 @section('js')
     <script>
         $(document).ready(function () {
-            let btnarttir = $('.btn-arttir');
-            let btnazalt = $('.btn-azalt');
-            let adetInputID = $('#adet');
-            let $adet = 1;
+            // Arttır
+            $('.btn-arttir').click(function () {
+                let input = $(this).closest('.sepet-input-group').find('.adet');
+                let $form = $(this).closest('.sepet-input-group').closest('.form-sepet-guncelle');
+                let adet = input.val();
 
-            btnarttir.click(function () {
+                console.log($form)
 
-                if ($adet < 10) {
-                    $adet++;
-                    adetInputID.val($adet);
-                    adetInputID.attr('value', $adet);
-                } else if ($adet >= 10) {
-                    adetInputID.val(10);
-                    adetInputID.attr('value', 10);
+                adet++;
+
+                if (adet <= 10) {
+                    input.val(adet);
+                    input.attr('value', adet);
+                    console.log($form.serializeArray());
                 }
             });
 
-            btnazalt.click(function () {
+            // Azalt
+            $('.btn-azalt').click(function () {
+                let input = $(this).closest('.sepet-input-group').find('.adet');
+                let adet = input.val();
 
-                if ($adet > 1) {
-                    $adet--;
-                    adetInputID.val($adet);
-                    adetInputID.attr('value', $adet);
-                } else if ($adet <= 1) {
-                    adetInputID.val(1);
-                    adetInputID.attr('value', 1);
+                adet--;
+
+                if (adet > 0) {
+                    input.val(adet);
+                    input.attr('value', adet);
                 }
             });
 
-            let btnSepetiOnayla = $('#sepetiOnayla');
-            btnSepetiOnayla.click(function () {
+            // Sepeti Güncelle
+
+            {{--let $kitapID = $('.sepet-input-group').find('.adet').data('secilen-kitap');--}}
+            {{--$('.btn-guncelle').click(function () {--}}
+            {{--    console.log($kitapID);--}}
+            {{--    let url = '{{ route('kitaplar.sepetteki_kitap_miktari', ['sepetDetaylari' => '#kitapID']) }}'.replace('kitapID', $kitapID);--}}
+
+            {{--    $.ajax({--}}
+            {{--        url: url,--}}
+            {{--        method: "PUT",--}}
+            {{--        dataType: "JSON",--}}
+            {{--        headers: {--}}
+            {{--            'X-CSRF-TOKEN': "{{csrf_token()}}",--}}
+            {{--        },--}}
+            {{--        success: function (data) {--}}
+            {{--            if (data.status) {--}}
+            {{--                window.location.reload();--}}
+            {{--            }--}}
+            {{--        },--}}
+            {{--        error: function (xhr) {--}}
+            {{--            console.log('E => ', xhr)--}}
+            {{--        }--}}
+            {{--    });--}}
+            {{--})--}}
+
+            // Sepeti Onayla
+            $('#sepetiOnayla').click(function () {
                 $('#kartBilgileri').removeAttr('hidden');
             });
 
+            // Sepetten Sil
             let $sepettenSil = $('.sepetten-sil');
-
             $sepettenSil.click(function () {
                 let sepettenSilinecekKitapID = $(this).data('selected-value');
                 let url = '{{ route('kitaplar.sepetten_sil', ['sepet' => "#sepetID", 'kitap' => '#kitapID']) }}'.replace('#sepetID', '{{ $sepet->id }}').replace('#kitapID', sepettenSilinecekKitapID);

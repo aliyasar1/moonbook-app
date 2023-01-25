@@ -5,8 +5,34 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use mysql_xdevapi\Table;
 
+/**
+ * App\Models\Sepet
+ *
+ * @property int $id
+ * @property int $kullanici_id
+ * @property string $kod
+ * @property int $is_active
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $kullanicilar
+ * @property-read \App\Models\SepetDetaylari|null $sepet_detaylari
+ * @method static \Illuminate\Database\Eloquent\Builder|Sepet newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Sepet newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Sepet onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Sepet query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Sepet whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Sepet whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Sepet whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Sepet whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Sepet whereKod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Sepet whereKullaniciId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Sepet whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Sepet withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Sepet withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Sepet extends Model
 {
     use HasFactory, SoftDeletes;
@@ -16,7 +42,7 @@ class Sepet extends Model
     protected $fillable = ['id', 'kullanici_id', 'kod'];
 
     public function sepet_detaylari () {
-        return $this->hasOne(SepetDetaylari::class, 'sepet_id');
+        return $this->hasMany(SepetDetaylari::class, 'sepet_id');
     }
 
     public function kullanicilar() {
