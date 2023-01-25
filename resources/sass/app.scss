@@ -44,4 +44,19 @@
     padding-left: 10px;
 }
 
+.sepet-input-group {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    width: 125px;
+}
+.sepet-box {
+    width: 300px;
+    border: 1px #ffc107 solid;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: white;
+}
+
 

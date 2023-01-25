@@ -14,7 +14,7 @@
                     <div class="max-w-12xl sm:px-6 lg:px-8" style="margin-right: 5px">
                         <div class="card" style="width: 15rem; align-items: center; padding: 1.25rem;">
                             <div class="fvrt-btn bg-warning d-flex justify-content-center align-items-center">
-                                <i class="@foreach($favoriKitaplar as $favkitap) @if($kitap->id === $favkitap->kitap_id) fa-solid @break @else fa-regular @endif @endforeach fa-heart" style="font-size: 18px"
+                                <i class="@foreach($favoriKitaplar as $favkitap) @if($kitap->id === $favkitap->kitap_id) fa-solid @break @else fa-regular @endif @endforeach fa-regular fa-heart" style="font-size: 18px"
                                    data-selected-value="{{ $kitap->id }}"></i></div>
                             <div class="ratio-3x2 mb-3" style="width: 150px; height: 200px;">
                                 <img class="w-100 h-100"
