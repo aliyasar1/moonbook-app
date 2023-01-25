@@ -7,10 +7,8 @@ use App\Models\Favoriler;
 use App\Models\Kitaplar;
 use App\Models\Sepet;
 use App\Models\SepetDetaylari;
-use Doctrine\DBAL\Schema\Table;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
 class SepetController extends Controller
 {
@@ -19,7 +17,8 @@ class SepetController extends Controller
         $sepet = Sepet::query()->where('kullanici_id', Auth::user()->id)->first();
         $sepettekiKitapSayisi = count(SepetDetaylari::query()->where('sepet_id', $sepet->id)->get());
         $sepet_detaylari = SepetDetaylari::query()->where('sepet_id', $sepet->id)->get();
-        return view('kullanicilar.sepet', compact('sepet_detaylari', 'favorikitapsayisi', 'sepettekiKitapSayisi', 'sepet'));
+        $sepetTutari = $this->SepetiHesapla();
+        return view('kullanicilar.sepet', compact('sepet_detaylari', 'sepetTutari', 'favorikitapsayisi', 'sepettekiKitapSayisi', 'sepet'));
     }
 
     public function postSepeteEkle(Kitaplar $kitap, Request $request) {
@@ -49,5 +48,15 @@ class SepetController extends Controller
             'status' => true,
             'message' => 'Sepetten Silindi',
         ]);
+    }
+
+    private function SepetiHesapla () {
+        $toplam = 0;
+        $sepet = Sepet::query()->where('kullanici_id', Auth::user()->id)->first();
+        $sepet_detaylari = SepetDetaylari::query()->with(['kitaplar'])->where('sepet_id', $sepet->id)->get();
+        foreach ($sepet_detaylari as $sepet_detayi) {
+            $toplam += $sepet_detayi->kitaplar->fiyat * $sepet_detayi->miktar;
+        }
+        return $toplam;
     }
 }

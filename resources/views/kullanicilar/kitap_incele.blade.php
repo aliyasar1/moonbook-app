@@ -44,18 +44,19 @@
                     <form id="form-sepete-ekle">
                         <div class="form-group flex-fill d-flex gap-3 mt-5 mb-0 align-items-center">
                             <label for="adet" style="font-size: 18px;" class="form-label">Adet :</label>
-
-                            <select class="form-control" style="font-size: 18px; width: 10%" id="adet" name="adet">
-                                @for($adet = 1; $adet<=$kitapadeti; $adet++)
-                                    <option value="{{ $adet }}">{{ $adet }}</option>
-                                    @break($adet == 10)
-                                @endfor
-                            </select>
+                            <div class="input-group" style="width: 15%; flex-wrap: nowrap">
+                                <span class="btn-azalt input-group-text"><i class="fa-solid fa-minus"></i></span>
+                                <input type="text" id="adet" name="adet" class="form-control text-center bg-white"
+                                       style="font-size: 16px"
+                                       value="1" readonly>
+                                <span class="btn-arttir input-group-text"><i class="fa-solid fa-plus"></i></span>
+                            </div>
                             <button type="button" class="sepete-ekle btn bg-warning" style="font-size: 18px"
                                     data-selected-value="{{ $kitap->id }}"><i class="fa-solid fa-cart-shopping"></i>
                                 <b class="mx-2">Sepete Ekle</b>
                             </button>
-                            <button type="button" class="btn bg-warning" style="font-size: 18px" id="btn-favorilere-ekle">
+                            <button type="button" class="btn bg-warning" style="font-size: 18px"
+                                    id="btn-favorilere-ekle">
                                 <i class="@isset($favoriKitaplar) @foreach($favoriKitaplar as $favkitap) @if($kitap->id === $favkitap->kitap_id) fa-solid @break @else fa-regular @endif @endforeach fa-regular @endisset fa-heart"></i>
                                 <b class="mx-2">Favorilere Ekle</b>
                             </button>
@@ -127,6 +128,35 @@
         let starPoint = 0;
 
         $(document).ready(function () {
+            let btnarttir = $('.btn-arttir');
+            let btnazalt = $('.btn-azalt');
+            let adetInput = $('#adet');
+            let $adet = 1;
+
+            btnarttir.click(function () {
+
+                if ($adet < 10) {
+                    $adet++;
+                    adetInput.val($adet);
+                    adetInput.attr('value', $adet);
+                } else if ($adet >= 10) {
+                    adetInput.val(10);
+                    adetInput.attr('value', 10);
+                }
+            });
+
+            btnazalt.click(function () {
+
+                if ($adet > 1) {
+                    $adet--;
+                    adetInput.val($adet);
+                    adetInput.attr('value', $adet);
+                } else if ($adet <= 1) {
+                    adetInput.val(1);
+                    adetInput.attr('value', 1);
+                }
+            });
+
             let $stars = $('#stars');
             let $fav = $('#btn-favorilere-ekle');
 
@@ -211,7 +241,6 @@
             $sepeteEkle.click(function () {
                 let sepeteEklenecekKitapID = $(this).data('selected-value');
                 let url = '{{ route('kitaplar.sepete_ekle', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', sepeteEklenecekKitapID);
-
                 $.ajax({
                     url: url,
                     method: "POST",

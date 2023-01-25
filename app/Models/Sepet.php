@@ -16,7 +16,7 @@ class Sepet extends Model
     protected $fillable = ['id', 'kullanici_id', 'kod'];
 
     public function sepet_detaylari () {
-        return $this->belongsTo(SepetDetaylari::class, 'sepet_id');
+        return $this->hasOne(SepetDetaylari::class, 'sepet_id');
     }
 
     public function kullanicilar() {
