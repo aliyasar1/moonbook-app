@@ -153,6 +153,16 @@ Route::prefix('/kitaplar')->as('kitaplar.')->group(function () {
         'as' => 'sepetten_sil',
         'uses' => 'App\Http\Controllers\Kullanicilar\SepetController@deleteSepettenSil'
     ]);
+
+    Route::put('/sepet/adet-guncellendi/{sepetDetaylari}', [
+        'as' => 'sepetteki_kitap_miktari',
+        'uses' => 'App\Http\Controllers\Kullanicilar\SepetController@putSepet'
+    ]);
+
+    Route::post('/siparis', [
+        'as' => 'siparis',
+        'uses' => 'App\Http\Controllers\Kullanicilar\SepetController@postSepetiOnayla'
+    ]);
 });
 
 Route::prefix('/satici')->as('satici.')->middleware(['admin'])->group(function () {

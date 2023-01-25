@@ -5,6 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Iller
+ *
+ * @property int $id
+ * @property string $il
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Ilceler[] $ilceler
+ * @property-read int|null $ilceler_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Iller newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Iller newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Iller query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Iller whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Iller whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Iller whereIl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Iller whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Iller extends Model
 {
     use HasFactory;

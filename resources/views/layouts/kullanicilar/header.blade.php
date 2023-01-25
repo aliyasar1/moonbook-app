@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+@php
+    use App\Models\Favoriler;use App\Models\SepetDetaylari;
+    use Illuminate\Support\Facades\Auth;
+@endphp
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -11,7 +15,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <script src="https://kit.fontawesome.com/68b01077e6.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js"
+            integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
 </head>
 <body class="d-flex flex-column h-100 min-vh-100">
 <main class="flex-shrink-0">
@@ -19,41 +24,49 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark shadow-lg">
             <div class="container px-3">
-                <a class="navbar-brand text-black" href="{{ route('anasayfa') }}"><img src="{{ asset('storage/logolar/moonbookSiyah.png') }}"
-                                                                 width="70px"
-                                                                 height="70px" alt="moonbook">MoonBook</a>
+                <a class="navbar-brand text-black" href="{{ route('anasayfa') }}"><img
+                            src="{{ asset('storage/logolar/moonbookSiyah.png') }}"
+                            width="70px"
+                            height="70px" alt="moonbook">MoonBook</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
                 </button>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Ara" aria-label="Ara">
-                    <button class="btn btn-dark text-warning" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button class="btn btn-dark text-warning" type="submit"><i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
                 </form>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="font-size: 16px;">
-                        <li class="nav-item"><a class="nav-link text-black" href="{{ route('anasayfa') }}"><b>Anasayfa</b></a></li>
-                        <li class="nav-item"><a class="nav-link text-black" href="{{ route('kitaplar') }}"><b>Kitaplar</b></a></li>
-                        <li class="nav-item"><a class="nav-link text-black" href="{{ route('yazarlar') }}"><b>Yazarlar</b></a></li>
-                        <li class="nav-item"><a class="nav-link text-black" href="{{ route('yayin_evleri') }}"><b>Yayın Evleri</b></a></li>
+                        <li class="nav-item"><a class="nav-link text-black"
+                                                href="{{ route('anasayfa') }}"><b>Anasayfa</b></a></li>
+                        <li class="nav-item"><a class="nav-link text-black"
+                                                href="{{ route('kitaplar') }}"><b>Kitaplar</b></a></li>
+                        <li class="nav-item"><a class="nav-link text-black"
+                                                href="{{ route('yazarlar') }}"><b>Yazarlar</b></a></li>
+                        <li class="nav-item"><a class="nav-link text-black" href="{{ route('yayin_evleri') }}"><b>Yayın
+                                    Evleri</b></a></li>
                         <li class="nav-item"><a class="nav-link text-black" href="#"><b>İletişim</b></a></li>
                         <li class="nav-item">
                             <a class="nav-link position-relative" role="button" href="{{ route('kitaplar.sepet') }}">
                                 <i class="fa-solid fa-cart-shopping" style="color: black; font-size: 20px"></i>
-                                <span class="position-absolute top-5 start-95 translate-middle badge rounded-pill bg-danger" style="font-size: 0.5rem;">{{ $sepettekiKitapSayisi ?? 0 }}</span>
+                                <span class="position-absolute top-5 start-95 translate-middle badge rounded-pill bg-danger"
+                                      style="font-size: 0.5rem;">{{ SepetDetaylari::getSepettekiKitapSayisi() }}</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link position-relative" role="button" href="{{ route('favoriler') }}">
                                 <i class="fa-solid fa-heart" style="color: black; font-size: 20px"></i>
-                                <span class="position-absolute top-5 start-95 translate-middle badge rounded-pill bg-danger" style="font-size: 0.5rem;">{{ $favorikitapsayisi }}</span>
+                                <span class="position-absolute top-5 start-95 translate-middle badge rounded-pill bg-danger"
+                                      style="font-size: 0.5rem;">{{ Favoriler::getFavoriKitapSayisi() }}</span>
                             </a>
                         </li>
                         <li class="nav-item dropdown mt-0 pt-0">
                             <a class="nav-link dropdown-toggle text-black" id="navbarDropdownPortfolio" href="#"
                                role="button"
                                data-bs-toggle="dropdown"
-                               aria-expanded="false"><b>{{ \Illuminate\Support\Facades\Auth::user()->adi_soyadi }}</b></a>
+                               aria-expanded="false"><b>{{ Auth::user()->adi_soyadi }}</b></a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
                                 <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear"></i> Profili
                                         Düzenle</a>
@@ -63,7 +76,7 @@
                                 </li>
                                 <hr>
                                 <li><a class="dropdown-item" href="{{ route('cikis_yap') }}"><i
-                                            class="fa-solid fa-arrow-right-from-bracket"></i>
+                                                class="fa-solid fa-arrow-right-from-bracket"></i>
                                         Çıkış Yap</a></li>
                             </ul>
                         </li>
