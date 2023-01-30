@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 /**
  * App\Models\Sepet
  *
@@ -17,7 +18,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $kullanicilar
- * @property-read \App\Models\SepetDetaylari|null $sepet_detaylari
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\SepetDetaylari[] $sepet_detaylari
+ * @property-read int|null $sepet_detaylari_count
  * @method static \Illuminate\Database\Eloquent\Builder|Sepet newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Sepet newQuery()
  * @method static \Illuminate\Database\Query\Builder|Sepet onlyTrashed()
@@ -41,11 +43,13 @@ class Sepet extends Model
 
     protected $fillable = ['id', 'kullanici_id', 'kod'];
 
-    public function sepet_detaylari () {
-        return $this->hasMany(SepetDetaylari::class, 'sepet_id');
+    public function sepetDetaylari ()
+    {
+        return $this->hasMany(SepetDetaylari::class, "sepet_id", "id");
     }
 
-    public function kullanicilar() {
+    public function kullanicilar ()
+    {
         return $this->belongsTo(User::class, 'kullanici_id');
     }
 }

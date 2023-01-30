@@ -28,7 +28,7 @@ class LoginController extends Controller
             abort(403);
         } elseif ($user->type === User::USER_TYPE['USER']) {
             Sepet::query()->firstOrCreate(
-                ['kullanici_id' => Auth::user()->id, 'is_active' => true],
+                ['kullanici_id' => Auth::user()->id, 'is_active' => 1],
                 ['kod' => Str::random(8)]
             );
             $kitapRoman = Kitaplar::query()->where('kategori_id', 3)->limit(4)->get();
