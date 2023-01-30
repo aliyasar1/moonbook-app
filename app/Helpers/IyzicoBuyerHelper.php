@@ -25,13 +25,14 @@ class IyzicoBuyerHelper
 //        $buyer->setCity($user->iller->il);
 
         $buyer = new Buyer();
-        $buyer->setId($user->id);
+        $buyer->setId(strval($user->id));
         $buyer->setName($user->adi_soyadi);
+        $buyer->setSurname("yok");
+        $buyer->setIdentityNumber("12345678901");
         $buyer->setEmail($user->email);
         $buyer->setGsmNumber($user->tel_no);
         $buyer->setRegistrationDate(Carbon::parse($user->created_at)->format("Y-m-d h:i:s"));
         $buyer->setRegistrationAddress($user->adres);
-        $buyer->setDistrict($user->ilceler->ilce);
         $buyer->setCity($user->iller->il);
         $buyer->setCountry("Türkiye");
         $buyer->setZipCode("34000");

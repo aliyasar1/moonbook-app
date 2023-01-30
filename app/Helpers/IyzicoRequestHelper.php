@@ -32,13 +32,15 @@ class IyzicoRequestHelper
         $request = new CreatePaymentRequest();
         $request->setLocale(Locale::TR);
         $request->setConversationId($sepet->kod);
-        $request->setPrice("1");
-        $request->setPaidPrice("1.2");
+        $request->setPrice($finalPrice);
+        $request->setPaidPrice($finalPrice);
         $request->setCurrency(Currency::TL);
         $request->setInstallment(1);
         $request->setBasketId($sepet->kod);
         $request->setPaymentChannel(PaymentChannel::WEB);
         $request->setPaymentGroup(PaymentGroup::PRODUCT);
+        $request->setCallbackUrl(null);
+
 
         return $request;
     }

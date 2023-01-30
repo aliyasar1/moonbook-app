@@ -36,4 +36,9 @@ class Siparisler extends Model
     protected $table = 'siparisler';
 
     protected $fillable = ['id', 'sepet_id', 'kod'];
+
+    public function siparis_detaylari()
+    {
+        return $this->hasMany(SiparisDetaylari::class, "siparis_id", "id");
+    }
 }

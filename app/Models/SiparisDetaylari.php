@@ -32,4 +32,10 @@ class SiparisDetaylari extends Model
     protected $table = 'siparis_detaylari';
 
     protected $fillable = ['id', 'siparis_id', 'kitap_id', 'miktar'];
+
+    public function kitap()
+    {
+        return $this->hasOne(Kitaplar::class, "kitap_id", "id");
+    }
+
 }
