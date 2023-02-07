@@ -62,7 +62,9 @@
                                 <a href="{{ route('kitaplar.kitap_incele', $kitap->id) }}"
                                    class="btn btn-warning w-50"><b>İncele</b></a>
 
-                                <button class="sepete-ekle btn btn-warning w-50" data-selected-value="{{ $kitap->id }}"><b>Sepete Ekle</b></button>
+                                <button class="sepete-ekle btn btn-warning w-50" @if($kitap->stok->stok_adeti === 0) disabled @endif data-selected-value="{{ $kitap->id }}">
+                                    <b>Sepete Ekle</b>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -75,6 +77,7 @@
 @section('js')
     <script>
         $(document).ready(function () {
+
             let $fav = $('.fvrt-btn');
 
             $fav.find('i').click(function () {
