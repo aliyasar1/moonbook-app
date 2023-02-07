@@ -129,10 +129,10 @@ class SepetController extends Controller
             $this->createSiparisOlustur($sepet);
 
 
-            return view("kullanicilar.odeme_alindi");
+            return view("kullanicilar.odeme_alindi", compact('sepet'));
         } else {
             $errorMessage = $payment->getErrorMessage();
-            return view("kullanicilar.odeme_hatali", ["message" => $errorMessage]);
+            return view("kullanicilar.odeme_hatali", compact('errorMessage'));
         }
     }
 
