@@ -52,6 +52,16 @@
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user" id="sifre" name="sifre" placeholder="Şifre">
                                     </div>
+                                    @if(session()->has('danger'))
+                                        <div class="alert alert-danger" style="border-radius: 25px" role="alert">
+                                            {{session()->get('danger')}}
+                                        </div>
+                                    @endif
+{{--                                    @if($errors->any())--}}
+{{--                                        <div class="alert alert-danger" style="border-radius: 25px" role="alert">--}}
+{{--                                            {{ $errors->first() }}--}}
+{{--                                        </div>--}}
+{{--                                    @endif--}}
                                     <button type="submit" class="btn btn-danger btn-user btn-block">
                                         Giriş Yap
                                     </button>

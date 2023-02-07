@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Favoriler;
+use App\Http\Requests\LoginRequest;
 use App\Models\Kitaplar;
 use App\Models\Sepet;
-use App\Models\SepetDetaylari;
 use App\Models\User;
 use App\Models\Yorumlar;
 use Illuminate\Http\Request;
@@ -22,11 +21,13 @@ class LoginController extends Controller
     public function postGiris_Yap(Request $request)
     {
         $inputs = $request->all();
-        $user = User::query()->where('email', $inputs['email'])->where('sifre', base64_encode($inputs['sifre']))->firstOrFail();
-        Auth::login($user);
-        if ($user->type === User::USER_TYPE['ADMIN']) {
-            abort(403);
-        } elseif ($user->type === User::USER_TYPE['USER']) {
+        $user = User::query()->where('email', $inputs['email'])->where('sifre', base64_encode($inputs['sifre']))->first();
+
+        if (! is_null($user) && $user->type === User::USER_TYPE['ADMIN']) {
+            return redirect()->route('giris_yap')->with('danger', 'E-Mail veya Şifre Hatalı. Tekrar Deneyiniz!');
+        } elseif (! is_null($user) && $user->type === User::USER_TYPE['USER']) {
+            Auth::login($user);
+
             Sepet::query()->firstOrCreate(
                 ['kullanici_id' => Auth::user()->id, 'is_active' => 1],
                 ['kod' => Str::random(8)]
@@ -36,12 +37,9 @@ class LoginController extends Controller
             $kitapCR = Kitaplar::query()->where('kategori_id', 9)->limit(4)->get();
             $kitapAT = Kitaplar::query()->where('kategori_id', 6)->limit(4)->get();
             $anasayfaYorumlar = Yorumlar::query()->orderByDesc('id')->limit(3)->get();
-            $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
-            $sepet = Sepet::query()->where('kullanici_id', Auth::user()->id)->first();
-            $sepettekiKitapSayisi = count(SepetDetaylari::query()->where('sepet_id', $sepet->id)->get());
-            return view('kullanicilar.anasayfa', compact('sepet','sepettekiKitapSayisi', 'kitapRoman', 'kitapKG', 'kitapCR', 'kitapAT', 'anasayfaYorumlar','favorikitapsayisi'));
+            return view('kullanicilar.anasayfa', compact('kitapRoman', 'kitapKG', 'kitapCR', 'kitapAT', 'anasayfaYorumlar'));
         }
-        return abort(404);
+        return redirect()->route('giris_yap')->with('danger', 'E-Mail veya Şifre Hatalı. Tekrar Deneyiniz!');
     }
 
     public function Satici_Girisi_Yap()
@@ -49,17 +47,20 @@ class LoginController extends Controller
         return view('admin.giris_yap');
     }
 
-    public function postSatici_Girisi_Yap(Request $request)
+    public function postSatici_Girisi_Yap(LoginRequest $request)
     {
         $inputs = $request->all();
 
-        $user = User::query()->where('email', $inputs['email'])->where('sifre', base64_encode($inputs['sifre']))->firstOrFail();
-        Auth::login($user);
-        if ($user->type === User::USER_TYPE['ADMIN']) {
-            return redirect()->route('satici.anasayfa');
-        } elseif ($user->type === User::USER_TYPE['USER']) {
-            abort(403);
+        $user = User::query()
+            ->where('email', $inputs['email'])
+            ->where('sifre', base64_encode($inputs['sifre']))
+            ->first();
+
+        if (! $user || $user->type === User::USER_TYPE['USER']) {
+            return redirect()->route('satici_girisi_yap')->with('danger', 'E-Mail veya Şifre Hatalı. Tekrar Deneyiniz!');
         }
-        return abort(404);
+
+        Auth::login($user);
+        return redirect()->route('satici.anasayfa');
     }
 }

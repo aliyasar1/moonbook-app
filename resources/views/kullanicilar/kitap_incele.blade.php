@@ -128,6 +128,11 @@
         let starPoint = 0;
 
         $(document).ready(function () {
+
+            if ({{ $kitap->stok->stok_adeti }} === 0) {
+                $(".sepete-ekle").add().attr('disabled', 'disabled');
+            }
+
             let btnarttir = $('.btn-arttir');
             let btnazalt = $('.btn-azalt');
             let adetInput = $('#adet');

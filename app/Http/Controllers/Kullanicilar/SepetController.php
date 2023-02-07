@@ -14,6 +14,7 @@ use App\Models\KrediKarti;
 use App\Models\Sepet;
 use App\Models\SepetDetaylari;
 use App\Models\Siparisler;
+use App\Models\Stok;
 use Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -201,6 +202,9 @@ class SepetController extends Controller
                 'siparis_id' => $siparis->id,
                 'kitap_id' => $detaylar->kitap_id,
                 'miktar' => $detaylar->miktar
+            ]);
+            Stok::query()->where('kitap_id', $detaylar->kitap_id)->update([
+                'stok_adeti' => $detaylar->kitaplar->stok->stok_adeti - $detaylar->miktar,
             ]);
         }
         return $siparis;
