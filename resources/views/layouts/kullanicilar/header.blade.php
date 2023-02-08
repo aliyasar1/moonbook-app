@@ -45,9 +45,11 @@
                                                 href="{{ route('kitaplar') }}"><b>Kitaplar</b></a></li>
                         <li class="nav-item"><a class="nav-link text-black"
                                                 href="{{ route('yazarlar') }}"><b>Yazarlar</b></a></li>
-                        <li class="nav-item"><a class="nav-link text-black" href="{{ route('yayin_evleri') }}"><b>Yayın
-                                    Evleri</b></a></li>
-                        <li class="nav-item"><a class="nav-link text-black" href="#"><b>İletişim</b></a></li>
+                        <li class="nav-item">
+                            <a class="nav-link text-black" href="{{ route('yayin_evleri') }}">
+                                <b>Yayın Evleri</b>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link position-relative" role="button" href="{{ route('kitaplar.sepet') }}">
                                 <i class="fa-solid fa-cart-shopping" style="color: black; font-size: 20px"></i>

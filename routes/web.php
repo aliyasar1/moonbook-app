@@ -72,12 +72,10 @@ Route::get('/favoriler', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getFavoriler'
 ]);
 
-
 Route::get('/anasayfa', [
     'as' => 'anasayfa',
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getAnasayfa'
 ]);
-
 
 Route::get('/yazarlar', [
     'as' => 'yazarlar',
@@ -114,6 +112,7 @@ Route::get('/kvkk', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getKVKK'
 ]);
 
+// Kitap İşlemleri
 Route::prefix('/kitaplar')->as('kitaplar.')->group(function () {
     Route::get('/kategori/{kategori}', [
         'as' => 'kategori',
@@ -165,6 +164,8 @@ Route::prefix('/kitaplar')->as('kitaplar.')->group(function () {
     ]);
 });
 
+
+// Admin
 Route::prefix('/satici')->as('satici.')->middleware(['admin'])->group(function () {
     Route::get('/anasayfa', [
         'as' => 'anasayfa',

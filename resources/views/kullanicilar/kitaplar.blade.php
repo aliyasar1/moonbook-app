@@ -19,7 +19,8 @@
                 <div class="max-w-12xl sm:px-6 lg:px-8" style="margin-right: 5px">
                     <div class="card" style="width: 15rem; align-items: center; padding: 1.25rem;">
                         <div class="fvrt-btn bg-warning d-flex justify-content-center align-items-center">
-                            <i class="@isset($favoriKitaplar) @foreach($favoriKitaplar as $favkitap) @if($kitap->id === $favkitap->kitap_id) fa-solid @break @else fa-regular @endif @endforeach fa-regular @endisset fa-heart" style="font-size: 18px" data-selected-value="{{ $kitap->id }}"></i>
+                            <i class="@isset($favoriKitaplar) @foreach($favoriKitaplar as $favkitap) @if($kitap->id === $favkitap->kitap_id) fa-solid @break @else fa-regular @endif @endforeach fa-regular @endisset fa-heart"
+                               style="font-size: 18px" data-selected-value="{{ $kitap->id }}"></i>
                         </div>
                         <div class="ratio-3x2 mb-3" style="width: 150px; height: 200px;">
                             <img class="w-100 h-100 shadow-sm"
@@ -31,11 +32,14 @@
                             <p class="card-text mb-3" style="color: black">
                                 <span class="badge text-decoration-none text-bg-warning"
                                       href="#">{{ $kitap->kategoriler->adi }}</span>
+                                @if($kitap->stok->stok_adeti === 0)
+                                <span class="badge badge-pill bg-danger">Tükendi</span>
+                                @endif
                             </p>
 
-                            <h4 class="card-title mb-0"
+                            <h4 class="kitap-adi card-title mb-0"
                                 style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-                                title="{{ $kitap->adi }}">{{ $kitap->adi }}</h4>
+                                title="{{ $kitap->adi }}" data-value="{{ $kitap->adi }}">{{ $kitap->adi }}</h4>
 
                             <p class="card-text mb-2"
                                style="font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -62,7 +66,9 @@
                                 <a href="{{ route('kitaplar.kitap_incele', $kitap->id) }}"
                                    class="btn btn-warning w-50"><b>İncele</b></a>
 
-                                <button class="sepete-ekle btn btn-warning w-50" @if($kitap->stok->stok_adeti === 0) disabled @endif data-selected-value="{{ $kitap->id }}">
+                                <button class="sepete-ekle btn btn-warning w-50"
+                                        @if($kitap->stok->stok_adeti === 0) disabled
+                                        @endif data-selected-value="{{ $kitap->id }}">
                                     <b>Sepete Ekle</b>
                                 </button>
                             </div>
@@ -141,7 +147,10 @@
                     },
                     success: function (data) {
                         if (data.status) {
-                            window.location.reload();
+                            $.notify('Sepete Eklendi.', 'success');
+                            setTimeout(function () {
+                                window.location.reload()
+                            }, 2000);
                         }
                     },
                     error: function (xhr) {

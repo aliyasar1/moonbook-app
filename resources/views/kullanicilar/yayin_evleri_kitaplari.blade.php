@@ -15,7 +15,8 @@
                     <div class="max-w-12xl sm:px-6 lg:px-8" style="margin-right: 5px">
                         <div class="card" style="width: 15rem; align-items: center; padding: 1.25rem;">
                             <div class="fvrt-btn bg-warning d-flex justify-content-center align-items-center">
-                                <i class="@foreach($favoriKitaplar as $favkitap) @if($kitap->id === $favkitap->kitap_id) fa-solid @break @else fa-regular @endif @endforeach fa-regular fa-heart" style="font-size: 18px"
+                                <i class="@foreach($favoriKitaplar as $favkitap) @if($kitap->id === $favkitap->kitap_id) fa-solid @break @else fa-regular @endif @endforeach fa-regular fa-heart"
+                                   style="font-size: 18px"
                                    data-selected-value="{{ $kitap->id }}"></i></div>
                             <div class="ratio-3x2 mb-3" style="width: 150px; height: 200px;">
                                 <img class="w-100 h-100"
@@ -26,13 +27,17 @@
                                 <p class="card-text mb-3" style="color: black">
                                 <span class="badge text-decoration-none text-bg-warning"
                                       href="#">{{ $kitap->kategoriler->adi }}</span>
+                                    @if($kitap->stok->stok_adeti === 0)
+                                        <span class="badge badge-pill bg-danger">Tükendi</span>
+                                    @endif
                                 </p>
                                 <h4 class="card-title mb-0"
                                     style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
                                     title="{{ $kitap->adi }}">{{ $kitap->adi }}</h4>
                                 <p class="card-text mb-2"
                                    style="font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-                                   title="{{ $kitap->yazarlar->adi_soyadi }}"><a class="text-decoration-none" href="{{ route('yazar_kitaplari', $kitap->yazarlar->id) }}">{{ $kitap->yazarlar->adi_soyadi }}</a>
+                                   title="{{ $kitap->yazarlar->adi_soyadi }}"><a class="text-decoration-none"
+                                                                                 href="{{ route('yazar_kitaplari', $kitap->yazarlar->id) }}">{{ $kitap->yazarlar->adi_soyadi }}</a>
                                     <span
                                             title="{{$kitap->yayin_evleri->adi }}">{{ ' - '. $kitap->yayin_evleri->adi }}</span>
                                 </p>
@@ -45,8 +50,13 @@
                                     </p>
                                 </div>
                                 <div class="flex-fill d-flex gap-3 mb-0 justify-content-center">
-                                    <a href="{{ route('kitaplar.kitap_incele', $kitap->id) }}" class="btn btn-warning w-50">İncele</a>
-                                    <a href="#" class="btn btn-warning w-50">Sepete Ekle</a>
+                                    <a href="{{ route('kitaplar.kitap_incele', $kitap->id) }}"
+                                       class="btn btn-warning w-50"><b>İncele</b></a>
+                                    <button class="sepete-ekle btn btn-warning w-50"
+                                            @if($kitap->stok->stok_adeti === 0) disabled
+                                            @endif data-selected-value="{{ $kitap->id }}">
+                                        <b>Sepete Ekle</b>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -54,11 +64,38 @@
                 @endforeach
             </div>
         </div>
-@endsection
+        @endsection
 
-@section('js')
-  <script>
+        @section('js')
+            <script>
                 $(document).ready(function () {
+
+                    let $sepeteEkle = $('.sepete-ekle');
+
+                    $sepeteEkle.click(function () {
+                        let sepeteEklenecekKitapID = $(this).data('selected-value');
+                        let url = '{{ route('kitaplar.sepete_ekle', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', sepeteEklenecekKitapID);
+
+                        $.ajax({
+                            url: url,
+                            method: "POST",
+                            dataType: "JSON",
+                            headers: {
+                                'X-CSRF-TOKEN': "{{csrf_token()}}",
+                            },
+                            success: function (data) {
+                                if (data.status) {
+                                    $.notify('Sepete Eklendi.', 'success');
+                                    setTimeout(function () {
+                                        window.location.reload()
+                                    }, 2000);
+                                }
+                            },
+                            error: function (xhr) {
+                                console.log('E => ', xhr)
+                            }
+                        });
+                    });
                     let $fav = $('.fvrt-btn');
 
                     $fav.find('i').click(function () {
