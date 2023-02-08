@@ -48,6 +48,9 @@
                                 <p class="card-text mb-3" style="color: black">
                                 <span class="badge text-decoration-none text-bg-warning"
                                       href="#">{{ $kitap->kategoriler->adi }}</span>
+                                    @if($kitap->stok->stok_adeti === 0)
+                                        <span class="badge badge-pill bg-danger">Tükendi</span>
+                                    @endif
                                 </p>
                                 <h4 class="card-title mb-0"
                                     style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
@@ -67,8 +70,13 @@
                                     </p>
                                 </div>
                                 <div class="flex-fill d-flex gap-3 mb-0 justify-content-center">
-                                    <a href="{{ route('kitaplar.kitap_incele', $kitap->id) }}" class="btn btn-warning w-50">İncele</a>
-                                    <a href="#" class="btn btn-warning w-50">Sepete Ekle</a>
+                                    <a href="{{ route('kitaplar.kitap_incele', $kitap->id) }}"
+                                       class="btn btn-warning w-50"><b>İncele</b></a>
+                                    <button class="sepete-ekle btn btn-warning w-50"
+                                            @if($kitap->stok->stok_adeti === 0) disabled
+                                            @endif data-selected-value="{{ $kitap->id }}">
+                                        <b>Sepete Ekle</b>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +88,36 @@
 
 @section('js')
             <script>
+
                 $(document).ready(function () {
+
+                    let $sepeteEkle = $('.sepete-ekle');
+
+                    $sepeteEkle.click(function () {
+                        let sepeteEklenecekKitapID = $(this).data('selected-value');
+                        let url = '{{ route('kitaplar.sepete_ekle', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', sepeteEklenecekKitapID);
+
+                        $.ajax({
+                            url: url,
+                            method: "POST",
+                            dataType: "JSON",
+                            headers: {
+                                'X-CSRF-TOKEN': "{{csrf_token()}}",
+                            },
+                            success: function (data) {
+                                if (data.status) {
+                                    $.notify('Sepete Eklendi.', 'success');
+                                    setTimeout(function () {
+                                        window.location.reload()
+                                    }, 2000);
+                                }
+                            },
+                            error: function (xhr) {
+                                console.log('E => ', xhr)
+                            }
+                        });
+                    });
+
                     let $fav = $('.fvrt-btn');
 
                     $fav.find('i').click(function () {
