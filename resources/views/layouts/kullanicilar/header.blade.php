@@ -6,14 +6,18 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="author" content=""/>
+
     @yield('title')
     <title>MoonBook | Anasayfa</title>
-    <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    @yield('link')
+
+    <!-- Bootstrap icons-->
     <script src="https://kit.fontawesome.com/68b01077e6.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.js"
             integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
@@ -52,16 +56,16 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link position-relative" role="button" href="{{ route('kitaplar.sepet') }}">
-                                <i class="fa-solid fa-cart-shopping" style="color: black; font-size: 20px"></i>
+                                <i class="fa-solid fa-cart-shopping" style="color: black; font-size: 24px"></i>
                                 <span class="position-absolute top-5 start-95 translate-middle badge rounded-pill bg-danger"
-                                      style="font-size: 0.5rem;">{{ SepetDetaylari::getSepettekiKitapSayisi() }}</span>
+                                      style="font-size: 0.65rem;">{{ SepetDetaylari::getSepettekiKitapSayisi() }}</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link position-relative" role="button" href="{{ route('favoriler') }}">
-                                <i class="fa-solid fa-heart" style="color: black; font-size: 20px"></i>
+                                <i class="fa-solid fa-heart" style="color: black; font-size: 24px"></i>
                                 <span class="position-absolute top-5 start-95 translate-middle badge rounded-pill bg-danger"
-                                      style="font-size: 0.5rem;">{{ Favoriler::getFavoriKitapSayisi() }}</span>
+                                      style="font-size: 0.65rem;">{{ Favoriler::getFavoriKitapSayisi() }}</span>
                             </a>
                         </li>
                         <li class="nav-item dropdown mt-0 pt-0">
@@ -70,7 +74,7 @@
                                data-bs-toggle="dropdown"
                                aria-expanded="false"><b>{{ Auth::user()->adi_soyadi }}</b></a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear"></i> Profili
+                                <li><a class="dropdown-item" href="{{ route('profil_duzenle') }}"><i class="fa-solid fa-gear"></i> Profili
                                         Düzenle</a>
                                 </li>
                                 <li><a class="dropdown-item" href="#"><i class="fa-solid fa-box"></i> Tüm

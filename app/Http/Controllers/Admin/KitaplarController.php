@@ -25,6 +25,7 @@ class KitaplarController extends Controller
         $yayin_evleri = YayinEvleri::all();
         return view('admin.kitaplar.anasayfa', compact('kitaplar', 'kategoriler', 'yazarlar', 'yayin_evleri', 'toplamkitap'));
     }
+
     public function getKitap_Ekle()
     {
         $kategoriler = Kategori::all();

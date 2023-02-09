@@ -112,6 +112,16 @@ Route::get('/kvkk', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getKVKK'
 ]);
 
+Route::get('/profil-duzenle', [
+    'as' => 'profil_duzenle',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getProfilDuzenle'
+]);
+
+Route::put('/profil-duzenle/{user}', [
+    'as' => 'profil_duzenle_put',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@putProfilDuzenle'
+]);
+
 // Kitap İşlemleri
 Route::prefix('/kitaplar')->as('kitaplar.')->group(function () {
     Route::get('/kategori/{kategori}', [

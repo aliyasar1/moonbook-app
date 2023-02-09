@@ -15,7 +15,6 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
-
                             <!-- Fotoğraf Yükle -->
                             <div class="col-lg-6 d-flex align-items-center">
                                 <div class="container">
@@ -167,6 +166,8 @@
                                                 </div>
                                                 @enderror
                                             </div>
+
+
                                             <button type="submit"
                                                     class="btn btn-danger btn-user btn-block">
                                                 Düzenle
