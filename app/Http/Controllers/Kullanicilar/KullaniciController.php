@@ -10,6 +10,7 @@ use App\Models\Kategori;
 use App\Models\Kitaplar;
 use App\Models\Sepet;
 use App\Models\SepetDetaylari;
+use App\Models\Siparisler;
 use App\Models\Stok;
 use App\Models\User;
 use App\Models\YayinEvleri;
@@ -289,6 +290,16 @@ class KullaniciController extends Controller
     {
         $favoriKitaplar = Favoriler::query()->where('kullanici_id', Auth::user()->id)->get();
         return view('kullanicilar.favoriler', compact('favoriKitaplar'));
+    }
+
+    public function getTumSiparislerim() {
+        $deactiveSepetler = Sepet::query()
+            ->with(['sepetDetaylari', 'sepetDetaylari.kitaplar'])
+            ->where('is_active', 0)
+            ->where('kullanici_id', Auth::user()->id)
+            ->get();
+
+        return view('kullanicilar.tum_siparislerim', compact('deactiveSepetler'));
     }
 
     public function getKVKK()

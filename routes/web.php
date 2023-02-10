@@ -117,6 +117,11 @@ Route::get('/profil-duzenle', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getProfilDuzenle'
 ]);
 
+Route::get('/tum-siparislerim', [
+    'as' => 'tum_siparislerim',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getTumSiparislerim'
+]);
+
 Route::put('/profil-duzenle/{user}', [
     'as' => 'profil_duzenle_put',
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@putProfilDuzenle'
@@ -173,7 +178,6 @@ Route::prefix('/kitaplar')->as('kitaplar.')->group(function () {
         'uses' => 'App\Http\Controllers\Kullanicilar\SepetController@postSepetiOnayla'
     ]);
 });
-
 
 // Admin
 Route::prefix('/satici')->as('satici.')->middleware(['admin'])->group(function () {
