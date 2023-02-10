@@ -74,15 +74,15 @@
                                data-bs-toggle="dropdown"
                                aria-expanded="false"><b>{{ Auth::user()->adi_soyadi }}</b></a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
-                                <li><a class="dropdown-item" href="{{ route('profil_duzenle') }}"><i class="fa-solid fa-gear"></i> Profili
+                                <li><a class="dropdown-item" href="{{ route('profil_duzenle') }}"><i class="fa-solid fa-gear" style="font-size: 16px"></i> Profili
                                         Düzenle</a>
                                 </li>
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-box"></i> Tüm
+                                <li><a class="dropdown-item" href="{{ route('tum_siparislerim') }}"><i class="fa-solid fa-box" style="font-size: 16px"></i> Tüm
                                         Siparişlerim</a>
                                 </li>
                                 <hr>
-                                <li><a class="dropdown-item" href="{{ route('cikis_yap') }}"><i
-                                                class="fa-solid fa-arrow-right-from-bracket"></i>
+                                <li><a class="dropdown-item" href="{{ route('cikis_yap') }}">
+                                        <i class="fa-solid fa-arrow-right-from-bracket" style="font-size: 16px"></i>
                                         Çıkış Yap</a></li>
                             </ul>
                         </li>
