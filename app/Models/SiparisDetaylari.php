@@ -31,7 +31,7 @@ class SiparisDetaylari extends Model
 
     protected $table = 'siparis_detaylari';
 
-    protected $fillable = ['id', 'siparis_id', 'kitap_id', 'miktar'];
+    protected $fillable = ['id', 'siparis_id', 'kitap_id', 'miktar', 'fiyat'];
 
     public function kitap()
     {
