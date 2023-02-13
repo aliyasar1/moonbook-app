@@ -16,6 +16,10 @@
                         <div class="card-body p-2">
                             <div class="d-flex justify-content-around">
                                 <div class="col-sm-2 text-center">
+                                    <p class="card-text m-0"><b>Sipariş Kodu</b></p>
+                                    <p class="card-text">{{ $sepet->kod }}</p>
+                                </div>
+                                <div class="col-sm-2 text-center">
                                     <p class="card-text m-0"><b>Siparis Tarihi</b></p>
                                     <p class="card-text">{{ Carbon::parse($sepet->updated_at)->format('d M Y') . ' - ' . $sepet->updated_at->diffForHumans() }}</p>
                                 </div>
@@ -26,6 +30,21 @@
                                 <div class="col-sm-2 text-center">
                                     <p class="card-text m-0"><b>Alıcı</b></p>
                                     <p class="card-text">{{ $sepet->kullanicilar->adi_soyadi }}</p>
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <p class="card-text m-0"><b>Tutar</b></p>
+                                    <p class="card-text">
+                                        @foreach($sepet->siparis->siparis_detaylari as $detay)
+                                            {{ $detay->where('siparis_id', $sepet->siparis->id)->sum('fiyat') }}
+                                            @break
+                                        @endforeach
+                                    </p>
+                                </div>
+                                <div class="text-center">
+                                    <a href="#" class="btn btn-warning">
+                                        <b>Sipariş Detayı</b>
+                                        <i class="fa-solid fa-chevron-down" style="margin-left: 5px"></i>
+                                    </a>
                                 </div>
                             </div>
                             <hr class="m-0 mb-3">

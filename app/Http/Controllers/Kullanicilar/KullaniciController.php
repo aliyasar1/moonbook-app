@@ -294,7 +294,7 @@ class KullaniciController extends Controller
 
     public function getTumSiparislerim() {
         $deactiveSepetler = Sepet::query()
-            ->with(['sepetDetaylari', 'sepetDetaylari.kitaplar'])
+            ->with(['sepetDetaylari', 'sepetDetaylari.kitaplar','siparis', 'siparis.siparis_detaylari'])
             ->where('is_active', 0)
             ->where('kullanici_id', Auth::user()->id)
             ->get();

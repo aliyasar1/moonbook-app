@@ -37,6 +37,10 @@ class Siparisler extends Model
 
     protected $fillable = ['id', 'sepet_id', 'kod'];
 
+    public function sepetler() {
+        return $this->hasMany(Sepet::class, 'sepet_id', 'id');
+    }
+
     public function siparis_detaylari()
     {
         return $this->hasMany(SiparisDetaylari::class, "siparis_id", "id");

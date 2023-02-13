@@ -201,7 +201,8 @@ class SepetController extends Controller
             $siparis->siparis_detaylari()->create([
                 'siparis_id' => $siparis->id,
                 'kitap_id' => $detaylar->kitap_id,
-                'miktar' => $detaylar->miktar
+                'miktar' => $detaylar->miktar,
+                'fiyat' => $detaylar->kitaplar->fiyat * $detaylar->miktar
             ]);
             Stok::query()->where('kitap_id', $detaylar->kitap_id)->update([
                 'stok_adeti' => $detaylar->kitaplar->stok->stok_adeti - $detaylar->miktar,
