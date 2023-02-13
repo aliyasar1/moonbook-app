@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5"
-                                                                                   src="{{ asset('storage/bookface.jpg') }}"
+                                                                                   src="{{ asset('storage/bookimage.png') }}"
                                                                                    alt="..."/></div>
             </div>
         </div>

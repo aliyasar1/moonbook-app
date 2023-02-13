@@ -9,7 +9,7 @@
             @foreach($kategoriler as $kategori)
                 <li class="nav-item">
                     <a class="btn bg-warning"
-                       href="{{ route('kitaplar.kategori', ['kategori' => $kategori->id]) }}">{{ $kategori->adi }}</a>
+                       href="{{ route('kitaplar.kategori', ['kategori' => $kategori->id]) }}"><b>{{ $kategori->adi }}</b></a>
                 </li>
             @endforeach
         </ul>

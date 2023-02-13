@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+@php use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\Storage; @endphp
+        <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,12 +12,14 @@
     <meta name="author" content="">
 
     @yield('title')
+    <title>MoonBook | Anasayfa </title>
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="{{ asset('css/fontawesome-free/css/all.min.css') }}">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
 
     <!-- Custom styles for this template-->
@@ -34,7 +37,7 @@
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('satici.anasayfa') }}">
             <div class="sidebar-brand-icon">
-                <img src="{{ asset('storage/logolar/moonbook.png') }}" class="w-100 h-100">
+                <img src="{{ asset('storage/logolar/moonbook.png') }}" class="w-100 h-100" alt="moonbook">
             </div>
             <div class="sidebar-brand-text mx-3">MoonBook</div>
         </a>
@@ -157,7 +160,7 @@
 
             <!-- Topbar Search -->
             <form
-                class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                 <div class="input-group">
                     <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
                            aria-label="Search" aria-describedby="basic-addon2">
@@ -259,9 +262,10 @@
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ \Illuminate\Support\Facades\Auth::user()->adi_soyadi }}</span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->firma_adi }}</span>
                         <img class="img-profile rounded-circle"
-                             src="{{ asset('storage/musteriler/' . \Illuminate\Support\Facades\Auth::user()->fotograf) }}" alt="default_Man">
+                             src="{{ Storage::url('public/saticilar/' . Auth::user()->fotograf) }}"
+                             alt="default_Man">
                     </a>
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

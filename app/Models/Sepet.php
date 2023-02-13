@@ -48,6 +48,11 @@ class Sepet extends Model
         return $this->hasMany(SepetDetaylari::class, "sepet_id", "id");
     }
 
+    public function siparis()
+    {
+        return $this->hasOne(Siparisler::class, 'sepet_id', 'id');
+    }
+
     public function kullanicilar ()
     {
         return $this->belongsTo(User::class, 'kullanici_id');

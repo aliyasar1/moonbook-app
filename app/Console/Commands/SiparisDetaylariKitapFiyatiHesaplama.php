@@ -3,27 +3,33 @@
 namespace App\Console\Commands;
 
 use App\Models\Sepet;
-use App\Models\SepetDetaylari;
 use App\Models\SiparisDetaylari;
+use App\Models\Siparisler;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Auth;
 
 class SiparisDetaylariKitapFiyatiHesaplama extends Command
 {
-    protected $signature = 'siparisdetayi:fiyathesapla';
+    protected $signature = 'sd:fiyat_hesapla';
 
     protected $description = 'Verilen siparişlerin detay tablosundaki fiyat sütununa kitap miktarı ile hesaplanan toplam ücreti';
 
     public function handle()
     {
-        $sepet = Sepet::query()->where('kullanici_id', Auth::user()->id)->where('is_active', 0)->get();
-        $toplam = 0.00;
-        $sepet_detaylari = SepetDetaylari::query()->with(['kitaplar'])->where('sepet_id', $sepet->id)->get();
-        foreach ($sepet_detaylari as $sepet_detayi) {
-            $toplam += $sepet_detayi->kitaplar->fiyat * $sepet_detayi->miktar;
-            SiparisDetaylari::query()->update([
-                'fiyat' => $toplam
-            ]);
+        $sepetler = Sepet::query()
+            ->with(['sepetDetaylari', 'sepetDetaylari.kitaplar'])
+            ->where('is_active', 0)
+            ->get();
+
+
+        foreach ($sepetler as $sepet) {
+            foreach ($sepet->sepetDetaylari as $detay) {
+                SiparisDetaylari::query()
+                    ->where('siparis_id', $sepet->siparis->id)
+                    ->where('kitap_id', $detay->kitaplar->id)
+                    ->update([
+                        'fiyat' => $detay->kitaplar->fiyat * $detay->miktar
+                    ]);
+            }
         }
         return Command::SUCCESS;
     }

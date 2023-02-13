@@ -66,8 +66,8 @@
                                                     <label for="yazar_id" class="mb-0"
                                                            style="font-size: 14px;">Yazar</label>
                                                     <select name="yazar_id"
-                                                                                                         id="yazar_id"
-                                                                                                         class="form-control">
+                                                            id="yazar_id"
+                                                            class="form-control">
                                                         <option value="" selected>Yazar Seçiniz...</option>
                                                         @foreach($yazarlar as $yazar)
                                                             <option value="{{$yazar->id}}"
