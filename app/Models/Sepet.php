@@ -55,6 +55,6 @@ class Sepet extends Model
 
     public function kullanicilar ()
     {
-        return $this->belongsTo(User::class, 'kullanici_id');
+        return $this->belongsTo(User::class,'kullanici_id', 'id');
     }
 }

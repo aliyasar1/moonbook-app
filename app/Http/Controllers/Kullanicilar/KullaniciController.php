@@ -10,6 +10,7 @@ use App\Models\Kategori;
 use App\Models\Kitaplar;
 use App\Models\Sepet;
 use App\Models\SepetDetaylari;
+use App\Models\SiparisDetaylari;
 use App\Models\Siparisler;
 use App\Models\Stok;
 use App\Models\User;
@@ -300,6 +301,11 @@ class KullaniciController extends Controller
             ->get();
 
         return view('kullanicilar.tum_siparislerim', compact('deactiveSepetler'));
+    }
+
+    public function getSiparisDetayi(Siparisler $siparis) {
+        $siparis->load(['siparis_detaylari', 'siparis_detaylari.kitap','sepetler', 'sepetler.kullanicilar']);
+        return view('kullanicilar.siparis_detayi', compact('siparis'));
     }
 
     public function getKVKK()
