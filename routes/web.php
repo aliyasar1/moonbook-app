@@ -122,6 +122,11 @@ Route::get('/tum-siparislerim', [
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getTumSiparislerim'
 ]);
 
+Route::get('/tum-siparislerim/siparis-detayi/{siparis}', [
+    'as' => 'siparis_detayi',
+    'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@getSiparisDetayi'
+]);
+
 Route::put('/profil-duzenle/{user}', [
     'as' => 'profil_duzenle_put',
     'uses' => 'App\Http\Controllers\Kullanicilar\KullaniciController@putProfilDuzenle'

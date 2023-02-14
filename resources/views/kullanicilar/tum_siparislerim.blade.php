@@ -35,13 +35,13 @@
                                     <p class="card-text m-0"><b>Tutar</b></p>
                                     <p class="card-text">
                                         @foreach($sepet->siparis->siparis_detaylari as $detay)
-                                            {{ $detay->where('siparis_id', $sepet->siparis->id)->sum('fiyat') }}
+                                            ₺ {{ $detay->where('siparis_id', $sepet->siparis->id)->sum('fiyat') }}
                                             @break
                                         @endforeach
                                     </p>
                                 </div>
                                 <div class="text-center">
-                                    <a href="#" class="btn btn-warning">
+                                    <a href="{{ route('siparis_detayi', $sepet->siparis->id) }}" class="btn btn-warning">
                                         <b>Sipariş Detayı</b>
                                         <i class="fa-solid fa-chevron-down" style="margin-left: 5px"></i>
                                     </a>
@@ -50,7 +50,7 @@
                             <hr class="m-0 mb-3">
                             <div>
                                 @foreach($sepet->sepetDetaylari as $detaylar)
-                                    <img class="ratio3x2 mx-2" style="width: 50px; margin-right: 10px"
+                                    <img class="ratio3x2 mx-2" style="width: 50px; margin-right: 10px;"
                                          src="{{ \Illuminate\Support\Facades\Storage::url('public/saticilar/kitaplar/'. $detaylar->kitaplar->fotograf) }}"
                                          alt="{{ $detaylar->kitaplar->adi }}">
                                 @endforeach

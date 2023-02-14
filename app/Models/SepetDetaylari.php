@@ -34,7 +34,7 @@ class SepetDetaylari extends Model
 
     protected $table = 'sepet_detaylari';
 
-    protected $fillable = ['sepet_id', 'kitap_id', 'miktar'];
+    protected $fillable = ['sepet_id', 'kitap_id', 'miktar', 'fiyat'];
 
     // Relations
     public function sepetler() {

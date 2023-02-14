@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Sepet;
+use App\Models\SepetDetaylari;
 use App\Models\SiparisDetaylari;
 use App\Models\Siparisler;
 use Illuminate\Console\Command;
@@ -25,6 +26,13 @@ class SiparisDetaylariKitapFiyatiHesaplama extends Command
             foreach ($sepet->sepetDetaylari as $detay) {
                 SiparisDetaylari::query()
                     ->where('siparis_id', $sepet->siparis->id)
+                    ->where('kitap_id', $detay->kitaplar->id)
+                    ->update([
+                        'fiyat' => $detay->kitaplar->fiyat * $detay->miktar
+                    ]);
+
+                SepetDetaylari::query()
+                    ->where('sepet_id', $sepet->id)
                     ->where('kitap_id', $detay->kitaplar->id)
                     ->update([
                         'fiyat' => $detay->kitaplar->fiyat * $detay->miktar

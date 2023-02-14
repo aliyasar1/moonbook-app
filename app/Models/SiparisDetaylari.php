@@ -34,12 +34,12 @@ class SiparisDetaylari extends Model
     protected $fillable = ['id', 'siparis_id', 'kitap_id', 'miktar', 'fiyat'];
 
     public function siparisler() {
-        return $this->hasMany(Siparisler::class, 'siparis_id', 'id');
+        return $this->hasMany(Siparisler::class, 'id', 'siparis_id');
     }
 
     public function kitap()
     {
-        return $this->hasOne(Kitaplar::class, "kitap_id", "id");
+        return $this->hasOne(Kitaplar::class, "id", "kitap_id");
     }
 
 }
