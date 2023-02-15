@@ -12,7 +12,7 @@
         @foreach($deactiveSepetler as $sepet)
             <div class="my-3">
                 <div class="mb-5">
-                    <div class="card shadow border-0" style="height: 170px; width: 100%">
+                    <div class="card shadow border-0" style="min-height: 170px; width: 100%">
                         <div class="card-body p-2">
                             <div class="d-flex justify-content-around">
                                 <div class="col-sm-2 text-center">

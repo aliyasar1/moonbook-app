@@ -43,41 +43,48 @@
                 </form>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="font-size: 16px;">
-                        <li class="nav-item"><a class="nav-link text-black"
+                        <li class="nav-item nav-li"><a class="nav-link text-black"
                                                 href="{{ route('anasayfa') }}"><b>Anasayfa</b></a></li>
-                        <li class="nav-item"><a class="nav-link text-black"
+                        <li class="nav-item nav-li"><a class="nav-link text-black"
                                                 href="{{ route('kitaplar') }}"><b>Kitaplar</b></a></li>
-                        <li class="nav-item"><a class="nav-link text-black"
+                        <li class="nav-item nav-li"><a class="nav-link text-black"
                                                 href="{{ route('yazarlar') }}"><b>Yazarlar</b></a></li>
-                        <li class="nav-item">
+                        <li class="nav-item nav-li">
                             <a class="nav-link text-black" href="{{ route('yayin_evleri') }}">
                                 <b>Yayın Evleri</b>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item nav-li">
                             <a class="nav-link position-relative" role="button" href="{{ route('kitaplar.sepet') }}">
                                 <i class="fa-solid fa-cart-shopping" style="color: black; font-size: 24px"></i>
                                 <span class="position-absolute top-5 start-95 translate-middle badge rounded-pill bg-danger"
                                       style="font-size: 0.65rem;">{{ SepetDetaylari::getSepettekiKitapSayisi() }}</span>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item nav-li">
                             <a class="nav-link position-relative" role="button" href="{{ route('favoriler') }}">
                                 <i class="fa-solid fa-heart" style="color: black; font-size: 24px"></i>
                                 <span class="position-absolute top-5 start-95 translate-middle badge rounded-pill bg-danger"
                                       style="font-size: 0.65rem;">{{ Favoriler::getFavoriKitapSayisi() }}</span>
                             </a>
                         </li>
-                        <li class="nav-item dropdown mt-0 pt-0">
-                            <a class="nav-link dropdown-toggle text-black" id="navbarDropdownPortfolio" href="#"
-                               role="button"
-                               data-bs-toggle="dropdown"
-                               aria-expanded="false"><b>{{ Auth::user()->adi_soyadi }}</b></a>
+                        <li class="nav-item nav-li dropdown mt-0 pt-0 mx-3" style="border: 2px black solid; border-radius: 5px">
+                            <div class="d-flex justify-content-center m-1">
+                                <img class="img-profile rounded-circle"
+                                     style="width: 40px; height: 40px"
+                                     src="{{ Storage::url('public/musteriler/' . Auth::user()->fotograf) }}"
+                                     alt="{{ Auth::user()->adi_soyadi }}">
+                                <a class="nav-link dropdown-toggle text-black" id="navbarDropdownPortfolio" href="#"
+                                   role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false"><b>{{ Auth::user()->adi_soyadi }}</b></a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
-                                <li><a class="dropdown-item" href="{{ route('profil_duzenle') }}"><i class="fa-solid fa-gear" style="font-size: 16px"></i> Profili
+                                <li><a class="dropdown-item" href="{{ route('profil_duzenle') }}"><i
+                                                class="fa-solid fa-gear" style="font-size: 16px"></i> Profili
                                         Düzenle</a>
                                 </li>
-                                <li><a class="dropdown-item" href="{{ route('tum_siparislerim') }}"><i class="fa-solid fa-box" style="font-size: 16px"></i> Tüm
+                                <li><a class="dropdown-item" href="{{ route('tum_siparislerim') }}"><i
+                                                class="fa-solid fa-box" style="font-size: 16px"></i> Tüm
                                         Siparişlerim</a>
                                 </li>
                                 <hr>
@@ -85,11 +92,11 @@
                                         <i class="fa-solid fa-arrow-right-from-bracket" style="font-size: 16px"></i>
                                         Çıkış Yap</a></li>
                             </ul>
+                            </div>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-
         @yield('hero')
     </div>

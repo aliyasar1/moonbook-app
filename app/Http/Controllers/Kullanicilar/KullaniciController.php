@@ -304,7 +304,6 @@ class KullaniciController extends Controller
     }
 
     public function getSiparisDetayi(Siparisler $siparis) {
-        $siparis->load(['siparis_detaylari', 'siparis_detaylari.kitap','sepetler', 'sepetler.kullanicilar']);
         return view('kullanicilar.siparis_detayi', compact('siparis'));
     }
 

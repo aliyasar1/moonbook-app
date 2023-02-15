@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+@php use Illuminate\Support\Facades\Storage; @endphp
+        <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -15,8 +16,8 @@
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="{{ asset('css/fontawesome-free/css/all.min.css') }}">
     <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/admin/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -38,7 +39,10 @@
                 <div class="card-body p-0">
                     <!-- Nested Row within Card Body -->
                     <div class="row">
-                        <div class="col-lg-6 d-none d-flex justify-content-center"><img src="{{\Illuminate\Support\Facades\Storage::url('public/logolar/moonbookSiyah.png')}}"></div>
+                        <div class="col-lg-6 d-flex justify-content-center align-items-center">
+                            <img style="width: 450px; height: 450px"
+                                 src="{{Storage::url('public/logolar/moonbooklogo.png')}}" alt="moonbook">
+                        </div>
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
@@ -47,21 +51,23 @@
                                 <form method="post" action="{{ route('satici_girisi_yap_post') }}" class="user">
                                     @csrf
                                     <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" id="email" name="email" aria-describedby="emailHelp" placeholder="Email">
+                                        <input type="email" class="form-control form-control-user" id="email"
+                                               name="email" aria-describedby="emailHelp" placeholder="Email">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control form-control-user" id="sifre" name="sifre" placeholder="Şifre">
+                                        <input type="password" class="form-control form-control-user" id="sifre"
+                                               name="sifre" placeholder="Şifre">
                                     </div>
                                     @if(session()->has('danger'))
                                         <div class="alert alert-danger" style="border-radius: 25px" role="alert">
                                             {{session()->get('danger')}}
                                         </div>
                                     @endif
-{{--                                    @if($errors->any())--}}
-{{--                                        <div class="alert alert-danger" style="border-radius: 25px" role="alert">--}}
-{{--                                            {{ $errors->first() }}--}}
-{{--                                        </div>--}}
-{{--                                    @endif--}}
+                                    {{--                                    @if($errors->any())--}}
+                                    {{--                                        <div class="alert alert-danger" style="border-radius: 25px" role="alert">--}}
+                                    {{--                                            {{ $errors->first() }}--}}
+                                    {{--                                        </div>--}}
+                                    {{--                                    @endif--}}
                                     <button type="submit" class="btn btn-danger btn-user btn-block">
                                         Giriş Yap
                                     </button>
@@ -72,7 +78,7 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-center">
-                                <div class="text-center mt-5">
+                                <div class="text-center">
                                     <a class="small text-danger" href="{{ route('satici_ol') }}">Satıcı Ol!</a>
                                 </div>
                             </div>

@@ -36,8 +36,9 @@
                 <div class="card-body p-0">
                     <!-- Nested Row within Card Body -->
                     <div class="row">
-                        <div class="col-lg-6 d-none d-flex justify-content-center"><img
-                                    src="{{\Illuminate\Support\Facades\Storage::url('public/logolar/moonbookSiyah.png')}}">
+                        <div class="col-lg-6 d-flex justify-content-center align-items-center">
+                            <img style="width: 450px; height: 450px"
+                                 src="{{Storage::url('public/logolar/moonbooklogo.png')}}" alt="moonbook">
                         </div>
                         <div class="col-lg-6">
                             <div class="p-5">
@@ -72,9 +73,8 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-center">
-                                <div class="text-center mt-5">
-                                    <a class="small text-danger" href="{{route('satici_girisi_yap')}}">Satıcı Girişi
-                                        Yap!</a>
+                                <div class="text-center">
+                                    <a class="small text-danger" href="{{route('satici_girisi_yap')}}">Satıcı Girişi Yap!</a>
                                 </div>
                             </div>
                         </div>
