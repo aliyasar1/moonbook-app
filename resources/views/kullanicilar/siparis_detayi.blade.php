@@ -20,7 +20,7 @@
                 <th scope="col">Yayın Evi</th>
                 <th scope="col">Sayfa Sayısı</th>
                 <th scope="col">Yayın Yılı</th>
-                <th scope="col">Açıklama</th>
+                <th scope="col">Satıcı</th>
                 <th scope="col">Miktar</th>
                 <th scope="col">Fiyat</th>
             </tr>
@@ -35,13 +35,11 @@
                              alt="{{ $kitap->kitap->adi }}"></td>
                     <td class="align-middle">{{ $kitap->kitap->kategoriler->adi }}</td>
                     <td class="align-middle">{{ $kitap->kitap->adi }}</td>
-                    <td class="align-middle">{{ $kitap->kitap->yazarlar->adi_soyadi }}</td>
-                    <td class="align-middle">{{ $kitap->kitap->yayin_evleri->adi }}</td>
+                    <td class="align-middle"><a class="text-decoration-none" href="{{ route('yazar_kitaplari', $kitap->kitap->yazarlar->id) }}">{{ $kitap->kitap->yazarlar->adi_soyadi }}</a></td>
+                    <td class="align-middle"><a class="text-decoration-none" href="{{ route('yayin_evleri_kitaplari', $kitap->kitap->yayin_evleri->id) }}">{{ $kitap->kitap->yayin_evleri->adi }}</a></td>
                     <td class="align-middle">{{ $kitap->kitap->sayfa_sayisi }}</td>
                     <td class="align-middle">{{ $kitap->kitap->yayin_yili }}</td>
-                    <td class="align-middle"
-                        title="{{ $kitap->kitap->aciklama }}">{{ \Illuminate\Support\Str::limit($kitap->kitap->aciklama, 30) }}
-                    </td>
+                    <td class="align-middle"><a class="text-decoration-none" href="{{ route('saticilar', $kitap->kitap->saticilar->id) }}">{{ $kitap->kitap->saticilar->firma_adi }}</a></td>
                     <td class="align-middle">{{ $kitap->miktar }}</td>
                     <td class="align-middle">{{ '₺ '. $kitap->kitap->fiyat }}</td>
                 </tr>

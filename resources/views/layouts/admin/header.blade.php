@@ -265,7 +265,7 @@
                         <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->firma_adi }}</span>
                         <img class="img-profile rounded-circle"
                              src="{{ Storage::url('public/saticilar/' . Auth::user()->fotograf) }}"
-                             alt="default_Man">
+                             alt="{{ Auth::user()->adi_soyadi }}">
                     </a>
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
