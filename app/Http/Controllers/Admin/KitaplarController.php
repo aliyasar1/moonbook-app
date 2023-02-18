@@ -18,12 +18,11 @@ class KitaplarController extends Controller
 {
     public function getAnasayfa()
     {
-        $kitaplar = Kitaplar::query()->where('satici_id', Auth::user()->id)->get();
-        $toplamkitap = count($kitaplar);
-        $kategoriler = Kategori::all();
-        $yazarlar = Yazarlar::all();
-        $yayin_evleri = YayinEvleri::all();
-        return view('admin.kitaplar.anasayfa', compact('kitaplar', 'kategoriler', 'yazarlar', 'yayin_evleri', 'toplamkitap'));
+        $kitaplar = Kitaplar::query()
+            ->where('satici_id', Auth::user()->id)
+            ->get();
+
+        return view('admin.kitaplar.anasayfa', compact('kitaplar'));
     }
 
     public function getKitap_Ekle()
@@ -31,6 +30,7 @@ class KitaplarController extends Controller
         $kategoriler = Kategori::all();
         $yazarlar = Yazarlar::all();
         $yayin_evleri = YayinEvleri::all();
+
         return view('admin.kitaplar.kitap_ekle', compact('kategoriler', 'yazarlar', 'yayin_evleri'));
     }
 

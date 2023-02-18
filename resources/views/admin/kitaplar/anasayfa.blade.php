@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <div class="flex m-2 mx-4 p-2" style="font-size: 24px">
-        {{ 'Kitaplar ('. $toplamkitap . ' adet)' }}
+        {{ 'Kitaplar ('. count($kitaplar) . ' adet)' }}
     </div>
     <div class="gap-2 g-col-4 d-flex flex-wrap"
          style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
