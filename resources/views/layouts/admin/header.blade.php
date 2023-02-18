@@ -52,15 +52,7 @@
                 <span>Anasayfa</span></a>
         </li>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Interface
-        </div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
+        <!-- Nav Item - Kitaplar -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                aria-expanded="true" aria-controls="collapseTwo">
@@ -77,22 +69,29 @@
             </div>
         </li>
 
-        <!-- Nav Item - Utilities Collapse Menu -->
+        <!-- Nav Item - Favoriler -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-               aria-expanded="true" aria-controls="collapseUtilities">
-                <i class="fa-solid fa-store"></i>
-                <span>Satıcılar</span>
-            </a>
-            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                 data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Satıcı İşlemleri:</h6>
-                    <a class="collapse-item" href="#">Satıcılar Listesi</a>
-                    <a class="collapse-item" href="#">Satıcı Ekle</a>
-                </div>
-            </div>
+            <a class="nav-link" href="#">
+                <i class="fa-solid fa-heart"></i>
+                <span>Favoridekiler</span></a>
         </li>
+
+{{--        <!-- Nav Item - Utilities Collapse Menu -->--}}
+{{--        <li class="nav-item">--}}
+{{--            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"--}}
+{{--               aria-expanded="true" aria-controls="collapseUtilities">--}}
+{{--                <i class="fa-solid fa-heart"></i>--}}
+{{--                <span>Favoridekiler</span>--}}
+{{--            </a>--}}
+{{--            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"--}}
+{{--                 data-parent="#accordionSidebar">--}}
+{{--                <div class="bg-white py-2 collapse-inner rounded">--}}
+{{--                    <h6 class="collapse-header">Satıcı İşlemleri:</h6>--}}
+{{--                    <a class="collapse-item" href="#">Satıcılar Listesi</a>--}}
+{{--                    <a class="collapse-item" href="#">Satıcı Ekle</a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </li>--}}
 
         <!-- Divider -->
         <hr class="sidebar-divider">
@@ -244,7 +243,7 @@
                         </h6>
                         <a class="dropdown-item d-flex align-items-center" href="#">
                             <div class="dropdown-list-image mr-3">
-                                <img class="rounded-circle" src="{{ asset('storage/undraw_profile_1.svg') }}"
+                                <img class="rounded-circle" src="{{ asset('storage/undraw_profile.svg') }}"
                                      alt="...">
                                 <div class="status-indicator bg-success"></div>
                             </div>

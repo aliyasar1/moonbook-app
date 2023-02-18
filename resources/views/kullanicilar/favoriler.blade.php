@@ -17,7 +17,7 @@
                 <th scope="col">Yayın Evi</th>
                 <th scope="col">Sayfa Sayısı</th>
                 <th scope="col">Yayın Yılı</th>
-                <th scope="col">Açıklama</th>
+                <th scope="col">Satıcı</th>
                 <th scope="col">Fiyat</th>
                 <th scope="col">Favori</th>
             </tr>
@@ -36,9 +36,7 @@
                     <td class="align-middle">{{ $favkitap->kitaplar->yayin_evleri->adi }}</td>
                     <td class="align-middle">{{ $favkitap->kitaplar->sayfa_sayisi }}</td>
                     <td class="align-middle">{{ $favkitap->kitaplar->yayin_yili }}</td>
-                    <td class="align-middle"
-                        title="{{ $favkitap->kitaplar->aciklama }}">{{ \Illuminate\Support\Str::limit($favkitap->kitaplar->aciklama, 30) }}
-                    </td>
+                    <td class="align-middle"><a class="text-decoration-none" href="{{ route('saticilar', $favkitap->kitaplar->saticilar->id) }}">{{ $favkitap->kitaplar->saticilar->firma_adi }}</a></td>
                     <td class="align-middle">{{ '₺ '. $favkitap->kitaplar->fiyat }}</td>
                     <td class="align-middle">
                         <button type="submit" class="btn-favorilerden-cikar btn bg-warning" style="font-size: 18px" data-selected-value="{{ $favkitap->kitaplar->id ?? null }}">

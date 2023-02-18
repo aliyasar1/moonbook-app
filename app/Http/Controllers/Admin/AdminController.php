@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Favoriler;
 use App\Models\Ilceler;
 use App\Models\Iller;
 use App\Models\Kitaplar;
@@ -16,15 +17,28 @@ class AdminController extends Controller
 {
     public function getAnasayfa()
     {
-        $kitap = Kitaplar::query()->where('satici_id', Auth::user()->id)->get();
-        $kitapsayisi = count($kitap);
-        return view('admin.anasayfa', compact('kitapsayisi'));
+        $kitapsayisi = Kitaplar::query()
+            ->where('satici_id', Auth::user()->id)
+            ->count();
+
+        $favoriKitapSayisi = Favoriler::query()
+            ->with(['kitaplar'])
+            ->whereHas('kitaplar', function ($q) {
+                $q->where('satici_id', Auth::user()->id);
+            })
+            ->count();
+
+        return view('admin.anasayfa', compact('kitapsayisi','favoriKitapSayisi'));
     }
 
     public function getSaticiOl(User $user)
     {
-        $iller = Iller::query()->with(['ilceler'])->get();
+        $iller = Iller::query()
+            ->with(['ilceler'])
+            ->get();
+
         $ilceler = $iller->where('il', $user->il_id)->first();
+
         return view('admin.satici_ol', compact('user', 'iller', 'ilceler'));
     }
 
@@ -88,7 +102,10 @@ class AdminController extends Controller
     public function getProfilDuzenle()
     {
         $user = Auth::user();
-        $iller = Iller::query()->with(['ilceler'])->get();
+        $iller = Iller::query()
+            ->with(['ilceler'])
+            ->get();
+
         $ilceler = $iller->where('il', $user->il_id)->first();
         return view('admin.satici.profil_duzenle', compact('user', 'iller', 'ilceler'));
     }
