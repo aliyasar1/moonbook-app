@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Kullanicilar;
+namespace App\Http\Controllers\Customers;
 
 use App\Helpers\IyzicoAdresHelper;
 use App\Helpers\IyzicoBuyerHelper;
@@ -24,30 +24,33 @@ use Iyzipay\Model\BasketItemType;
 use Iyzipay\Model\Payment;
 use Iyzipay\Model\PayWithIyzicoInitialize;
 
-class SepetController extends Controller
+class CartController extends Controller
 {
-    public function getSepet()
+    public function getCart()
     {
-        $favorikitapsayisi = count(Favoriler::query()->where('kullanici_id', Auth::user()->id)->get());
-
         $sepet = Sepet::query()
             ->where('kullanici_id', Auth::user()->id)
             ->where('is_active', 1)
             ->first();
 
-        $sepettekiKitapSayisi = count(SepetDetaylari::query()->where('sepet_id', $sepet->id)->get());
-        $sepet_detaylari = SepetDetaylari::query()->where('sepet_id', $sepet->id)->get();
-        $sepetTutari = $this->SepetiHesapla($sepet);
-        return view('kullanicilar.sepet', compact('sepet_detaylari', 'sepetTutari', 'favorikitapsayisi', 'sepettekiKitapSayisi', 'sepet'));
+        $sepet_detaylari = SepetDetaylari::query()
+            ->where('sepet_id', $sepet->id)
+            ->get();
+
+        $sepetTutari = $this->calculateCartTotal($sepet);
+
+        return view('kullanicilar.sepet', compact('sepet_detaylari', 'sepetTutari', 'sepet'));
     }
 
-    public function postSepeteEkle(Kitaplar $kitap, Request $request)
+    public function postAddToCart(Kitaplar $kitap, Request $request)
     {
         $kullanici_sepeti = Sepet::query()
             ->where('kullanici_id', Auth::user()->id)
             ->where('is_active', 1)
             ->first();
+
         $miktar = $request->input('adet') ?? 1;
+
         $sepet_detaylari = new SepetDetaylari([
             'sepet_id' => $kullanici_sepeti->id,
             'kitap_id' => $kitap->id,
@@ -62,7 +65,7 @@ class SepetController extends Controller
         ]);
     }
 
-    public function deleteSepettenSil(Sepet $sepet, Kitaplar $kitap)
+    public function deleteFromCart(Sepet $sepet, Kitaplar $kitap)
     {
         SepetDetaylari::query()
             ->where('sepet_id', $sepet->id)
@@ -75,9 +78,8 @@ class SepetController extends Controller
         ]);
     }
 
-    public function putSepet(SepetDetaylari $sepetDetaylari)
+    public function putCart(SepetDetaylari $sepetDetaylari)
     {
-
         $sepetDetaylari->update();
 
         return response()->json([
@@ -86,7 +88,7 @@ class SepetController extends Controller
         ]);
     }
 
-    public function postSepetiOnayla(Request $request)
+    public function postConfirmCart(Request $request)
     {
 
         $krediKarti = new KrediKarti();
@@ -94,9 +96,9 @@ class SepetController extends Controller
         $kart = $this->prepare($request, $krediKarti->getFillable());
         $krediKarti->fill($kart);
 
-        $sepet = $this->getKullaniciSepeti();
+        $sepet = $this->getOrCreateCart();
 
-        $sepetTutari = $this->SepetiHesapla($sepet);
+        $sepetTutari = $this->calculateCartTotal($sepet);
 
         $request = IyzicoRequestHelper::createRequest($sepet, $sepetTutari);
 
@@ -112,8 +114,7 @@ class SepetController extends Controller
         $faturaAdresi = (new IyzicoAdresHelper)->getFaturaAdresi();
         $request->setBillingAddress($faturaAdresi);
 
-
-        $sepettekiKitaplar = $this->getSepettekiKitaplar($sepet);
+        $sepettekiKitaplar = $this->getBasketItems($sepet);
         $request->setBasketItems($sepettekiKitaplar);
 
         $options = IyzicoOptionsHelper::getTestOptions();
@@ -123,22 +124,24 @@ class SepetController extends Controller
         if ($payment->getStatus() == "success") {
 
             // Sepeti sona erdir.
-            $this->SepetiKapat($sepet);
+            $this->finalizeCart($sepet);
 
             // Sipariş oluştur
-            $this->createSiparisOlustur($sepet);
-
+            $this->createOrderWithDetails($sepet);
 
             return view("kullanicilar.odeme_alindi", compact('sepet'));
         } else {
             $errorMessage = $payment->getErrorMessage();
+
             return view("kullanicilar.odeme_hatali", compact('errorMessage'));
         }
     }
 
-    private function SepetiKapat(Sepet $sepet)
+    private function finalizeCart(Sepet $sepet)
     {
-        Sepet::query()->where('id', $sepet->id)->update(['is_active' => 0]);
+        Sepet::query()
+            ->where('id', $sepet->id)
+            ->update(['is_active' => 0]);
 
         Sepet::query()->firstOrCreate(
             ['kullanici_id' => Auth::user()->id, 'is_active' => true],
@@ -146,17 +149,20 @@ class SepetController extends Controller
         );
     }
 
-    private function SepetiHesapla(Sepet $sepet)
+    private function calculateCartTotal(Sepet $sepet)
     {
         $toplam = 0;
-        $sepet_detaylari = SepetDetaylari::query()->with(['kitaplar'])->where('sepet_id', $sepet->id)->get();
+        $sepet_detaylari = SepetDetaylari::query()
+            ->with(['kitaplar'])->where('sepet_id', $sepet->id)
+            ->get();
+
         foreach ($sepet_detaylari as $sepet_detayi) {
             $toplam += $sepet_detayi->kitaplar->fiyat * $sepet_detayi->miktar;
         }
         return $toplam;
     }
 
-    private function getKullaniciSepeti()
+    private function getOrCreateCart()
     {
         $kullanici = Auth::user();
         $sepetolustur = Sepet::query()->firstOrCreate(
@@ -166,11 +172,13 @@ class SepetController extends Controller
         return $sepetolustur;
     }
 
-    private function getSepettekiKitaplar(Sepet $sepet): array
+    private function getBasketItems(Sepet $sepet): array
     {
         $basketItems = [];
 
-        $sepetDetaylari = SepetDetaylari::query()->with(['kitaplar'])->where('sepet_id', $sepet->id)->get();
+        $sepetDetaylari = SepetDetaylari::query()
+            ->with(['kitaplar'])->where('sepet_id', $sepet->id)
+            ->get();
 
         foreach ($sepetDetaylari as $detay) {
             $item = new BasketItem();
@@ -188,7 +196,7 @@ class SepetController extends Controller
         return $basketItems;
     }
 
-    private function createSiparisOlustur(Sepet $sepet): Siparisler
+    private function createOrderWithDetails(Sepet $sepet): Siparisler
     {
         $siparis = new Siparisler([
             "sepet_id" => $sepet->id,

@@ -46,7 +46,7 @@
                         <li class="nav-item nav-li"><a class="nav-link text-black"
                                                 href="{{ route('anasayfa') }}"><b>Anasayfa</b></a></li>
                         <li class="nav-item nav-li"><a class="nav-link text-black"
-                                                href="{{ route('kitaplar') }}"><b>Kitaplar</b></a></li>
+                                                href="{{ route('kitaplar.kitaplar') }}"><b>Kitaplar</b></a></li>
                         <li class="nav-item nav-li"><a class="nav-link text-black"
                                                 href="{{ route('yazarlar') }}"><b>Yazarlar</b></a></li>
                         <li class="nav-item nav-li">
