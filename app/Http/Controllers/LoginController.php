@@ -13,15 +13,19 @@ use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
-    public function getGiris_Yap()
+    //Customer
+    public function getLogin()
     {
         return view('giris_yap');
     }
 
-    public function postGiris_Yap(Request $request)
+    public function postLogin(Request $request)
     {
         $inputs = $request->all();
-        $user = User::query()->where('email', $inputs['email'])->where('sifre', base64_encode($inputs['sifre']))->first();
+        $user = User::query()
+            ->where('email', $inputs['email'])
+            ->where('sifre', base64_encode($inputs['sifre']))
+            ->first();
 
         if (! is_null($user) && $user->type === User::USER_TYPE['ADMIN']) {
             return redirect()->route('giris_yap')->with('danger', 'E-Mail veya Şifre Hatalı. Tekrar Deneyiniz!');
@@ -32,22 +36,19 @@ class LoginController extends Controller
                 ['kullanici_id' => Auth::user()->id, 'is_active' => 1],
                 ['kod' => Str::random(8)]
             );
-            $kitapRoman = Kitaplar::query()->where('kategori_id', 3)->limit(4)->get();
-            $kitapKG = Kitaplar::query()->where('kategori_id', 4)->limit(4)->get();
-            $kitapCR = Kitaplar::query()->where('kategori_id', 9)->limit(4)->get();
-            $kitapAT = Kitaplar::query()->where('kategori_id', 6)->limit(4)->get();
-            $anasayfaYorumlar = Yorumlar::query()->orderByDesc('id')->limit(3)->get();
-            return view('kullanicilar.anasayfa', compact('kitapRoman', 'kitapKG', 'kitapCR', 'kitapAT', 'anasayfaYorumlar'));
+
+            return redirect()->route('anasayfa');
         }
         return redirect()->route('giris_yap')->with('danger', 'E-Mail veya Şifre Hatalı. Tekrar Deneyiniz!');
     }
 
-    public function Satici_Girisi_Yap()
+    // Seller
+    public function getSellerLogin()
     {
         return view('admin.giris_yap');
     }
 
-    public function postSatici_Girisi_Yap(LoginRequest $request)
+    public function postSellerLogin(LoginRequest $request)
     {
         $inputs = $request->all();
 
@@ -62,5 +63,10 @@ class LoginController extends Controller
 
         Auth::login($user);
         return redirect()->route('satici.anasayfa');
+    }
+
+    public function getLogout(){
+        Auth::logout();
+        return redirect()->route('giris_yap');
     }
 }

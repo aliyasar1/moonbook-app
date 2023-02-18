@@ -1,3 +1,4 @@
+@php use App\Models\SepetDetaylari; @endphp
 @extends('layouts.kullanicilar.master')
 
 @section('title')
@@ -70,7 +71,7 @@
 
         <div style="max-height: 500px">
             <div class="sepet-box" style="max-height: 250px">
-                <h3>Sepetim ({{ $sepettekiKitapSayisi }})</h3>
+                <h3>Sepetim ({{ SepetDetaylari::getSepettekiKitapSayisi() }})</h3>
                 <hr>
                 <div class="d-flex justify-content-between">
                     <p>Kitapların Toplamı :</p>

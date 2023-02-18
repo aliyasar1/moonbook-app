@@ -70,7 +70,7 @@
                                     </p>
                                 </div>
                                 <div class="flex-fill d-flex gap-3 mb-0 justify-content-center">
-                                    <a href="{{ route('kitaplar.kitap_incele', $kitap->id) }}"
+                                    <a href="{{ route('kitaplar.kitap_detayi', $kitap->id) }}"
                                        class="btn btn-warning w-50"><b>İncele</b></a>
                                     <button class="sepete-ekle btn btn-warning w-50"
                                             @if($kitap->stok->stok_adeti === 0) disabled

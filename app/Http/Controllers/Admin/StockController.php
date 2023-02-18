@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class StokController extends Controller
+class StockController extends Controller
 {
-    public function getStokAnasayfa()
+    public function getStockHome()
     {
         $stoklar = Stok::query()->with(['kitap'])
             ->whereHas('kitap', function ($q) {
@@ -21,7 +21,7 @@ class StokController extends Controller
         return view('admin.kitaplar.stok', compact('stoklar'));
     }
 
-    public function putStok(Stok $stok)
+    public function putStock(Stok $stok)
     {
         $validator = Validator::make(
             request()->all(),
