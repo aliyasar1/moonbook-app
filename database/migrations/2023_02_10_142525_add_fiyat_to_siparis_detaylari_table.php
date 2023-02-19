@@ -14,7 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('siparis_detaylari', function (Blueprint $table) {
-            $table->decimal('fiyat', 19)->after('miktar')->default(0)->nullable();
+            $table->decimal('fiyat', 19)
+                ->after('miktar')
+                ->default(0)
+                ->nullable();
         });
     }
 

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ilceler;
-use App\Models\Iller;
+use App\Models\Districts;
+use App\Models\Cities;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,13 +13,13 @@ class RegisterController extends Controller
     // Customer
     public function getRegister(User $user)
     {
-        $iller = Iller::query()
+        $iller = Cities::query()
             ->with(['ilceler'])
             ->get();
 
         $ilceler = $iller->where('il', $user->il_id)->first();
 
-        return view('kayit_ol', compact('user', 'iller', 'ilceler'));
+        return view('register', compact('user', 'iller', 'ilceler'));
     }
 
     public function postRegister(Request $request)
@@ -71,19 +71,19 @@ class RegisterController extends Controller
         $inputs['sifre_tekrar'] = base64_encode($request->sifre_tekrar);
         User::query()->create($inputs);
 
-        return redirect()->route('giris_yap');
+        return redirect()->route('login');
     }
 
     // Seller
     public function getSellerRegister(User $user)
     {
-        $iller = Iller::query()
+        $iller = Cities::query()
             ->with(['ilceler'])
             ->get();
 
         $ilceler = $iller->where('il', $user->il_id)->first();
 
-        return view('admin.satici_ol', compact('user', 'iller', 'ilceler'));
+        return view('admin.sellerRegister', compact('user', 'iller', 'ilceler'));
     }
 
     public function postSellerRegister(Request $request)
@@ -140,7 +140,7 @@ class RegisterController extends Controller
 
         User::query()->create($inputs);
 
-        return redirect()->route('satici_girisi_yap');
+        return redirect()->route('sellerLogin');
     }
 
     public function postDistrictByCity(Request $request)
@@ -157,7 +157,7 @@ class RegisterController extends Controller
 
         $inputs = $validator->validate();
 
-        $ilceler = Ilceler::query()->where('il_id', $inputs['il_id'])->get();
+        $ilceler = Districts::query()->where('il_id', $inputs['il_id'])->get();
 
         return response()->json($ilceler);
     }

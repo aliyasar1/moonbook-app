@@ -35,7 +35,7 @@
     <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('satici.anasayfa') }}">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('satici.home') }}">
             <div class="sidebar-brand-icon">
                 <img src="{{ asset('storage/logolar/moonbook.png') }}" class="w-100 h-100" alt="moonbook">
             </div>
@@ -47,7 +47,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="{{ route('satici.anasayfa') }}">
+            <a class="nav-link" href="{{ route('satici.home') }}">
                 <i class="fa-solid fa-house"></i>
                 <span>Anasayfa</span></a>
         </li>
@@ -62,9 +62,9 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Kitap İşlemleri:</h6>
-                    <a class="collapse-item" href="{{ route('satici.kitaplar.anasayfa') }}">Kitap Listesi</a>
-                    <a class="collapse-item" href="{{ route('satici.kitaplar.kitap_ekle') }}">Kitap Ekle</a>
-                    <a class="collapse-item" href="{{ route('satici.kitaplar.stok') }}">Kitap Stok Durumu</a>
+                    <a class="collapse-item" href="{{ route('seller.books.home') }}">Kitap Listesi</a>
+                    <a class="collapse-item" href="{{ route('seller.books.addBook') }}">Kitap Ekle</a>
+                    <a class="collapse-item" href="{{ route('seller.books.stock') }}">Kitap Stok Durumu</a>
                 </div>
             </div>
         </li>
@@ -269,7 +269,7 @@
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                          aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href=" {{ route('satici.profil_duzenle') }}">
+                        <a class="dropdown-item" href=" {{ route('satici.editProfile') }}">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             Profil Düzenle
                         </a>

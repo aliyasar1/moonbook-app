@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Models\Sepet;
+use App\Models\Cart;
 use Iyzipay\Model\Currency;
 use Iyzipay\Model\Locale;
 use Iyzipay\Model\PaymentChannel;
@@ -12,11 +12,11 @@ use Iyzipay\Request\CreatePaymentRequest;
 class IyzicoRequestHelper
 {
     /**
-     * @param Sepet $sepet
+     * @param Cart $sepet
      * @param float $finalPrice
      * @return CreatePaymentRequest
      */
-    public static function createRequest(Sepet $sepet, float $finalPrice): CreatePaymentRequest
+    public static function createRequest(Cart $sepet, float $finalPrice): CreatePaymentRequest
     {
 //        $request = new CreatePaymentRequest();
 //        $request->setLocale(Locale::TR);

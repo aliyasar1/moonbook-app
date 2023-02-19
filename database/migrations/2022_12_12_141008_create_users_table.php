@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 return new class extends Migration
 {
@@ -16,7 +17,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->autoIncrement();
             $table->enum('type', ['admin', 'user'])->default('user');
-            $table->string('fotograf')->default(\Illuminate\Support\Facades\Storage::url('default.png'));
+            $table->string('fotograf')->default(Storage::url('default.png'));
             $table->string('firma_adi')->unique()->nullable();
             $table->string('tckn')->unique()->nullable();
             $table->string('adi_soyadi');
@@ -30,11 +31,17 @@ return new class extends Migration
             $table->unsignedBigInteger('il_id');
             $table->timestamps();
 
-            $table->foreign('il_id')->references('id')->on('iller')
-                ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('il_id')
+                ->references('id')
+                ->on('iller')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
-            $table->foreign('ilce_id')->references('id')->on('ilceler')
-                ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('ilce_id')
+                ->references('id')
+                ->on('ilceler')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

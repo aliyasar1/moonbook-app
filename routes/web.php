@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [
-    'as' => 'giris_yap',
+    'as' => 'login',
     'uses' => 'App\Http\Controllers\LoginController@getLogin'
 ]);
 
@@ -23,77 +23,77 @@ Route::post('/', [
 ]);
 
 Route::get('/kayit-ol', [
-    'as' => 'kayit_ol',
+    'as' => 'register',
     'uses' => 'App\Http\Controllers\RegisterController@getRegister'
 ]);
 
 Route::post('/kayit-ol', [
-    'as' => 'kayit_ol_post',
+    'as' => 'postRegister',
     'uses' => 'App\Http\Controllers\RegisterController@postRegister'
 ]);
 
 Route::post('/ilce-by-il', [
-    'as' => 'ilce_by_il',
+    'as' => 'DistrictByCity',
     'uses' => 'App\Http\Controllers\RegisterController@postDistrictByCity'
 ]);
 
 Route::get('/satici-girisi-yap', [
-    'as' => 'satici_girisi_yap',
+    'as' => 'sellerLogin',
     'uses' => 'App\Http\Controllers\LoginController@getSellerLogin'
 ]);
 
 Route::post('/satici-girisi-yap', [
-    'as' => 'satici_girisi_yap_post',
+    'as' => 'postSellerLogin',
     'uses' => 'App\Http\Controllers\LoginController@postSellerLogin'
 ]);
 
 Route::get('/satici-ol', [
-    'as' => 'satici_ol',
+    'as' => 'sellerRegister',
     'uses' => 'App\Http\Controllers\RegisterController@getSellerRegister'
 ]);
 
 Route::post('/satici-ol', [
-    'as' => 'satici_ol_post',
+    'as' => 'postSellerRegister',
     'uses' => 'App\Http\Controllers\RegisterController@postSellerRegister'
 ]);
 
 Route::get('/cikis-yap', [
-    'as' => 'cikis_yap',
+    'as' => 'logout',
     'uses' => 'App\Http\Controllers\LoginController@getLogout'
 ]);
 
 Route::get('/favoriler', [
-    'as' => 'favoriler',
+    'as' => 'favorites',
     'uses' => 'App\Http\Controllers\Customers\BooksController@getFavorites'
 ]);
 
 Route::get('/anasayfa', [
-    'as' => 'anasayfa',
+    'as' => 'home',
     'uses' => 'App\Http\Controllers\Customers\CustomerController@getHome'
 ]);
 
 Route::get('/yazarlar', [
-    'as' => 'yazarlar',
+    'as' => 'writers',
     'uses' => 'App\Http\Controllers\Customers\BooksController@getWriters'
 ]);
 
 Route::get('/yazarlar/yazar-kitaplari/{yazar}', [
-    'as' => 'yazar_kitaplari',
+    'as' => 'writerBooks',
     'uses' => 'App\Http\Controllers\Customers\BooksController@getWriterBooks'
 ]);
 
 Route::get('/yayin-evleri', [
-    'as' => 'yayin_evleri',
+    'as' => 'publishingHouses',
     'uses' => 'App\Http\Controllers\Customers\BooksController@getPublishingHouses'
 ]);
 
 Route::get('/yayin-evleri/yayin-evleri-kitaplari/{yayinevi}', [
-    'as' => 'yayin_evleri_kitaplari',
+    'as' => 'publishingHousesBooks',
     'uses' => 'App\Http\Controllers\Customers\BooksController@getPublishingHouseBooks'
 ]);
 
 Route::get('/saticilar/{satici}', [
-    'as' => 'saticilar',
+    'as' => 'sellers',
     'uses' => 'App\Http\Controllers\Customers\BooksController@getSeller'
 ]);
 
@@ -103,133 +103,133 @@ Route::get('/kvkk', [
 ]);
 
 Route::get('/profil-duzenle', [
-    'as' => 'profil_duzenle',
+    'as' => 'editProfile',
     'uses' => 'App\Http\Controllers\Customers\CustomerController@getEditProfile'
 ]);
 
 Route::put('/profil-duzenle/{user}', [
-    'as' => 'profil_duzenle_put',
+    'as' => 'putEditProfile',
     'uses' => 'App\Http\Controllers\Customers\CustomerController@putEditProfile'
 ]);
 
 Route::get('/tum-siparislerim', [
-    'as' => 'tum_siparislerim',
+    'as' => 'allOrders',
     'uses' => 'App\Http\Controllers\Customers\CustomerController@getAllOrders'
 ]);
 
 Route::get('/tum-siparislerim/siparis-detayi/{siparis}', [
-    'as' => 'siparis_detayi',
+    'as' => 'orderDetail',
     'uses' => 'App\Http\Controllers\Customers\CustomerController@getOrderDetail'
 ]);
 
 
 // Kitap İşlemleri
-Route::prefix('/kitaplar')->as('kitaplar.')->group(function () {
+Route::prefix('/kitaplar')->as('books.')->group(function () {
 
     Route::get('/', [
-        'as' => 'kitaplar',
+        'as' => 'books',
         'uses' => 'App\Http\Controllers\Customers\BooksController@getBooks'
     ]);
 
     Route::get('/kategori/{kategori}', [
-        'as' => 'kategori',
+        'as' => 'category',
         'uses' => 'App\Http\Controllers\Customers\BooksController@getBooksByCategory'
     ]);
 
     Route::get('/kitap-detaylari/{kitap}', [
-        'as' => 'kitap_detayi',
+        'as' => 'bookDetail',
         'uses' => 'App\Http\Controllers\Customers\BooksController@getBookDetails'
     ]);
 
     Route::post('/kitap-detaylari/{kitap}/favorilere-eklendi', [
-        'as' => 'favorilere_ekle',
+        'as' => 'addFavorites',
         'uses' => 'App\Http\Controllers\Customers\BooksController@postAddFavorite'
     ]);
 
     Route::delete('/kitap-detaylari/{kitap}/favorilerden-silindi', [
-        'as' => 'favorilerden_sil',
+        'as' => 'deleteFavorite',
         'uses' => 'App\Http\Controllers\Customers\BooksController@deleteFavorite'
     ]);
 
     Route::post('/kitap-detaylari/{kitap}/yorum-eklendi', [
-        'as' => 'yorum_ekle',
+        'as' => 'addComment',
         'uses' => 'App\Http\Controllers\Customers\BooksController@postBookComment'
     ]);
 
     Route::get('/sepet', [
-        'as' => 'sepet',
+        'as' => 'cart',
         'uses' => 'App\Http\Controllers\Customers\CartController@getCart'
     ]);
 
     Route::post('/sepet/sepete-eklendi/{kitap}', [
-        'as' => 'sepete_ekle',
+        'as' => 'addToCart',
         'uses' => 'App\Http\Controllers\Customers\CartController@postAddToCart'
     ]);
 
     Route::get('/sepet/{sepet}/sepetten-silindi/{kitap}', [
-        'as' => 'sepetten_sil',
+        'as' => 'deleteFromCart',
         'uses' => 'App\Http\Controllers\Customers\CartController@deleteFromCart'
     ]);
 
     Route::put('/sepet/adet-guncellendi/{sepetDetaylari}', [
-        'as' => 'sepetteki_kitap_miktari',
+        'as' => 'quantityOfBookInCart',
         'uses' => 'App\Http\Controllers\Customers\CartController@putCart'
     ]);
 
     Route::post('/siparis', [
-        'as' => 'siparis',
+        'as' => 'order',
         'uses' => 'App\Http\Controllers\Customers\CartController@postConfirmCart'
     ]);
 });
 
 // Admin
-Route::prefix('/satici')->as('satici.')->middleware(['admin'])->group(function () {
+Route::prefix('/satici')->as('seller.')->middleware(['admin'])->group(function () {
     Route::get('/anasayfa', [
-        'as' => 'anasayfa',
+        'as' => 'home',
         'uses' => 'App\Http\Controllers\Admin\AdminController@getHome'
     ]);
 
     Route::get('/profil-duzenle', [
-        'as' => 'profil_duzenle',
+        'as' => 'editProfile',
         'uses' => 'App\Http\Controllers\Admin\AdminController@getEditProfile'
     ]);
 
     Route::put('/profil-duzenle/{user}', [
-        'as' => 'profil_duzenle_put',
+        'as' => 'putEditProfile',
         'uses' => 'App\Http\Controllers\Admin\AdminController@putEditProfile'
     ]);
 
-    Route::prefix('/kitaplar')->as('kitaplar.')->group(function () {
+    Route::prefix('/kitaplar')->as('books.')->group(function () {
         Route::get('/anasayfa', [
-            'as' => 'anasayfa',
-            'uses' => 'App\Http\Controllers\Admin\KitaplarController@getAnasayfa',
+            'as' => 'home',
+            'uses' => 'App\Http\Controllers\Admin\BooksController@getHome',
         ]);
         Route::get('/kitap-ekle', [
-            'as' => 'kitap_ekle',
-            'uses' => 'App\Http\Controllers\Admin\KitaplarController@getKitap_Ekle'
+            'as' => 'addBook',
+            'uses' => 'App\Http\Controllers\Admin\BooksController@getAddBook'
         ]);
         Route::post('/kitap-ekle', [
-            'as' => 'kitap_ekle_post',
-            'uses' => 'App\Http\Controllers\Admin\KitaplarController@postKitap_Ekle'
+            'as' => 'postAddBook',
+            'uses' => 'App\Http\Controllers\Admin\BooksController@postAddBook'
         ]);
         Route::get('/kitap-duzenle/{kitap}', [
-            'as' => 'kitap_duzenle',
-            'uses' => 'App\Http\Controllers\Admin\KitaplarController@getKitapDuzenle'
+            'as' => 'editBook',
+            'uses' => 'App\Http\Controllers\Admin\BooksController@getEditBook'
         ]);
         Route::put('/kitap-duzenle/{kitap}', [
-            'as' => 'kitap_duzenle_put',
-            'uses' => 'App\Http\Controllers\Admin\KitaplarController@putKitapDuzenle'
+            'as' => 'putEditBook',
+            'uses' => 'App\Http\Controllers\Admin\BooksController@putEditBook'
         ]);
         Route::delete('/kitap-sil/{kitap}', [
-            'as' => 'kitap_sil',
-            'uses' => 'App\Http\Controllers\Admin\KitaplarController@deleteKitap'
+            'as' => 'deleteBook',
+            'uses' => 'App\Http\Controllers\Admin\BooksController@deleteBook'
         ]);
         Route::get('/stok', [
-            'as' => 'stok',
+            'as' => 'stock',
             'uses' => 'App\Http\Controllers\Admin\StockController@getStockHome'
         ]);
         Route::put('/stok/{stok}', [
-            'as' => 'stok_put',
+            'as' => 'putStock',
             'uses' => 'App\Http\Controllers\Admin\StockController@putStock'
         ]);
     });

@@ -26,7 +26,10 @@ return new class extends Migration
     public function down()
     {
         Schema::table('sepetler', function (Blueprint $table) {
-            $table->boolean("is_active")->after('kod')->nullable()->change();
+            $table->boolean("is_active")
+                ->after('kod')
+                ->nullable()
+                ->change();
         });
     }
 };

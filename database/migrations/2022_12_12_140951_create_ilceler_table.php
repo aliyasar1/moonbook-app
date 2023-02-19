@@ -19,8 +19,11 @@ return new class extends Migration
             $table->string('ilce');
             $table->timestamps();
 
-            $table->foreign('il_id')->references('id')->on('iller')
-                ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('il_id')
+                ->references('id')
+                ->on('iller')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

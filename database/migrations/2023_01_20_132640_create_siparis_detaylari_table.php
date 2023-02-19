@@ -20,11 +20,17 @@ return new class extends Migration
             $table->integer('miktar');
             $table->timestamps();
 
-            $table->foreign('siparis_id')->references('id')->on('siparisler')
-                ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('siparis_id')
+                ->references('id')
+                ->on('siparisler')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
-            $table->foreign('kitap_id')->references('id')->on('kitaplar')
-                ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('kitap_id')
+                ->references('id')
+                ->on('kitaplar')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
 
     }

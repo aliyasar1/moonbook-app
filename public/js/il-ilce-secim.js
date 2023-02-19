@@ -5,7 +5,7 @@ $(document).on('change', '#il_id', function () {
 
     $.ajax({
         type: 'post',
-        url: "{{ route('ilce_by_il') }}",
+        url: "{{ route('DistrictByCity') }}",
         dataType: 'json',
         data: {
             'il_id': ilID

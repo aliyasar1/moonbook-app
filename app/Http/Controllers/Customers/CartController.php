@@ -8,13 +8,13 @@ use App\Helpers\IyzicoOptionsHelper;
 use App\Helpers\IyzicoPaymentCardHelper;
 use App\Helpers\IyzicoRequestHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Favoriler;
-use App\Models\Kitaplar;
-use App\Models\KrediKarti;
-use App\Models\Sepet;
-use App\Models\SepetDetaylari;
-use App\Models\Siparisler;
-use App\Models\Stok;
+use App\Models\Favorites;
+use App\Models\Books;
+use App\Models\CreditCart;
+use App\Models\Cart;
+use App\Models\CartDetails;
+use App\Models\Orders;
+use App\Models\Stock;
 use Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,30 +28,30 @@ class CartController extends Controller
 {
     public function getCart()
     {
-        $sepet = Sepet::query()
+        $sepet = Cart::query()
             ->where('kullanici_id', Auth::user()->id)
             ->where('is_active', 1)
             ->first();
 
-        $sepet_detaylari = SepetDetaylari::query()
+        $sepet_detaylari = CartDetails::query()
             ->where('sepet_id', $sepet->id)
             ->get();
 
         $sepetTutari = $this->calculateCartTotal($sepet);
 
-        return view('kullanicilar.sepet', compact('sepet_detaylari', 'sepetTutari', 'sepet'));
+        return view('customers.cart', compact('sepet_detaylari', 'sepetTutari', 'sepet'));
     }
 
-    public function postAddToCart(Kitaplar $kitap, Request $request)
+    public function postAddToCart(Books $kitap, Request $request)
     {
-        $kullanici_sepeti = Sepet::query()
+        $kullanici_sepeti = Cart::query()
             ->where('kullanici_id', Auth::user()->id)
             ->where('is_active', 1)
             ->first();
 
         $miktar = $request->input('adet') ?? 1;
 
-        $sepet_detaylari = new SepetDetaylari([
+        $sepet_detaylari = new CartDetails([
             'sepet_id' => $kullanici_sepeti->id,
             'kitap_id' => $kitap->id,
             'miktar' => $miktar
@@ -65,9 +65,9 @@ class CartController extends Controller
         ]);
     }
 
-    public function deleteFromCart(Sepet $sepet, Kitaplar $kitap)
+    public function deleteFromCart(Cart $sepet, Books $kitap)
     {
-        SepetDetaylari::query()
+        CartDetails::query()
             ->where('sepet_id', $sepet->id)
             ->where('kitap_id', $kitap->id)
             ->delete();
@@ -78,7 +78,7 @@ class CartController extends Controller
         ]);
     }
 
-    public function putCart(SepetDetaylari $sepetDetaylari)
+    public function putCart(CartDetails $sepetDetaylari)
     {
         $sepetDetaylari->update();
 
@@ -91,7 +91,7 @@ class CartController extends Controller
     public function postConfirmCart(Request $request)
     {
 
-        $krediKarti = new KrediKarti();
+        $krediKarti = new CreditCart();
 
         $kart = $this->prepare($request, $krediKarti->getFillable());
         $krediKarti->fill($kart);
@@ -129,30 +129,30 @@ class CartController extends Controller
             // Sipariş oluştur
             $this->createOrderWithDetails($sepet);
 
-            return view("kullanicilar.odeme_alindi", compact('sepet'));
+            return view("customers.paymentSuccessful", compact('sepet'));
         } else {
             $errorMessage = $payment->getErrorMessage();
 
-            return view("kullanicilar.odeme_hatali", compact('errorMessage'));
+            return view("customers.paymentUnsuccessful", compact('errorMessage'));
         }
     }
 
-    private function finalizeCart(Sepet $sepet)
+    private function finalizeCart(Cart $sepet)
     {
-        Sepet::query()
+        Cart::query()
             ->where('id', $sepet->id)
             ->update(['is_active' => 0]);
 
-        Sepet::query()->firstOrCreate(
+        Cart::query()->firstOrCreate(
             ['kullanici_id' => Auth::user()->id, 'is_active' => true],
             ['kod' => Str::random(8)]
         );
     }
 
-    private function calculateCartTotal(Sepet $sepet)
+    private function calculateCartTotal(Cart $sepet)
     {
         $toplam = 0;
-        $sepet_detaylari = SepetDetaylari::query()
+        $sepet_detaylari = CartDetails::query()
             ->with(['kitaplar'])->where('sepet_id', $sepet->id)
             ->get();
 
@@ -165,18 +165,18 @@ class CartController extends Controller
     private function getOrCreateCart()
     {
         $kullanici = Auth::user();
-        $sepetolustur = Sepet::query()->firstOrCreate(
+        $sepetolustur = Cart::query()->firstOrCreate(
             ['kullanici_id' => $kullanici->id, 'is_active' => true],
             ['kod' => Str::random(8)]
         );
         return $sepetolustur;
     }
 
-    private function getBasketItems(Sepet $sepet): array
+    private function getBasketItems(Cart $sepet): array
     {
         $basketItems = [];
 
-        $sepetDetaylari = SepetDetaylari::query()
+        $sepetDetaylari = CartDetails::query()
             ->with(['kitaplar'])->where('sepet_id', $sepet->id)
             ->get();
 
@@ -196,9 +196,9 @@ class CartController extends Controller
         return $basketItems;
     }
 
-    private function createOrderWithDetails(Sepet $sepet): Siparisler
+    private function createOrderWithDetails(Cart $sepet): Orders
     {
-        $siparis = new Siparisler([
+        $siparis = new Orders([
             "sepet_id" => $sepet->id,
             "kod" => $sepet->kod
         ]);
@@ -212,7 +212,7 @@ class CartController extends Controller
                 'miktar' => $detaylar->miktar,
                 'fiyat' => $detaylar->kitaplar->fiyat * $detaylar->miktar
             ]);
-            Stok::query()->where('kitap_id', $detaylar->kitap_id)->update([
+            Stock::query()->where('kitap_id', $detaylar->kitap_id)->update([
                 'stok_adeti' => $detaylar->kitaplar->stok->stok_adeti - $detaylar->miktar,
             ]);
         }

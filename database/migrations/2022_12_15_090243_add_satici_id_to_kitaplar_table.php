@@ -16,7 +16,11 @@ return new class extends Migration
         Schema::table('kitaplar', function (Blueprint $table) {
             $table->unsignedBigInteger('satici_id')->after('id');
 
-            $table->foreign('satici_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('satici_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

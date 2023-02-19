@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Favoriler;
-use App\Models\Ilceler;
-use App\Models\Iller;
-use App\Models\Kitaplar;
+use App\Models\Favorites;
+use App\Models\Districts;
+use App\Models\Cities;
+use App\Models\Books;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,29 +17,29 @@ class AdminController extends Controller
 {
     public function getHome()
     {
-        $kitapsayisi = Kitaplar::query()
+        $kitapsayisi = Books::query()
             ->where('satici_id', Auth::user()->id)
             ->count();
 
-        $favoriKitapSayisi = Favoriler::query()
+        $favoriKitapSayisi = Favorites::query()
             ->with(['kitaplar'])
             ->whereHas('kitaplar', function ($q) {
                 $q->where('satici_id', Auth::user()->id);
             })
             ->count();
 
-        return view('admin.anasayfa', compact('kitapsayisi','favoriKitapSayisi'));
+        return view('admin.home', compact('kitapsayisi','favoriKitapSayisi'));
     }
 
     public function getEditProfile()
     {
         $user = Auth::user();
-        $iller = Iller::query()
+        $iller = Cities::query()
             ->with(['ilceler'])
             ->get();
 
         $ilceler = $iller->where('il', $user->il_id)->first();
-        return view('admin.satici.profil_duzenle', compact('user', 'iller', 'ilceler'));
+        return view('admin.seller.editProfile', compact('user', 'iller', 'ilceler'));
     }
 
     public function putEditProfile(Request $request, User $user)
@@ -97,6 +97,6 @@ class AdminController extends Controller
 
         $user->update($inputs);
 
-        return redirect()->route('satici.anasayfa');
+        return redirect()->route('satici.home');
     }
 }

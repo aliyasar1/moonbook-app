@@ -12,7 +12,7 @@ class Admin
     public function handle(Request $request, Closure $next)
     {
         if(!auth()->check() || auth()->user()->type !== User::USER_TYPE['ADMIN']){
-            return redirect()->route('satici_girisi_yap')->with('danger', 'E-Mail veya Şifre Hatalı. Tekrar Deneyiniz!');
+            return redirect()->route('sellerLogin')->with('danger', 'E-Mail veya Şifre Hatalı. Tekrar Deneyiniz!');
         }
         return $next($request);
     }
