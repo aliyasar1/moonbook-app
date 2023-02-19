@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kitaplar;
-use App\Models\Stok;
+use App\Models\Books;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -13,15 +13,15 @@ class StockController extends Controller
 {
     public function getStockHome()
     {
-        $stoklar = Stok::query()->with(['kitap'])
+        $stoklar = Stock::query()->with(['kitap'])
             ->whereHas('kitap', function ($q) {
                 $q->where('satici_id', Auth::user()->id);
             })->get();
 
-        return view('admin.kitaplar.stok', compact('stoklar'));
+        return view('admin.books.stock', compact('stoklar'));
     }
 
-    public function putStock(Stok $stok)
+    public function putStock(Stock $stok)
     {
         $validator = Validator::make(
             request()->all(),
@@ -39,6 +39,6 @@ class StockController extends Controller
             'stok_adeti' => $veriler['stok_adeti']
         ]);
 
-        return redirect()->route('satici.kitaplar.stok');
+        return redirect()->route('seller.book.stok');
     }
 }

@@ -19,7 +19,11 @@ return new class extends Migration
             $table->integer('stok_adeti')->default(0);
             $table->timestamps();
 
-            $table->foreign('kitap_id')->references('id')->on('kitaplar')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('kitap_id')
+                ->references('id')
+                ->on('kitaplar')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

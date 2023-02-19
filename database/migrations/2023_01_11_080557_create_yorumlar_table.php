@@ -20,8 +20,16 @@ return new class extends Migration
             $table->longText('yorum');
             $table->timestamps();
 
-            $table->foreign('kitap_id')->references('id')->on('kitaplar')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('kullanici_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('kitap_id')
+                ->references('id')->on('kitaplar')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('kullanici_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

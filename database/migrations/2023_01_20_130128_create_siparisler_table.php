@@ -20,8 +20,11 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('sepet_id')->references('id')->on('sepetler')
-                ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('sepet_id')
+                ->references('id')
+                ->on('sepetler')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

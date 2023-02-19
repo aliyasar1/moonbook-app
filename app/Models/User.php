@@ -27,13 +27,13 @@ use Laravel\Sanctum\HasApiTokens;
  * @property int $il_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Favoriler[] $favori_kitaplar
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Favorites[] $favori_kitaplar
  * @property-read int|null $favori_kitaplar_count
- * @property-read \App\Models\Ilceler $ilceler
- * @property-read \App\Models\Iller $iller
+ * @property-read \App\Models\Districts $ilceler
+ * @property-read \App\Models\Cities $iller
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Sepet[] $sepetler
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Cart[] $sepetler
  * @property-read int|null $sepetler_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
@@ -69,12 +69,12 @@ class User extends Authenticatable
 
     public function iller()
     {
-        return $this->belongsTo(Iller::class, 'il_id', 'id');
+        return $this->belongsTo(Cities::class, 'il_id', 'id');
     }
 
     public function ilceler()
     {
-        return $this->belongsTo(Ilceler::class, 'ilce_id', 'id');
+        return $this->belongsTo(Districts::class, 'ilce_id', 'id');
     }
 
     public const USER_TYPE = [
@@ -85,10 +85,10 @@ class User extends Authenticatable
     // Relations
     public function favori_kitaplar()
     {
-        return $this->hasMany(Favoriler::class, 'kullanici_id');
+        return $this->hasMany(Favorites::class, 'kullanici_id');
     }
 
     public function sepetler () {
-        return $this->hasMany(Sepet::class, 'kullanici_id');
+        return $this->hasMany(Cart::class, 'kullanici_id');
     }
 }

@@ -33,7 +33,7 @@
             <div class="modal-body">Geçerli oturumunuzu sonlandırmaya hazırsanız aşağıdan "Çıkış"ı seçin.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">İptal</button>
-                <a class="btn btn-danger" href="{{ route('cikis_yap') }}">Çıkış</a>
+                <a class="btn btn-danger" href="{{ route('logout') }}">Çıkış</a>
             </div>
         </div>
     </div>

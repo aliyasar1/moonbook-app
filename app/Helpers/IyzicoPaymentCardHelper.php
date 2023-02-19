@@ -2,16 +2,16 @@
 
 namespace App\Helpers;
 
-use App\Models\KrediKarti;
+use App\Models\CreditCart;
 use Iyzipay\Model\PaymentCard;
 
 class IyzicoPaymentCardHelper
 {
     /**
-     * @param KrediKarti $card
+     * @param CreditCart $card
      * @return PaymentCard
      */
-    public static function getPaymentCard(KrediKarti $card): PaymentCard
+    public static function getPaymentCard(CreditCart $card): PaymentCard
     {
 //        $paymentCard = new PaymentCard();
 //        $paymentCard->setCardHolderName($card->getAdiSoyadi());

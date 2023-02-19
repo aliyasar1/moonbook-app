@@ -26,9 +26,23 @@ return new class extends Migration {
             $table->integer('fiyat')->default(0);
             $table->timestamps();
 
-            $table->foreign('kategori_id')->references('id')->on('kategoriler')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('yazar_id')->references('id')->on('yazarlar')->onDelete('cascade')->onDelete('cascade');
-            $table->foreign('yayin_evi_id')->references('id')->on('yayin_evleri')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('kategori_id')
+                ->references('id')
+                ->on('kategoriler')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('yazar_id')
+                ->references('id')
+                ->on('yazarlar')
+                ->onDelete('cascade')
+                ->onDelete('cascade');
+
+            $table->foreign('yayin_evi_id')
+                ->references('id')
+                ->on('yayin_evleri')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

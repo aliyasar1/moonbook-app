@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use \App\Models\Kitaplar;
+use \App\Models\Books;
 
 return new class extends Migration
 {
@@ -20,8 +20,17 @@ return new class extends Migration
             $table->unsignedBigInteger('kitap_id');
             $table->timestamps();
 
-            $table->foreign('kullanici_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('kitap_id')->references('id')->on('kitaplar')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('kullanici_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('kitap_id')
+                ->references('id')
+                ->on('kitaplar')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 
