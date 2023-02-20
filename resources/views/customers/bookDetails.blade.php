@@ -199,8 +199,8 @@
             let kitapID = '{{ $kitap->id ?? null }}';
             $fav.click(function () {
                 let favkitap = $fav.find('i');
-                let urlEkle = '{{ route('books.addFavorites', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', kitapID);
-                let urlSil = '{{ route('books.deleteFavorite', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', kitapID);
+                let urlEkle = '{{ route('books.addFavorites', ['book' => "#kitapID"]) }}'.replace('#kitapID', kitapID);
+                let urlSil = '{{ route('books.deleteFavorite', ['book' => "#kitapID"]) }}'.replace('#kitapID', kitapID);
 
                 if (favkitap.hasClass('fa-solid')) {
                     favkitap.removeClass("fa-solid").addClass("fa-regular");
@@ -245,7 +245,7 @@
 
             $sepeteEkle.click(function () {
                 let sepeteEklenecekKitapID = $(this).data('selected-value');
-                let url = '{{ route('books.addToCart', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', sepeteEklenecekKitapID);
+                let url = '{{ route('books.addToCart', ['book' => "#kitapID"]) }}'.replace('#kitapID', sepeteEklenecekKitapID);
                 $.ajax({
                     url: url,
                     method: "POST",

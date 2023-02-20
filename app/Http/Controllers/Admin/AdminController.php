@@ -17,29 +17,29 @@ class AdminController extends Controller
 {
     public function getHome()
     {
-        $kitapsayisi = Books::query()
+        $bookQuantity = Books::query()
             ->where('satici_id', Auth::user()->id)
             ->count();
 
-        $favoriKitapSayisi = Favorites::query()
+        $favoriteBookQuantity = Favorites::query()
             ->with(['kitaplar'])
             ->whereHas('kitaplar', function ($q) {
                 $q->where('satici_id', Auth::user()->id);
             })
             ->count();
 
-        return view('admin.home', compact('kitapsayisi','favoriKitapSayisi'));
+        return view('admin.home', compact('bookQuantity','favoriteBookQuantity'));
     }
 
     public function getEditProfile()
     {
         $user = Auth::user();
-        $iller = Cities::query()
+
+        $cities = Cities::query()
             ->with(['ilceler'])
             ->get();
 
-        $ilceler = $iller->where('il', $user->il_id)->first();
-        return view('admin.seller.editProfile', compact('user', 'iller', 'ilceler'));
+        return view('admin.seller.editProfile', compact('user', 'cities'));
     }
 
     public function putEditProfile(Request $request, User $user)
@@ -82,8 +82,8 @@ class AdminController extends Controller
 
         $file = $request->file('fotograf');
 
-        if (is_null($file)) {
-            $fileName = 'default.png';
+        if(is_null($file)) {
+            $fileName = $user->fotograf;
             $inputs['fotograf'] = $fileName;
         } else {
             $fileName = $file->getClientOriginalName();
@@ -97,6 +97,6 @@ class AdminController extends Controller
 
         $user->update($inputs);
 
-        return redirect()->route('satici.home');
+        return redirect()->route('seller.home');
     }
 }

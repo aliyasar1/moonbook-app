@@ -120,9 +120,9 @@
                                             <select name="il_id" id="il_id" class="form-control">
                                                 <option value="{{ $user->il_id }}"
                                                         selected>{{ $user->iller->il }}</option>
-                                                @foreach($iller as $il)
-                                                    <option value="{{$il->id}}"
-                                                            data-id="{{ $il->id }}">{{ $il->il }}</option>
+                                                @foreach($cities as $city)
+                                                    <option value="{{$city->id}}"
+                                                            data-id="{{ $city->id }}">{{ $city->il }}</option>
                                                 @endforeach
                                             </select>
                                             @error('il_id')

@@ -62,7 +62,7 @@ class LoginController extends Controller
         }
 
         Auth::login($user);
-        return redirect()->route('satici.home');
+        return redirect()->route('seller.home');
     }
 
     public function getLogout(){
