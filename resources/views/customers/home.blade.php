@@ -41,8 +41,8 @@
                             <div class="bd-example">
                                 <div class="carousel-inner">
                                     <div class="row">
-                                        @foreach($kitapRoman as $kitap)
-                                            <img src="{{ asset('storage/saticilar/kitaplar/'. $kitap->fotograf) }}"
+                                        @foreach($novelBooks as $book)
+                                            <img src="{{ asset('storage/saticilar/kitaplar/'. $book->fotograf) }}"
                                                  class="d-block w-25 h-25" alt="...">
                                         @endforeach
                                     </div>
@@ -50,8 +50,8 @@
                             </div>
                             <div class="feature text-white rounded-3 mb-1"><span
                                         class="badge text-bg-warning">Roman</span></div>
-                            <p class="mb-0"> @foreach($kitapRoman as $kitap)
-                                    {{ $kitap->adi. ', ' }}
+                            <p class="mb-0"> @foreach($novelBooks as $book)
+                                    {{ $book->adi. ', ' }}
                                 @endforeach</p>
                         </div>
 
@@ -59,8 +59,8 @@
                             <div class="bd-example">
                                 <div class="carousel-inner">
                                     <div class="row">
-                                        @foreach($kitapKG as $kitap)
-                                            <img src="{{ asset('storage/saticilar/kitaplar/'. $kitap->fotograf) }}"
+                                        @foreach($personalDevelopmentBooks as $book)
+                                            <img src="{{ asset('storage/saticilar/kitaplar/'. $book->fotograf) }}"
                                                  class="d-block w-25 h-25 mb-2" alt="...">
                                         @endforeach
                                     </div>
@@ -68,8 +68,8 @@
                             </div>
                             <div class="feature text-white rounded-3 mb-1"><span
                                         class="badge text-bg-warning">Kişisel Gelişim</span></div>
-                            <p class="mb-0"> @foreach($kitapKG as $kitap)
-                                    {{ $kitap->adi. ', ' }}
+                            <p class="mb-0"> @foreach($personalDevelopmentBooks as $book)
+                                    {{ $book->adi. ', ' }}
                                 @endforeach</p>
                         </div>
 
@@ -78,8 +78,8 @@
                             <div class="bd-example">
                                 <div class="carousel-inner">
                                     <div class="row">
-                                        @foreach($kitapCR as $kitap)
-                                            <img src="{{ asset('storage/saticilar/kitaplar/'. $kitap->fotograf) }}"
+                                        @foreach($comicBooks as $book)
+                                            <img src="{{ asset('storage/saticilar/kitaplar/'. $book->fotograf) }}"
                                                  class="d-block w-25 h-25 mb-2" alt="...">
                                         @endforeach
                                     </div>
@@ -87,8 +87,8 @@
                             </div>
                             <div class="feature text-white rounded-3 mb-1"><span
                                         class="badge text-bg-warning">Çizgi Roman</span></div>
-                            <p class="mb-0"> @foreach($kitapCR as $kitap)
-                                    {{ $kitap->adi. ', ' }}
+                            <p class="mb-0"> @foreach($comicBooks as $book)
+                                    {{ $book->adi. ', ' }}
                                 @endforeach</p>
                         </div>
 
@@ -96,8 +96,8 @@
                             <div class="bd-example">
                                 <div class="carousel-inner">
                                     <div class="row">
-                                        @foreach($kitapAT as $kitap)
-                                            <img src="{{ asset('storage/saticilar/kitaplar/'. $kitap->fotograf) }}"
+                                        @foreach($researchHistoryBooks as $book)
+                                            <img src="{{ asset('storage/saticilar/kitaplar/'. $book->fotograf) }}"
                                                  class="d-block w-25 h-25 mb-2" alt="...">
                                         @endforeach
                                     </div>
@@ -105,8 +105,8 @@
                             </div>
                             <div class="feature text-white rounded-3 mb-1"><span
                                         class="badge text-bg-warning">Araştırma - Tarih</span></div>
-                            <p class="mb-0"> @foreach($kitapAT as $kitap)
-                                    {{ $kitap->adi. ', ' }}
+                            <p class="mb-0"> @foreach($researchHistoryBooks as $book)
+                                    {{ $book->adi. ', ' }}
                                 @endforeach</p>
                         </div>
                     </div>
@@ -151,13 +151,13 @@
                 </div>
             </div>
             <div class="row gx-5">
-                @foreach($anasayfaYorumlar as $anasayfaYorum)
+                @foreach($homeComments as $comment)
                     <div class="col-lg-4 mb-5">
                         <div class="card h-100 shadow border-0">
                             <div class="d-flex justify-content-center my-3">
                                 <div class="ratio-3x2 mb-3" style="width: 150px; height: 200px;">
                                     <img class="card-img-top shadow-sm"
-                                         src="{{ asset('storage/saticilar/kitaplar/'. $anasayfaYorum->kitaplar->fotograf) }}"
+                                         src="{{ asset('storage/saticilar/kitaplar/'. $comment->kitaplar->fotograf) }}"
                                          alt="..."/>
                                 </div>
                             </div>
@@ -165,7 +165,7 @@
                                 <div class="badge bg-warning bg-gradient text-dark rounded-pill mb-2">Yorum</div>
                                 <span class="stars mx-2">
                                 @for($i = 1; $i <= 5; $i++)
-                                        @if($i <= $anasayfaYorum->puan)
+                                        @if($i <= $comment->puan)
                                             <i class="star1 fa-solid fa-star" style="font-size: 14px;"></i>
                                         @else
                                             <i class="star1 fa-regular fa-star" style="font-size: 14px;"></i>
@@ -173,19 +173,19 @@
                                     @endfor
                                 </span>
                                 <a class="text-decoration-none link-dark stretched-link"
-                                   href="{{ route('books.bookDetail', $anasayfaYorum->kitaplar->id) }}"><h5
-                                            class="card-title mb-3">{{ $anasayfaYorum->kitaplar->adi }}</h5></a>
-                                <p class="card-text mb-0">{{ $anasayfaYorum->yorum }}</p>
+                                   href="{{ route('books.bookDetail', $comment->kitaplar->id) }}"><h5
+                                            class="card-title mb-3">{{ $comment->kitaplar->adi }}</h5></a>
+                                <p class="card-text mb-0">{{ $comment->yorum }}</p>
                             </div>
                             <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                                 <div class="d-flex align-items-end justify-content-between">
                                     <div class="d-flex align-items-center">
                                         <img class="rounded-circle me-3" style="width: 40px; height: 40px"
-                                             src="{{ asset('storage/musteriler/'. $anasayfaYorum->kullanicilar->fotograf) }}"
+                                             src="{{ asset('storage/musteriler/'. $comment->kullanicilar->fotograf) }}"
                                              alt="..."/>
                                         <div class="small">
-                                            <div class="fw-bold">{{ $anasayfaYorum->kullanicilar->adi_soyadi }}</div>
-                                            <div class="text-muted">{{ \Illuminate\Support\Carbon::parse($anasayfaYorum->created_at)->format('d M Y') . ' - ' . $anasayfaYorum->created_at->diffForHumans() }}</div>
+                                            <div class="fw-bold">{{ $comment->kullanicilar->adi_soyadi }}</div>
+                                            <div class="text-muted">{{ \Illuminate\Support\Carbon::parse($comment->created_at)->format('d M Y') . ' - ' . $comment->created_at->diffForHumans() }}</div>
                                         </div>
                                     </div>
                                 </div>

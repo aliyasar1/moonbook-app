@@ -11,7 +11,7 @@
                  alt="Ödeme Başarılı">
         </div>
         <div class="alert alert-success text-center mt-3" role="alert" style="font-size: 20px">
-            Ödeme Başarılı! <b>{{ $sepet->kod }}</b> fatura numaralı siparişinizi takip edebilirsiniz.
+            Ödeme Başarılı! <b>{{ $cart->kod }}</b> fatura numaralı siparişinizi takip edebilirsiniz.
         </div>
         <div class="d-flex justify-content-center align-items-center my-3">
             <a role="button" href="{{ route('home') }}" class="btn btn-warning" style="font-size: 20px">

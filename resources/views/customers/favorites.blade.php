@@ -23,26 +23,26 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($favoriKitaplar as $favkitap)
+            @foreach($favoriteBooks as $favbook)
                 <tr class="text-center">
-                    <td class="align-middle">{{ $favkitap->kitaplar->id }}</td>
+                    <td class="align-middle">{{ $favbook->kitaplar->id }}</td>
                     <td class="py-2 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <img class="ratio3x2" style="width: 70px"
-                             src="{{ Storage::url('public/saticilar/kitaplar/'. $favkitap->kitaplar->fotograf )}}"
-                             alt="{{ $favkitap->kitaplar->adi }}"></td>
-                    <td class="align-middle">{{ $favkitap->kitaplar->kategoriler->adi }}</td>
-                    <td class="align-middle">{{ $favkitap->kitaplar->adi }}</td>
-                    <td class="align-middle">{{ $favkitap->kitaplar->yazarlar->adi_soyadi }}</td>
-                    <td class="align-middle">{{ $favkitap->kitaplar->yayin_evleri->adi }}</td>
-                    <td class="align-middle">{{ $favkitap->kitaplar->sayfa_sayisi }}</td>
-                    <td class="align-middle">{{ $favkitap->kitaplar->yayin_yili }}</td>
+                             src="{{ Storage::url('public/saticilar/kitaplar/'. $favbook->kitaplar->fotograf )}}"
+                             alt="{{ $favbook->kitaplar->adi }}"></td>
+                    <td class="align-middle">{{ $favbook->kitaplar->kategoriler->adi }}</td>
+                    <td class="align-middle">{{ $favbook->kitaplar->adi }}</td>
+                    <td class="align-middle">{{ $favbook->kitaplar->yazarlar->adi_soyadi }}</td>
+                    <td class="align-middle">{{ $favbook->kitaplar->yayin_evleri->adi }}</td>
+                    <td class="align-middle">{{ $favbook->kitaplar->sayfa_sayisi }}</td>
+                    <td class="align-middle">{{ $favbook->kitaplar->yayin_yili }}</td>
                     <td class="align-middle"><a class="text-decoration-none"
-                                                href="{{ route('sellers', $favkitap->kitaplar->saticilar->id) }}">{{ $favkitap->kitaplar->saticilar->firma_adi }}</a>
+                                                href="{{ route('sellers', $favbook->kitaplar->saticilar->id) }}">{{ $favbook->kitaplar->saticilar->firma_adi }}</a>
                     </td>
-                    <td class="align-middle">{{ '₺ '. $favkitap->kitaplar->fiyat }}</td>
+                    <td class="align-middle">{{ '₺ '. $favbook->kitaplar->fiyat }}</td>
                     <td class="align-middle">
                         <button type="submit" class="btn-favorilerden-cikar btn bg-warning" style="font-size: 18px"
-                                data-selected-value="{{ $favkitap->kitaplar->id ?? null }}">
+                                data-selected-value="{{ $favbook->kitaplar->id ?? null }}">
                             <i class="fa-solid fa-heart"></i>
                         </button>
                     </td>
@@ -60,7 +60,7 @@
 
             $fav.click(function () {
                 let favButton = $(this).data('selected-value');
-                let urlSil = '{{ route('books.deleteFavorite', ['kitap' => "#kitapID"]) }}'.replace('#kitapID', favButton);
+                let urlSil = '{{ route('books.deleteFavorite', ['book' => "#kitapID"]) }}'.replace('#kitapID', favButton);
 
                 $.ajax({
                     url: urlSil,

@@ -25,44 +25,42 @@ class CustomerController extends Controller
 {
     public function getHome()
     {
-        $kitapRoman = Books::query()
+        $novelBooks = Books::query()
             ->where('kategori_id', 3)
             ->limit(4)
             ->get();
 
-        $kitapKG = Books::query()
+        $personalDevelopmentBooks = Books::query()
             ->where('kategori_id', 4)
             ->limit(4)
             ->get();
 
-        $kitapCR = Books::query()
+        $comicBooks = Books::query()
             ->where('kategori_id', 9)
             ->limit(4)
             ->get();
 
-        $kitapAT = Books::query()
+        $researchHistoryBooks = Books::query()
             ->where('kategori_id', 6)
             ->limit(4)
             ->get();
 
-        $anasayfaYorumlar = Comments::query()
+        $homeComments = Comments::query()
             ->orderByDesc('id')
             ->limit(3)
             ->get();
 
-        return view('customers.home', compact('kitapRoman', 'kitapKG', 'kitapCR', 'kitapAT', 'anasayfaYorumlar'));
+        return view('customers.home', compact('novelBooks', 'personalDevelopmentBooks', 'comicBooks', 'researchHistoryBooks', 'homeComments'));
     }
 
     public function getEditProfile()
     {
         $user = Auth::user();
-        $iller = Cities::query()
+        $cities = Cities::query()
             ->with(['ilceler'])
             ->get();
 
-        $ilceler = $iller->where('il', $user->il_id)->first();
-
-        return view('customers.editProfile', compact('user', 'iller', 'ilceler'));
+        return view('customers.editProfile', compact('user', 'cities'));
     }
 
     public function putEditProfile(Request $request, User $user)
@@ -119,19 +117,19 @@ class CustomerController extends Controller
     }
 
     public function getAllOrders() {
-        $deactiveSepetler = Cart::query()
+        $deactiveCarts = Cart::query()
             ->with(['sepetDetaylari', 'sepetDetaylari.kitaplar','siparis', 'siparis.siparis_detaylari'])
             ->where('is_active', 0)
             ->where('kullanici_id', Auth::user()->id)
             ->orderByDesc('id')
             ->get();
 
-        return view('customers.allOrders', compact('deactiveSepetler'));
+        return view('customers.allOrders', compact('deactiveCarts'));
     }
 
-    public function getOrderDetail(Orders $siparis)
+    public function getOrderDetail(Orders $order)
     {
-        return view('customers.orderDetail', compact('siparis'));
+        return view('customers.orderDetail', compact('order'));
     }
 
     public function getKVKK()

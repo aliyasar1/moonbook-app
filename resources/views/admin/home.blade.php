@@ -8,12 +8,12 @@
             <div class="d-flex justify-content-start gap-3 align-items-center">
                 <div class="card mb-4 py-3 border-left-danger" style="width: 350px">
                     <div class="card-body" style="font-size: 22px">
-                        Toplam Kitap Adeti: {{ $kitapsayisi }} Adet
+                        Toplam Kitap Adeti: {{ $bookQuantity }} Adet
                     </div>
                 </div>
                 <div class="card mb-4 py-3 border-left-danger" style="width: 350px">
                     <div class="card-body" style="font-size: 22px">
-                        Favorideki Kitap Adeti: {{ $favoriKitapSayisi }} Adet
+                        Favorideki Kitap Adeti: {{ $favoriteBookQuantity }} Adet
                     </div>
                 </div>
                 <div class="card mb-4 py-3 border-left-danger" style="width: 350px">

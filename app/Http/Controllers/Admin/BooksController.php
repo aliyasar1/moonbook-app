@@ -18,20 +18,20 @@ class BooksController extends Controller
 {
     public function getHome()
     {
-        $kitaplar = Books::query()
+        $books = Books::query()
             ->where('satici_id', Auth::user()->id)
             ->get();
 
-        return view('admin.books.home', compact('kitaplar'));
+        return view('admin.books.home', compact('books'));
     }
 
     public function getAddBook()
     {
-        $kategoriler = Category::all();
-        $yazarlar = Writers::all();
-        $yayin_evleri = PublishingHouses::all();
+        $categories = Category::all();
+        $writers = Writers::all();
+        $publishingHouses = PublishingHouses::all();
 
-        return view('admin.books.addBook', compact('kategoriler', 'yazarlar', 'yayin_evleri'));
+        return view('admin.books.addBook', compact('categories', 'writers', 'publishingHouses'));
     }
 
     public function postAddBook(Request $request)
@@ -58,23 +58,23 @@ class BooksController extends Controller
             ]
         );
 
-        $veriler = $validator->validate();
+        $inputs = $validator->validate();
 
         $file = $request->file('fotograf');
 
         if (is_null($file)) {
             $fileName = 'book.png';
-            $veriler['fotograf'] = $fileName;
+            $inputs['fotograf'] = $fileName;
         } else {
             $fileName = $file->getClientOriginalName();
             $file->storeAs('public/saticilar/kitaplar', $fileName);
 
-            $veriler['fotograf'] = $fileName;
+            $inputs['fotograf'] = $fileName;
         }
 
-        $veriler['satici_id'] = Auth::user()->id;
+        $inputs['satici_id'] = Auth::user()->id;
 
-        $kitap = Books::query()->create($veriler);
+        $kitap = Books::query()->create($inputs);
 
         Stock::query()->create([
             'kitap_id' => $kitap->id,
@@ -84,15 +84,16 @@ class BooksController extends Controller
         return redirect()->route('seller.books.home');
     }
 
-    public function getEditBook(Books $kitap)
+    public function getEditBook(Books $book)
     {
-        $kategoriler = Category::all();
-        $yazarlar = Writers::all();
-        $yayin_evleri = PublishingHouses::all();
-     return view('admin.books.editBook', compact('kitap','kategoriler', 'yazarlar', 'yayin_evleri'));
+        $categories = Category::all();
+        $writers = Writers::all();
+        $publishingHouses = PublishingHouses::all();
+
+     return view('admin.books.editBook', compact('book','categories', 'writers', 'publishingHouses'));
     }
 
-    public function putEditBook (Request $request, Books $kitap)
+    public function putEditBook(Request $request, Books $book)
     {
         $validator = Validator::make(
             request()->all(),
@@ -116,29 +117,29 @@ class BooksController extends Controller
             ]
         );
 
-        $veriler = $validator->validate();
+        $inputs = $validator->validate();
 
         $file = $request->file('fotograf');
 
-        if (is_null($file)) {
-            $fileName = $kitap->fotograf;
-            $veriler['fotograf'] = $fileName;
+        if(is_null($file)) {
+            $fileName = $book->fotograf;
+            $inputs['fotograf'] = $fileName;
         } else {
             $fileName = $file->getClientOriginalName();
             $file->storeAs('public/saticilar/kitaplar', $fileName);
 
-            $veriler['fotograf'] = $fileName;
+            $inputs['fotograf'] = $fileName;
         }
 
-        $kitap->update($veriler);
+        $book->update($inputs);
 
 
         return redirect()->route('seller.books.home');
     }
 
-    public function deleteBook (Books $kitap)
+    public function deleteBook (Books $book)
     {
-        $kitap->delete();
+        $book->delete();
         return redirect()->route('seller.books.home');
     }
 }

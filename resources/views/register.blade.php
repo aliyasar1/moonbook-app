@@ -139,9 +139,9 @@
                                             <div class="col px-0">
                                                 <select name="il_id" id="il_id" class="form-control">
                                                     <option value="" selected>Bir İl Seçiniz...</option>
-                                                    @foreach($iller as $il)
-                                                        <option value="{{$il->id}}"
-                                                                data-id="{{ $il->id }}">{{ $il->il }}</option>
+                                                    @foreach($cities as $city)
+                                                        <option value="{{$city->id}}"
+                                                                data-id="{{ $city->id }}">{{ $city->il }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('il_id')

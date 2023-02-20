@@ -24,31 +24,31 @@
             </tr>
             </thead>
             <tbody class="flex-row justify-content-center align-items-center">
-            @foreach($stoklar as $stok)
+            @foreach($stocks as $stock)
                 <tr class="text-center h-100">
-                    <td class="align-middle">{{ $stok->kitap->id }}</td>
+                    <td class="align-middle">{{ $stock->kitap->id }}</td>
                     <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <img
                                 class="ratio3x2" style="width: 75px"
-                                src="{{ asset('storage/saticilar/kitaplar/'. $stok->kitap->fotograf )}}"
-                                alt="{{ $stok->kitap->adi }}"></td>
-                    <td class="align-middle">{{ $stok->kitap->kategoriler->adi }}</td>
-                    <td class="align-middle">{{ $stok->kitap->adi }}</td>
-                    <td class="align-middle">{{ $stok->kitap->yazarlar->adi_soyadi }}</td>
-                    <td class="align-middle">{{ $stok->kitap->yayin_evleri->adi }}</td>
-                    <td class="align-middle">{{ $stok->kitap->sayfa_sayisi }}</td>
-                    <td class="align-middle">{{ $stok->kitap->yayin_yili }}</td>
+                                src="{{ asset('storage/saticilar/kitaplar/'. $stock->kitap->fotograf )}}"
+                                alt="{{ $stock->kitap->adi }}"></td>
+                    <td class="align-middle">{{ $stock->kitap->kategoriler->adi }}</td>
+                    <td class="align-middle">{{ $stock->kitap->adi }}</td>
+                    <td class="align-middle">{{ $stock->kitap->yazarlar->adi_soyadi }}</td>
+                    <td class="align-middle">{{ $stock->kitap->yayin_evleri->adi }}</td>
+                    <td class="align-middle">{{ $stock->kitap->sayfa_sayisi }}</td>
+                    <td class="align-middle">{{ $stock->kitap->yayin_yili }}</td>
                     <td class="align-middle"
-                        title="{{ $stok->kitap->aciklama }}">{{ \Illuminate\Support\Str::limit($stok->kitap->aciklama, 30) }}</td>
-                    <td class="align-middle">{{ '₺ '. $stok->kitap->fiyat }}</td>
-                    <form method="post" action="{{ route('seller.books.putStock', ['stok' => $stok->id]) }}"
+                        title="{{ $stock->kitap->aciklama }}">{{ \Illuminate\Support\Str::limit($stock->kitap->aciklama, 30) }}</td>
+                    <td class="align-middle">{{ '₺ '. $stock->kitap->fiyat }}</td>
+                    <form method="post" action="{{ route('seller.books.putStock', ['stock' => $stock->id]) }}"
                           onsubmit="return confirm('Stok Güncellendi!')"
                           enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <td class="align-middle"><input type="text" class="form-control w-50 mx-auto"
                                                         id="stok_adeti"
-                                                        name="stok_adeti" value="{{ $stok->stok_adeti ?? 0}}">
+                                                        name="stok_adeti" value="{{ $stock->stok_adeti ?? 0}}">
                         </td>
                         <td class="align-middle">
                             <button type="submit" class="btn btn-success"><i

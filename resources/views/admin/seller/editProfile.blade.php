@@ -10,7 +10,7 @@
             <div class="card o-hidden border-1 my-5">
                 <div class="card-body py-5 px-3">
                     <!-- Nested Row within Card Body -->
-                    <form method="post" action="{{ route('satici.putEditProfile', $user->id) }}"
+                    <form method="post" action="{{ route('seller.putEditProfile', $user->id) }}"
                           enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -135,9 +135,9 @@
                                                 <div class="col px-0">
                                                     <select name="il_id" id="il_id" class="form-control">
                                                         <option value="{{ $user->il_id }}" selected>{{ $user->iller->il }}</option>
-                                                        @foreach($iller as $il)
-                                                            <option value="{{$il->id}}"
-                                                                    data-id="{{ $il->id }}">{{ $il->il }}</option>
+                                                        @foreach($cities as $city)
+                                                            <option value="{{$city->id}}"
+                                                                    data-id="{{ $city->id }}">{{ $city->il }}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('il_id')
@@ -186,6 +186,32 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/il-ilce-secim.js') }}"></script>
+    <script>
+        $(document).on('change', '#il_id', function () {
+            let cityID = $(this).find('option:selected').data('id');
+            let $district = $('#ilce_id');
+
+
+            $.ajax({
+                type: 'post',
+                url: "{{ route('DistrictByCity') }}",
+                dataType: 'json',
+                data: {
+                    'il_id': cityID
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (res) {
+                    console.log(res)
+                    $district.find('option').remove().end().append(new Option('Seçiniz...', '')).val('');
+
+                    $.each(res, function (index, item) {
+                        $district.append(new Option(item.ilce, item.id));
+                    });
+                }
+            });
+        });
+    </script>
     <script src="{{ asset('js/fotografekle.js') }}"></script>
 @endsection

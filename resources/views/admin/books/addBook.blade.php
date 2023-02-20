@@ -20,10 +20,10 @@
                                         <div class="col-lg-12 d-flex mb-3" style="justify-content: center;">
                                             <div class="ratio-3x2" style="width: 300px;">
                                                 <img
-                                                    style="width: 100%; height: 100%; object-fit: cover;"
-                                                    src="{{ asset('storage/book.png') }}"
-                                                    alt="Varsayılan Fotoğraf"
-                                                    class="preview-image">
+                                                        style="width: 100%; height: 100%; object-fit: cover;"
+                                                        src="{{ asset('storage/book.png') }}"
+                                                        alt="Varsayılan Fotoğraf"
+                                                        class="preview-image">
                                             </div>
                                         </div>
                                         <div class="col-lg-8">
@@ -48,11 +48,11 @@
                                                 <div class="col px-0">
                                                     <label for="kategori_id" class="mb-0" style="font-size: 14px;">Kategori</label>
                                                     <select
-                                                        name="kategori_id" id="kategori_id" class="form-control">
+                                                            name="kategori_id" id="kategori_id" class="form-control">
                                                         <option value="" selected>Kategori Seçiniz...</option>
-                                                        @foreach($kategoriler as $kategori)
-                                                            <option value="{{$kategori->id}}"
-                                                                    data-id="{{ $kategori->id }}">{{ $kategori->adi }}</option>
+                                                        @foreach($categories as $category)
+                                                            <option value="{{$category->id}}"
+                                                                    data-id="{{ $category->id }}">{{ $category->adi }}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('kategori_id')
@@ -69,9 +69,9 @@
                                                             id="yazar_id"
                                                             class="form-control">
                                                         <option value="" selected>Yazar Seçiniz...</option>
-                                                        @foreach($yazarlar as $yazar)
-                                                            <option value="{{$yazar->id}}"
-                                                                    data-id="{{ $yazar->id }}">{{ $yazar->adi_soyadi }}</option>
+                                                        @foreach($writers as $writer)
+                                                            <option value="{{$writer->id}}"
+                                                                    data-id="{{ $writer->id }}">{{ $writer->adi_soyadi }}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('yazar_id')
@@ -90,7 +90,7 @@
                                                     <label for="adi" class="mb-0" style="font-size: 14px;">Kitap
                                                         Adı</label>
                                                     <input type="text" class="form-control" id="adi"
-                                                                          name="adi" placeholder="Kitap Adı">
+                                                           name="adi" placeholder="Kitap Adı">
                                                     @error('adi')
                                                     <div class="text-sm text-red-400" style="color: red;">
                                                         <small>{{ $message }}</small></div>
@@ -102,11 +102,11 @@
                                                     <label for="yayin_evi_id" class="mb-0" style="font-size: 14px;">Yayın
                                                         Evi</label>
                                                     <select name="yayin_evi_id" id="yayin_evi_id"
-                                                                           class="form-control">
+                                                            class="form-control">
                                                         <option value="" selected>Yayın Evi Seçiniz...</option>
-                                                        @foreach($yayin_evleri as $yayin_evi)
-                                                            <option value="{{$yayin_evi->id}}"
-                                                                    data-id="{{ $yayin_evi->id }}">{{ $yayin_evi->adi }}</option>
+                                                        @foreach($publishingHouses as $publishingHouse)
+                                                            <option value="{{$publishingHouse->id}}"
+                                                                    data-id="{{ $publishingHouse->id }}">{{ $publishingHouse->adi }}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('yayin_evi_id')
@@ -125,9 +125,9 @@
                                                     <label for="sayfa_sayisi" class="mb-0" style="font-size: 14px;">Sayfa
                                                         Sayısı</label>
                                                     <input type="text" class="form-control"
-                                                                             id="sayfa_sayisi"
-                                                                             name="sayfa_sayisi"
-                                                                             placeholder="Sayfa Sayısı">
+                                                           id="sayfa_sayisi"
+                                                           name="sayfa_sayisi"
+                                                           placeholder="Sayfa Sayısı">
                                                 </div>
 
                                                 <!-- Yayın Yılı -->
@@ -135,8 +135,8 @@
                                                     <label for="yayin_yili" class="mb-0" style="font-size: 14px;">Yayın
                                                         Yılı</label>
                                                     <input type="text" class="form-control"
-                                                                           id="yayin_yili"
-                                                                           name="yayin_yili" placeholder="Yayın Yılı">
+                                                           id="yayin_yili"
+                                                           name="yayin_yili" placeholder="Yayın Yılı">
                                                 </div>
 
                                             </div>
@@ -146,9 +146,9 @@
                                                 <label for="aciklama" class="mb-0"
                                                        style="font-size: 14px;">Açıklama</label>
                                                 <textarea
-                                                    class="form-control" style="resize: none" name="aciklama"
-                                                    id="aciklama" cols="30"
-                                                    rows="5" placeholder="Açıklama..."></textarea>
+                                                        class="form-control" style="resize: none" name="aciklama"
+                                                        id="aciklama" cols="30"
+                                                        rows="5" placeholder="Açıklama..."></textarea>
                                             </div>
 
                                             <!-- Fiyat -->
@@ -156,10 +156,10 @@
                                                 <label for="fiyat" class="mb-0"
                                                        style="font-size: 14px;">Fiyat</label>
                                                 <input type="text"
-                                                                                                    class="form-control"
-                                                                                                    id="fiyat"
-                                                                                                    name="fiyat"
-                                                                                                    placeholder="Fiyat">
+                                                       class="form-control"
+                                                       id="fiyat"
+                                                       name="fiyat"
+                                                       placeholder="Fiyat">
                                                 @error('fiyat')
                                                 <div class="text-sm text-red-400" style="color: red;">
                                                     <small>{{ $message }}</small></div>

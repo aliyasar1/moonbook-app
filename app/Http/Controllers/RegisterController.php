@@ -13,13 +13,11 @@ class RegisterController extends Controller
     // Customer
     public function getRegister(User $user)
     {
-        $iller = Cities::query()
+        $cities = Cities::query()
             ->with(['ilceler'])
             ->get();
 
-        $ilceler = $iller->where('il', $user->il_id)->first();
-
-        return view('register', compact('user', 'iller', 'ilceler'));
+        return view('register', compact('user', 'cities'));
     }
 
     public function postRegister(Request $request)
@@ -69,6 +67,7 @@ class RegisterController extends Controller
         }
         $inputs['sifre'] = base64_encode($request->sifre);
         $inputs['sifre_tekrar'] = base64_encode($request->sifre_tekrar);
+
         User::query()->create($inputs);
 
         return redirect()->route('login');
@@ -77,13 +76,11 @@ class RegisterController extends Controller
     // Seller
     public function getSellerRegister(User $user)
     {
-        $iller = Cities::query()
+        $cities = Cities::query()
             ->with(['ilceler'])
             ->get();
 
-        $ilceler = $iller->where('il', $user->il_id)->first();
-
-        return view('admin.sellerRegister', compact('user', 'iller', 'ilceler'));
+        return view('admin.sellerRegister', compact('user', 'cities'));
     }
 
     public function postSellerRegister(Request $request)
@@ -157,8 +154,8 @@ class RegisterController extends Controller
 
         $inputs = $validator->validate();
 
-        $ilceler = Districts::query()->where('il_id', $inputs['il_id'])->get();
+        $districts = Districts::query()->where('il_id', $inputs['il_id'])->get();
 
-        return response()->json($ilceler);
+        return response()->json($districts);
     }
 }

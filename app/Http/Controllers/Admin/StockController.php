@@ -13,15 +13,15 @@ class StockController extends Controller
 {
     public function getStockHome()
     {
-        $stoklar = Stock::query()->with(['kitap'])
+        $stocks = Stock::query()->with(['kitap'])
             ->whereHas('kitap', function ($q) {
                 $q->where('satici_id', Auth::user()->id);
             })->get();
 
-        return view('admin.books.stock', compact('stoklar'));
+        return view('admin.books.stock', compact('stocks'));
     }
 
-    public function putStock(Stock $stok)
+    public function putStock(Stock $stock)
     {
         $validator = Validator::make(
             request()->all(),
@@ -33,12 +33,12 @@ class StockController extends Controller
             ]
         );
 
-        $veriler = $validator->validate();
+        $inputs = $validator->validate();
 
-        $stok->update([
-            'stok_adeti' => $veriler['stok_adeti']
+        $stock->update([
+            'stok_adeti' => $inputs['stok_adeti']
         ]);
 
-        return redirect()->route('seller.book.stok');
+        return redirect()->route('seller.books.stock');
     }
 }

@@ -22,21 +22,21 @@
                 </thead>
 
                 <tbody>
-                @foreach($sepet_detaylari as $sepetDetay)
+                @foreach($cartDetails as $detail)
                     <tr class="text-center">
-                        <td class="align-middle">{{ $sepetDetay->kitaplar->id }}</td>
+                        <td class="align-middle">{{ $detail->kitaplar->id }}</td>
 
                         <td class="py-2 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             <img class="ratio3x2" style="width: 70px"
-                                 src="{{ Storage::url('public/saticilar/kitaplar/'. $sepetDetay->kitaplar->fotograf )}}"
-                                 alt="{{ $sepetDetay->kitaplar->adi }}">
+                                 src="{{ Storage::url('public/saticilar/kitaplar/'. $detail->kitaplar->fotograf )}}"
+                                 alt="{{ $detail->kitaplar->adi }}">
                         </td>
 
-                        <td class="align-middle">{{ $sepetDetay->kitaplar->kategoriler->adi }}</td>
+                        <td class="align-middle">{{ $detail->kitaplar->kategoriler->adi }}</td>
 
-                        <td class="align-middle">{{ $sepetDetay->kitaplar->adi }}</td>
+                        <td class="align-middle">{{ $detail->kitaplar->adi }}</td>
 
-                        <td class="align-middle">{{ '₺ '. $sepetDetay->kitaplar->fiyat }}</td>
+                        <td class="align-middle">{{ '₺ '. $detail->kitaplar->fiyat }}</td>
 
                         <td class="align-middle">
                             <form method="POST" class="form-sepet-guncelle">
@@ -46,8 +46,8 @@
                                     <span class="btn-azalt input-group-text"><i class="fa-solid fa-minus"></i></span>
 
                                     <input type="text" id="adet" class="form-control text-center bg-white adet"
-                                           style="font-size: 16px" value="{{ $sepetDetay->miktar }}"
-                                           data-secilen-kitap="{{ $sepetDetay->kitaplar->id }}" readonly>
+                                           style="font-size: 16px" value="{{ $detail->miktar }}"
+                                           data-secilen-kitap="{{ $detail->kitaplar->id }}" readonly>
 
                                     <span class="btn-arttir input-group-text"><i class="fa-solid fa-plus"></i></span>
                                 </div>
@@ -56,7 +56,7 @@
 
                         <td class="align-middle">
                             <button type="button" class="sepetten-sil btn bg-warning" style="font-size: 18px"
-                                    data-selected-value="{{ $sepetDetay->kitaplar->id ?? null }}">
+                                    data-selected-value="{{ $detail->kitaplar->id ?? null }}">
                                 <i class="fa-solid fa-trash-can" style="font-size: 20px"></i>
                             </button>
                         </td>
@@ -75,7 +75,7 @@
                 <hr>
                 <div class="d-flex justify-content-between">
                     <p>Kitapların Toplamı :</p>
-                    <p>{{ $sepetTutari }} ₺</p>
+                    <p>{{ $cartSum }} ₺</p>
                 </div>
             </div>
             <div class="my-4">
@@ -152,7 +152,7 @@
             {{--let $kitapID = $('.sepet-input-group').find('.adet').data('secilen-kitap');--}}
             {{--$('.btn-guncelle').click(function () {--}}
             {{--    console.log($kitapID);--}}
-            {{--    let url = '{{ route('books.quantityOfBookInCart', ['sepetDetaylari' => '#kitapID']) }}'.replace('kitapID', $kitapID);--}}
+            {{--    let url = '{{ route('books.quantityOfBookInCart', ['cartDetails' => '#kitapID']) }}'.replace('kitapID', $kitapID);--}}
 
             {{--    $.ajax({--}}
             {{--        url: url,--}}
@@ -181,7 +181,7 @@
             let $sepettenSil = $('.sepetten-sil');
             $sepettenSil.click(function () {
                 let sepettenSilinecekKitapID = $(this).data('selected-value');
-                let url = '{{ route('books.deleteFromCart', ['sepet' => "#sepetID", 'kitap' => '#kitapID']) }}'.replace('#sepetID', '{{ $sepet->id }}').replace('#kitapID', sepettenSilinecekKitapID);
+                let url = '{{ route('books.deleteFromCart', ['cart' => "#sepetID", 'book' => '#kitapID']) }}'.replace('#sepetID', '{{ $cart->id }}').replace('#kitapID', sepettenSilinecekKitapID);
 
                 $.ajax({
                     url: url,

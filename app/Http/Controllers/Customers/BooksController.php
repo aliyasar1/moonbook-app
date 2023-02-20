@@ -17,32 +17,32 @@ use Illuminate\Support\Facades\Validator;
 class BooksController extends Controller
 {
     public function getBooks(){
-        $kitaplar = Books::query()
+        $books = Books::query()
             ->with(['favoriler'])
             ->get();
 
-        $kategoriler = Category::all();
+        $categories = Category::all();
 
-        $favoriKitaplar = Favorites::query()
+        $favoriteBooks = Favorites::query()
             ->where('kullanici_id', Auth::user()->id)
             ->get();
 
-        return view('customers.books', compact('kitaplar', 'kategoriler', 'favoriKitaplar'));
+        return view('customers.books', compact('books', 'categories', 'favoriteBooks'));
     }
 
-    public function getBooksByCategory(Category $kategori)
+    public function getBooksByCategory(Category $category)
     {
-        $kitaplar = Books::query()
-            ->where('kategori_id', $kategori->id)
+        $books = Books::query()
+            ->where('kategori_id', $category->id)
             ->get();
 
-        $kategoriler = Category::all();
+        $categories = Category::all();
 
-        $favoriKitaplar = Favorites::query()
+        $favoriteBooks = Favorites::query()
             ->where('kullanici_id', Auth::user()->id)
             ->get();
 
-        return view('customers.books', compact('kitaplar', 'kategoriler', 'favoriKitaplar'));
+        return view('customers.books', compact('books', 'categories', 'favoriteBooks'));
     }
 
     public function getBookDetails(Books $kitap)
@@ -66,7 +66,7 @@ class BooksController extends Controller
         return view('customers.bookDetails', compact('kitap', 'kitapadeti', 'yorumlar', 'puanOrt', 'favoriKitaplar'));
     }
 
-    public function postBookComment(Books $kitap)
+    public function postBookComment(Books $book)
     {
         $validator = Validator::make(
             request()->all(),
@@ -80,13 +80,13 @@ class BooksController extends Controller
             ]
         );
 
-        $veriler = $validator->validate();
-        $veriler['kitap_id'] = $kitap->id;
-        $veriler['kullanici_id'] = Auth::user()->id;
+        $inputs = $validator->validate();
+        $inputs['kitap_id'] = $book->id;
+        $inputs['kullanici_id'] = Auth::user()->id;
 
-        Comments::query()->create($veriler);
+        Comments::query()->create($inputs);
 
-        return redirect()->route('books.bookDetail', $kitap->id);
+        return redirect()->route('books.bookDetail', $book->id);
     }
 
     public function getWriters()
@@ -96,68 +96,68 @@ class BooksController extends Controller
         return view('customers.writers', compact('writers'));
     }
 
-    public function getWriterBooks(Writers $yazar)
+    public function getWriterBooks(Writers $writer)
     {
-        $kitaplar = Books::query()
-            ->where('yazar_id', $yazar->id)
+        $books = Books::query()
+            ->where('yazar_id', $writer->id)
             ->get();
 
-        $favoriKitaplar = Favorites::query()
+        $favoriteBooks = Favorites::query()
             ->where('kullanici_id', Auth::user()->id)
             ->get();
 
-        return view('customers.writerBooks', compact('yazar', 'kitaplar', 'favoriKitaplar'));
+        return view('customers.writerBooks', compact('writer', 'books', 'favoriteBooks'));
     }
 
     public function getPublishingHouses()
     {
-        $yayinevleri = PublishingHouses::all();
+        $publishingHouses = PublishingHouses::all();
 
-        return view('customers.publishingHouses', compact('yayinevleri'));
+        return view('customers.publishingHouses', compact('publishingHouses'));
     }
 
-    public function getPublishingHouseBooks(PublishingHouses $yayinevi)
+    public function getPublishingHouseBooks(PublishingHouses $publishingHouse)
     {
-        $kitaplar = Books::query()
-            ->where('yayin_evi_id', $yayinevi->id)
+        $books = Books::query()
+            ->where('yayin_evi_id', $publishingHouse->id)
             ->get();
 
-        $favoriKitaplar = Favorites::query()
+        $favoriteBook = Favorites::query()
             ->where('kullanici_id', Auth::user()->id)
             ->get();
 
-        return view('customers.publishingHouseBooks', compact('yayinevi', 'kitaplar', 'favoriKitaplar'));
+        return view('customers.publishingHouseBooks', compact('publishingHouse', 'books', 'favoriteBook'));
     }
 
-    public function getSeller(User $satici)
+    public function getSeller(User $seller)
     {
-        $kitaplar = Books::query()
-            ->where('satici_id', $satici->id)
+        $books = Books::query()
+            ->where('satici_id', $seller->id)
             ->get();
 
-        $favoriKitaplar = Favorites::query()
+        $favoriteBook = Favorites::query()
             ->where('kullanici_id', Auth::user()->id)
             ->get();
 
-        return view('customers.sellers', compact('satici', 'kitaplar', 'favoriKitaplar'));
+        return view('customers.sellers', compact('seller', 'books', 'favoriteBook'));
     }
 
     public function getFavorites()
     {
-        $favoriKitaplar = Favorites::query()
+        $favoriteBooks = Favorites::query()
             ->where('kullanici_id', Auth::user()->id)
             ->get();
 
-        return view('customers.favorites', compact('favoriKitaplar'));
+        return view('customers.favorites', compact('favoriteBooks'));
     }
 
-    public function postAddFavorite(Books $kitap)
+    public function postAddFavorite(Books $book)
     {
 
-        $veriler['kullanici_id'] = Auth::user()->id;
-        $veriler['kitap_id'] = $kitap->id;
+        $inputs['kullanici_id'] = Auth::user()->id;
+        $inputs['kitap_id'] = $book->id;
 
-        Favorites::query()->create($veriler);
+        Favorites::query()->create($inputs);
 
         return response()->json([
             'status' => true,
@@ -165,11 +165,11 @@ class BooksController extends Controller
         ]);
     }
 
-    public function deleteFavorite(Books $kitap)
+    public function deleteFavorite(Books $book)
     {
 
         Favorites::query()
-            ->where('kitap_id', $kitap->id)
+            ->where('kitap_id', $book->id)
             ->where('kullanici_id', Auth::user()->id)
             ->delete();
 
