@@ -1,65 +1,56 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
+// Login Routes
 Route::get('/', [
     'as' => 'login',
-    'uses' => 'App\Http\Controllers\LoginController@getLogin'
+    'uses' => 'App\Http\Controllers\AuthController@getLogin'
 ]);
-
 Route::post('/', [
-    'uses' => 'App\Http\Controllers\LoginController@postLogin'
+    'uses' => 'App\Http\Controllers\AuthController@postLogin'
 ]);
 
 Route::get('/kayit-ol', [
     'as' => 'register',
-    'uses' => 'App\Http\Controllers\RegisterController@getRegister'
+    'uses' => 'App\Http\Controllers\AuthController@getRegister'
 ]);
 
 Route::post('/kayit-ol', [
     'as' => 'postRegister',
-    'uses' => 'App\Http\Controllers\RegisterController@postRegister'
+    'uses' => 'App\Http\Controllers\AuthController@postRegister'
 ]);
 
 Route::post('/ilce-by-il', [
     'as' => 'DistrictByCity',
-    'uses' => 'App\Http\Controllers\RegisterController@postDistrictByCity'
+    'uses' => 'App\Http\Controllers\AuthController@postDistrictByCity'
 ]);
 
 Route::get('/satici-girisi-yap', [
     'as' => 'sellerLogin',
-    'uses' => 'App\Http\Controllers\LoginController@getSellerLogin'
+    'uses' => 'App\Http\Controllers\AuthController@getSellerLogin'
 ]);
 
 Route::post('/satici-girisi-yap', [
     'as' => 'postSellerLogin',
-    'uses' => 'App\Http\Controllers\LoginController@postSellerLogin'
+    'uses' => 'App\Http\Controllers\AuthController@postSellerLogin'
 ]);
 
 Route::get('/satici-ol', [
     'as' => 'sellerRegister',
-    'uses' => 'App\Http\Controllers\RegisterController@getSellerRegister'
+    'uses' => 'App\Http\Controllers\AuthController@getSellerRegister'
 ]);
 
 Route::post('/satici-ol', [
     'as' => 'postSellerRegister',
-    'uses' => 'App\Http\Controllers\RegisterController@postSellerRegister'
+    'uses' => 'App\Http\Controllers\AuthController@postSellerRegister'
 ]);
 
 Route::get('/cikis-yap', [
     'as' => 'logout',
-    'uses' => 'App\Http\Controllers\LoginController@getLogout'
+    'uses' => 'App\Http\Controllers\AuthController@getLogout'
 ]);
 
 Route::get('/favoriler', [

@@ -74,7 +74,7 @@
                             </div>
                             <div class="d-flex align-items-center justify-content-center">
                                 <div class="text-center">
-                                    <a class="small text-danger" href="{{route('sellerLogin')}}">Satıcı Girişi Yap!</a>
+                                    <a class="small text-danger" href="{{ route('sellerRegister') }}">Satıcı Ol!</a>
                                 </div>
                             </div>
                         </div>
