@@ -117,14 +117,16 @@ class CustomerController extends Controller
     }
 
     public function getAllOrders() {
-        $deactiveCarts = Cart::query()
-            ->with(['sepetDetaylari', 'sepetDetaylari.kitaplar','siparis', 'siparis.siparis_detaylari'])
-            ->where('is_active', 0)
-            ->where('kullanici_id', Auth::user()->id)
+
+        $orders = Orders::query()
+            ->with(['siparis_detaylari', 'siparis_detaylari.order_status', 'siparis_detaylari.kitap'])
+            ->whereHas('sepet', function ($q) {
+                $q->where('kullanici_id', Auth::user()->id);
+            })
             ->orderByDesc('id')
             ->get();
 
-        return view('customers.allOrders', compact('deactiveCarts'));
+        return view('customers.allOrders', compact('orders'));
     }
 
     public function getOrderDetail(Orders $order)

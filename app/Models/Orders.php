@@ -37,8 +37,8 @@ class Orders extends Model
 
     protected $fillable = ['id', 'sepet_id', 'kod'];
 
-    public function sepetler() {
-        return $this->hasMany(Cart::class, 'id', 'sepet_id');
+    public function sepet() {
+        return $this->hasOne(Cart::class, 'id', 'sepet_id');
     }
 
     public function siparis_detaylari()

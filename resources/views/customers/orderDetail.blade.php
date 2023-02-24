@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <div class="container my-5" style="max-width: 1450px">
+    <div class="container my-5">
         <h3><b><u>{{ $order->kod }}</u></b> Kodlu Sipariş</h3>
         <hr>
         <table class="table" style="border: 1px #f4b122">
@@ -18,11 +18,10 @@
                 <th scope="col">Kitap Adı</th>
                 <th scope="col">Yazar</th>
                 <th scope="col">Yayın Evi</th>
-                <th scope="col">Sayfa Sayısı</th>
-                <th scope="col">Yayın Yılı</th>
                 <th scope="col">Satıcı</th>
                 <th scope="col">Miktar</th>
                 <th scope="col">Fiyat</th>
+                <th scope="col">Sipariş Durumu</th>
             </tr>
             </thead>
             <tbody>
@@ -41,13 +40,15 @@
                     <td class="align-middle"><a class="text-decoration-none"
                                                 href="{{ route('publishingHousesBooks', $detail->kitap->yayin_evleri->id) }}">{{ $detail->kitap->yayin_evleri->adi }}</a>
                     </td>
-                    <td class="align-middle">{{ $detail->kitap->sayfa_sayisi }}</td>
-                    <td class="align-middle">{{ $detail->kitap->yayin_yili }}</td>
                     <td class="align-middle"><a class="text-decoration-none"
                                                 href="{{ route('sellers', $detail->kitap->saticilar->id) }}">{{ $detail->kitap->saticilar->firma_adi }}</a>
                     </td>
                     <td class="align-middle">{{ $detail->miktar }}</td>
                     <td class="align-middle">{{ '₺ '. $detail->kitap->fiyat }}</td>
+                    <td class="align-middle text-success">
+                        <i class="{{ $detail->order_status->icon }}"></i>
+                        <b>{{ $detail->order_status->status }}</b>
+                    </td>
                 </tr>
             @endforeach
             </tbody>

@@ -31,7 +31,7 @@ class OrderDetails extends Model
 
     protected $table = 'siparis_detaylari';
 
-    protected $fillable = ['id', 'siparis_id', 'kitap_id', 'miktar', 'fiyat'];
+    protected $fillable = ['id', 'siparis_id', 'kitap_id', 'miktar', 'fiyat', 'status_id'];
 
     public function siparisler() {
         return $this->hasMany(Orders::class, 'id', 'siparis_id');
@@ -40,6 +40,10 @@ class OrderDetails extends Model
     public function kitap()
     {
         return $this->hasOne(Books::class, "id", "kitap_id");
+    }
+
+    public function order_status() {
+        return $this->hasOne(OrderStatuses::class, 'id', 'status_id');
     }
 
 }
