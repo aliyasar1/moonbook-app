@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use phpDocumentor\Reflection\Types\False_;
 
 class AuthController extends Controller
 {
@@ -27,26 +28,29 @@ class AuthController extends Controller
         $user = User::query()
             ->where('email', $inputs['email'])
             ->where('sifre', base64_encode($inputs['sifre']))
-            ->firstOrFail();
+            ->first();
 
-        if ($user->type === User::USER_TYPE['ADMIN']) {
+        if (!$user || !$inputs) {
+            return redirect()->route('login')->with('danger', 'E-Mail veya Şifre Hatalı. Tekrar Deneyiniz!');
+        } else {
+            if ($user->type === User::USER_TYPE['ADMIN']) {
 
-            Auth::login($user);
-            return redirect()->route('seller.home');
+                Auth::login($user);
+                return redirect()->route('seller.home');
 
-        } elseif ($user->type === User::USER_TYPE['USER']) {
+            } elseif ($user->type === User::USER_TYPE['USER']) {
 
-            Auth::login($user);
+                Auth::login($user);
 
-            Cart::query()->firstOrCreate(
-                ['kullanici_id' => Auth::user()->id, 'is_active' => 1],
-                ['kod' => Str::random(8)]
-            );
+                Cart::query()->firstOrCreate(
+                    ['kullanici_id' => Auth::user()->id, 'is_active' => 1],
+                    ['kod' => Str::random(8)]
+                );
 
-            return redirect()->route('home');
+                return redirect()->route('home');
+            }
         }
-
-        return redirect()->route('login')->with('danger', 'E-Mail veya Şifre Hatalı. Tekrar Deneyiniz!');
+        return false;
     }
 
     public function getRegister(User $user)
@@ -142,7 +146,7 @@ class AuthController extends Controller
                 'tckn.required' => 'VKN/TCKN alanı boş geçilemez',
                 'tckn.numeric' => 'VKN/TCKN alanına sadece sayı girişi yapılabilir.',
                 'sifre.required' => 'Şifre alanı boş geçilemez.',
-                'sifre.min' => 'Şifre En az 6 karakter olmalıdır.' ,
+                'sifre.min' => 'Şifre En az 6 karakter olmalıdır.',
                 'kullanici_adi.required' => 'Kullanıcı adı alanı boş geçilemez',
                 'email.required' => 'Email alanı boş geçilemez',
                 'tel_no.min' => 'Telefon Numarası 11 haneli olmalıdır.',
@@ -177,7 +181,7 @@ class AuthController extends Controller
         return redirect()->route('sellerLogin');
     }
 
-    public function getLogout(){
+    public function getLogout() {
         Auth::logout();
         return redirect()->route('login');
     }

@@ -71,7 +71,7 @@
 
         <!-- Nav Item - Favoriler -->
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('seller.books.favorites') }}">
                 <i class="fa-solid fa-heart"></i>
                 <span>Favoridekiler</span></a>
         </li>

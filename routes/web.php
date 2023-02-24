@@ -223,5 +223,9 @@ Route::prefix('/satici')->as('seller.')->middleware(['admin'])->group(function (
             'as' => 'putStock',
             'uses' => 'App\Http\Controllers\Admin\StockController@putStock'
         ]);
+        Route::get('/favoridekiler', [
+            'as' => 'favorites',
+            'uses' => 'App\Http\Controllers\Admin\BooksController@getFavorites',
+        ]);
     });
 });
