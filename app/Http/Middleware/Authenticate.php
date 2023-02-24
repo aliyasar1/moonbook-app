@@ -14,8 +14,8 @@ class Authenticate extends Middleware
         if (! is_null($user) && $user->type === User::USER_TYPE['ADMIN']) {
             return view('admin.home');
         } elseif (! is_null($user) && $user->type === User::USER_TYPE['USER']) {
-            return redirect()->route('sellerLogin')->with('danger', 'E-Mail veya Şifre Hatalı. Tekrar Deneyiniz!');
+            return redirect()->route('login')->with('danger', 'E-Mail veya Şifre Hatalı. Tekrar Deneyiniz!');
         }
-        return redirect()->route('sellerLogin')->with('danger', 'E-Mail veya Şifre Hatalı. Tekrar Deneyiniz!');
+        return redirect()->route('login')->with('danger', 'E-Mail veya Şifre Hatalı. Tekrar Deneyiniz!');
     }
 }

@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Cities;
 use App\Models\Category;
 use App\Models\Books;
+use App\Models\Favorites;
 use App\Models\Stock;
 use App\Models\User;
 use App\Models\PublishingHouses;
 use App\Models\Writers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class BooksController extends Controller
@@ -141,5 +143,20 @@ class BooksController extends Controller
     {
         $book->delete();
         return redirect()->route('seller.books.home');
+    }
+
+    public function getFavorites () {
+
+        $favorites = Favorites::query()
+            ->with('kitaplar')
+            ->selectRaw('COUNT(kitap_id) as miktar, kitap_id')
+            ->join('kitaplar', 'kitaplar.id', '=', 'favoriler.kitap_id')
+            ->whereHas('kitaplar', function ($q) {
+                $q->where('satici_id', Auth::user()->id);
+            })
+            ->groupBy(['kitap_id'])
+            ->get();
+
+        return view('admin.books.favorites', compact('favorites'));
     }
 }
