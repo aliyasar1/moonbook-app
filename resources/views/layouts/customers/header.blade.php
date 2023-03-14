@@ -68,17 +68,16 @@
                                       style="font-size: 0.65rem;">{{ Favorites::getFavoriKitapSayisi() }}</span>
                             </a>
                         </li>
-                        <li class="nav-item nav-li dropdown mt-0 pt-0 mx-3"
-                            style="border: 2px black solid; border-radius: 5px">
+                        <li class="nav-item nav-li dropdown mt-0 pt-0 mx-3">
                             <div class="d-flex justify-content-center m-1">
-                                <img class="img-profile rounded-circle"
+                                <img class="img-profile rounded-circle shadow-sm"
                                      style="width: 40px; height: 40px"
                                      src="{{ Storage::url('public/musteriler/' . Auth::user()->fotograf) }}"
-                                     alt="{{ Auth::user()->adi_soyadi }}">
+                                     alt="{{ Auth::user()->kullanici_adi }}">
                                 <a class="nav-link dropdown-toggle text-black" id="navbarDropdownPortfolio" href="#"
                                    role="button"
                                    data-bs-toggle="dropdown"
-                                   aria-expanded="false"><b>{{ Auth::user()->adi_soyadi }}</b></a>
+                                   aria-expanded="false"><b>{{ Auth::user()->adi_soyadi }}</b></a> <!-- sadece kullanıcının adi gelecek -->
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
                                     <li><a class="dropdown-item" href="{{ route('editProfile') }}"><i
                                                     class="fa-solid fa-gear" style="font-size: 16px"></i> Profili

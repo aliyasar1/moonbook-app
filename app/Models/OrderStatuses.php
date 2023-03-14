@@ -4,6 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+/**
+ * App\Models\OrderStatuses
+ *
+ * @property int $id
+ */
+
+
 
 class OrderStatuses extends Model
 {
@@ -11,7 +18,7 @@ class OrderStatuses extends Model
 
     protected $table = 'order_statuses';
 
-    protected $fillable = ['icon', 'status'];
+    protected $fillable = ['id', 'icon', 'status'];
 
     public const ORDER_STATUS = [
         1 => 'Sipariş Alındı',
