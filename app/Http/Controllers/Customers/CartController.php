@@ -38,8 +38,9 @@ class CartController extends Controller
             ->get();
 
         $cartSum = $this->calculateCartTotal($cart);
+        $kdv = $cartSum * 0.18;
 
-        return view('customers.cart', compact('cartDetails', 'cartSum', 'cart'));
+        return view('customers.cart', compact('cartDetails', 'cartSum', 'cart', 'kdv'));
     }
 
     public function postAddToCart(Books $book, Request $request)
@@ -101,7 +102,9 @@ class CartController extends Controller
 
         $cartSum = $this->calculateCartTotal($cart);
 
-        $request = IyzicoRequestHelper::createRequest($cart, $cartSum);
+        $total = $cartSum + ($cartSum * 0.18);
+
+        $request = IyzicoRequestHelper::createRequest($cart, $total);
 
         $paymentCard = IyzicoPaymentCardHelper::getPaymentCard($creditCart);
         $request->setPaymentCard($paymentCard);
