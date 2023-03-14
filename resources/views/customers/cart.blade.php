@@ -39,19 +39,20 @@
                         <td class="align-middle">{{ '₺ '. $detail->kitaplar->fiyat }}</td>
 
                         <td class="align-middle">
-                            <form method="POST" class="form-sepet-guncelle">
-                                @csrf
-                                @method('PUT')
-                                <div class="sepet-input-group mx-auto">
-                                    <span class="btn-azalt input-group-text"><i class="fa-solid fa-minus"></i></span>
+                            {{ $detail->miktar }}
+{{--                            <form method="POST" class="form-sepet-guncelle">--}}
+{{--                                @csrf--}}
+{{--                                @method('PUT')--}}
+{{--                                <div class="sepet-input-group mx-auto">--}}
+{{--                                    <span class="btn-azalt input-group-text"><i class="fa-solid fa-minus"></i></span>--}}
 
-                                    <input type="text" id="adet" class="form-control text-center bg-white adet"
-                                           style="font-size: 16px" value="{{ $detail->miktar }}"
-                                           data-secilen-kitap="{{ $detail->kitaplar->id }}" readonly>
+{{--                                    <input type="text" id="adet" class="form-control text-center bg-white adet"--}}
+{{--                                           style="font-size: 16px" value="{{ $detail->miktar }}"--}}
+{{--                                           data-secilen-kitap="{{ $detail->kitaplar->id }}" readonly>--}}
 
-                                    <span class="btn-arttir input-group-text"><i class="fa-solid fa-plus"></i></span>
-                                </div>
-                            </form>
+{{--                                    <span class="btn-arttir input-group-text"><i class="fa-solid fa-plus"></i></span>--}}
+{{--                                </div>--}}
+{{--                            </form>--}}
                         </td>
 
                         <td class="align-middle">
@@ -70,12 +71,27 @@
         </div>
 
         <div style="max-height: 500px">
-            <div class="sepet-box" style="max-height: 250px">
+            <div class="sepet-box">
                 <h3>Sepetim ({{ CartDetails::getSepettekiKitapSayisi() }})</h3>
                 <hr>
-                <div class="d-flex justify-content-between">
-                    <p>Kitapların Toplamı :</p>
-                    <p>{{ $cartSum }} ₺</p>
+                <div class="flex-column">
+                    <div class="col-lg-12 d-flex justify-content-between">
+                        <p>Kitapların Toplamı : </p>
+                        <p>{{ $cartSum }} ₺</p>
+                    </div>
+{{--                    <div class="col-lg-12 d-flex justify-content-between">--}}
+{{--                        <p>KDV (%18) : </p>--}}
+{{--                        <p>{{ $kdv }} ₺</p>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-lg-12 d-flex justify-content-between">--}}
+{{--                        <p>Kargo Bedeli : </p>--}}
+{{--                        <p>{{ $kdv }} ₺</p>--}}
+{{--                    </div>--}}
+                    <hr>
+                    <div class="col-lg-12 d-flex justify-content-between">
+                        <p>Toplam : </p>
+                        <p>{{ $cartSum }} ₺</p>
+                    </div>
                 </div>
             </div>
             <div class="my-4">

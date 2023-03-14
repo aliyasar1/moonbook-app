@@ -36,11 +36,11 @@
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
                 </button>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Ara" aria-label="Ara">
-                    <button class="btn btn-dark text-warning" type="submit"><i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                </form>
+{{--                <form class="d-flex" role="search">--}}
+{{--                    <input class="form-control me-2" type="search" placeholder="Ara" aria-label="Ara">--}}
+{{--                    <button class="btn btn-dark text-warning" type="submit"><i class="fa-solid fa-magnifying-glass"></i>--}}
+{{--                    </button>--}}
+{{--                </form>--}}
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="font-size: 16px;">
                         <li class="nav-item nav-li"><a class="nav-link text-black"
