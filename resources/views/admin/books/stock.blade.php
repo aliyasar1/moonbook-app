@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="container" style="max-width: 1700px;">
+    <div class="container" style="max-width: 1700px; min-height: 700px">
         <table class="table">
             <thead class="bg-danger text-white text-center">
             <tr>

@@ -9,6 +9,7 @@ Route::get('/', [
     'as' => 'login',
     'uses' => 'App\Http\Controllers\AuthController@getLogin'
 ]);
+
 Route::post('/', [
     'uses' => 'App\Http\Controllers\AuthController@postLogin'
 ]);
@@ -188,6 +189,21 @@ Route::prefix('/satici')->as('seller.')->middleware(['admin'])->group(function (
     Route::put('/profil-duzenle/{user}', [
         'as' => 'putEditProfile',
         'uses' => 'App\Http\Controllers\Admin\AdminController@putEditProfile'
+    ]);
+
+    Route::get('/siparisler/{status}', [
+        'as' => 'orders',
+        'uses' => 'App\Http\Controllers\Admin\OrdersController@getOrders'
+    ]);
+
+    Route::get('/siparisler/{status}/siparis-detayi/{order}', [
+        'as' => 'orderDetail',
+        'uses' => 'App\Http\Controllers\Admin\OrdersController@getOrderDetail'
+    ]);
+
+    Route::put('/siparisler/siparis-durumu-guncellendi/{orderDetails}', [
+        'as' => 'putOrderStatus',
+        'uses' => 'App\Http\Controllers\Admin\OrdersController@putOrderStatus'
     ]);
 
     Route::prefix('/kitaplar')->as('books.')->group(function () {
