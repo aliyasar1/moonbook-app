@@ -163,7 +163,7 @@ Route::prefix('/kitaplar')->as('books.')->group(function () {
         'uses' => 'App\Http\Controllers\Customers\CartController@deleteFromCart'
     ]);
 
-    Route::put('/sepet/adet-guncellendi/{cartDetails}', [
+    Route::put('/sepet/adet-guncellendi/{cartDetail}', [
         'as' => 'quantityOfBookInCart',
         'uses' => 'App\Http\Controllers\Customers\CartController@putCart'
     ]);
