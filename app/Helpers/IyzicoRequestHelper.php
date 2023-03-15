@@ -18,17 +18,6 @@ class IyzicoRequestHelper
      */
     public static function createRequest(Cart $sepet, float $finalPrice): CreatePaymentRequest
     {
-//        $request = new CreatePaymentRequest();
-//        $request->setLocale(Locale::TR);
-//        $request->setConversationId($sepet->kod);
-//        $request->setPrice($finalPrice);
-//        $request->setPaidPrice($finalPrice);
-//        $request->setCurrency(Currency::TL);
-//        $request->setInstallment(1);
-//        $request->setBasketId($sepet->kod);
-//        $request->setPaymentChannel(PaymentChannel::WEB);
-//        $request->setPaymentGroup(PaymentGroup::PRODUCT);
-
         $request = new CreatePaymentRequest();
         $request->setLocale(Locale::TR);
         $request->setConversationId($sepet->kod);

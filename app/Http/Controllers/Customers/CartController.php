@@ -18,7 +18,9 @@ use App\Models\Stock;
 use Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Iyzipay\Model\BasketItem;
 use Iyzipay\Model\BasketItemType;
 use Iyzipay\Model\Payment;
@@ -38,9 +40,13 @@ class CartController extends Controller
             ->get();
 
         $cartSum = $this->calculateCartTotal($cart);
-        $kdv = $cartSum * 0.18;
+        $kdv = number_format($cartSum * 0.18);
+//        $shippingPrice = 40;
+//        if ($cartSum >= 400 || $cartSum == 0) {
+//            $shippingPrice = 0;
+//        }
 
-        return view('customers.cart', compact('cartDetails', 'cartSum', 'cart', 'kdv'));
+        return view('customers.cart', compact('cartDetails', 'cartSum', 'cart', 'kdv', 'shippingPrice'));
     }
 
     public function postAddToCart(Books $book, Request $request)
@@ -80,9 +86,20 @@ class CartController extends Controller
         ]);
     }
 
-    public function putCart(CartDetails $cartDetails)
+    /**
+     * @throws ValidationException
+     */
+    public function putCart(CartDetails $cartDetail, Request $request)
     {
-        $cartDetails->update();
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'miktar' => 'min:1|max:10|numeric',
+                'fiyat' => 'required'
+            ]
+        );
+
+        $cartDetail->update($validator->validate());
 
         return response()->json([
             'status' => true,
@@ -92,7 +109,6 @@ class CartController extends Controller
 
     public function postConfirmCart(Request $request)
     {
-
         $creditCart = new CreditCart();
 
         $card = $this->prepare($request, $creditCart->getFillable());
@@ -102,9 +118,7 @@ class CartController extends Controller
 
         $cartSum = $this->calculateCartTotal($cart);
 
-        $total = $cartSum + ($cartSum * 0.18);
-
-        $request = IyzicoRequestHelper::createRequest($cart, $total);
+        $request = IyzicoRequestHelper::createRequest($cart, $cartSum);
 
         $paymentCard = IyzicoPaymentCardHelper::getPaymentCard($creditCart);
         $request->setPaymentCard($paymentCard);
@@ -156,6 +170,7 @@ class CartController extends Controller
     private function calculateCartTotal(Cart $cart)
     {
         $total = 0;
+//        $shippingPrice = 40;
         $cartDetails = CartDetails::query()
             ->with(['kitaplar'])
             ->where('sepet_id', $cart->id)
@@ -164,6 +179,9 @@ class CartController extends Controller
         foreach ($cartDetails as $detail) {
             $total += $detail->kitaplar->fiyat * $detail->miktar;
         }
+
+//        $total += $shippingPrice;
+
         return $total;
     }
 

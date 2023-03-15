@@ -36,23 +36,21 @@
 
                         <td class="align-middle">{{ $detail->kitaplar->adi }}</td>
 
-                        <td class="align-middle">{{ '₺ '. $detail->kitaplar->fiyat }}</td>
+                        <td class="align-middle price" data-price="{{ $detail->kitaplar->fiyat }}">₺ {{ $detail->kitaplar->fiyat }}</td>
 
                         <td class="align-middle">
-                            {{ $detail->miktar }}
-{{--                            <form method="POST" class="form-sepet-guncelle">--}}
-{{--                                @csrf--}}
-{{--                                @method('PUT')--}}
-{{--                                <div class="sepet-input-group mx-auto">--}}
-{{--                                    <span class="btn-azalt input-group-text"><i class="fa-solid fa-minus"></i></span>--}}
+                            <form class="form-sepet-guncelle">
+                                <div class="sepet-input-group mx-auto">
+                                    <span class="btn-azalt input-group-text" data-cart_detail_id="{{ $detail->id }}"><i class="fa-solid fa-minus"></i></span>
 
-{{--                                    <input type="text" id="adet" class="form-control text-center bg-white adet"--}}
-{{--                                           style="font-size: 16px" value="{{ $detail->miktar }}"--}}
-{{--                                           data-secilen-kitap="{{ $detail->kitaplar->id }}" readonly>--}}
+                                    <label for="adet" hidden></label>
+                                    <input type="text" id="adet" class="form-control text-center bg-white adet"
+                                           style="font-size: 16px" value="{{ $detail->miktar }}"
+                                           data-secilen-kitap="{{ $detail->kitaplar->id }}" readonly>
 
-{{--                                    <span class="btn-arttir input-group-text"><i class="fa-solid fa-plus"></i></span>--}}
-{{--                                </div>--}}
-{{--                            </form>--}}
+                                    <span class="btn-arttir input-group-text" data-cart_detail_id="{{ $detail->id }}"><i class="fa-solid fa-plus"></i></span>
+                                </div>
+                            </form>
                         </td>
 
                         <td class="align-middle">
@@ -65,9 +63,6 @@
                 @endforeach
                 </tbody>
             </table>
-            {{--            <button class="btn-guncelle btn btn-warning ">--}}
-            {{--                <b>Güncelle</b>--}}
-            {{--            </button>--}}
         </div>
 
         <div style="max-height: 500px">
@@ -77,15 +72,15 @@
                 <div class="flex-column">
                     <div class="col-lg-12 d-flex justify-content-between">
                         <p>Kitapların Toplamı : </p>
-                        <p>{{ $cartSum }} ₺</p>
+                        <p>{{ $cartSum -= $shippingPrice }} ₺</p>
+                    </div>
+                    <div class="col-lg-12 d-flex justify-content-between">
+                        <p>KDV : </p>
+                        <p>{{ $kdv }} ₺</p>
                     </div>
 {{--                    <div class="col-lg-12 d-flex justify-content-between">--}}
-{{--                        <p>KDV (%18) : </p>--}}
-{{--                        <p>{{ $kdv }} ₺</p>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-lg-12 d-flex justify-content-between">--}}
 {{--                        <p>Kargo Bedeli : </p>--}}
-{{--                        <p>{{ $kdv }} ₺</p>--}}
+{{--                        <p>{{ $shippingPrice }} ₺</p>--}}
 {{--                    </div>--}}
                     <hr>
                     <div class="col-lg-12 d-flex justify-content-between">
@@ -132,27 +127,58 @@
 
 @section('js')
     <script>
+        function quantityUpdateCartDetail(input, adet, fiyat) {
+
+            let $detailID = $(input).data('cart_detail_id');
+            let url = '{{ route('books.quantityOfBookInCart', ['cartDetail' => 'detailID']) }}'.replace('detailID', $detailID);
+
+            fiyat *= adet;
+
+            $.ajax({
+                url: url,
+                method: "PUT",
+                dataType: "JSON",
+                data: {
+                    miktar: adet,
+                    fiyat: fiyat
+                },
+                headers: {
+                    'X-CSRF-TOKEN': "{{csrf_token()}}",
+                },
+                success: function (data) {
+                    if (data.status) {
+                        window.location.reload();
+                    }
+                },
+                error: function (xhr) {
+                    console.log('E => ', xhr)
+                }
+            });
+        }
+
         $(document).ready(function () {
+
             // Arttır
             $('.btn-arttir').click(function () {
                 let input = $(this).closest('.sepet-input-group').find('.adet');
-                let $form = $(this).closest('.sepet-input-group').closest('.form-sepet-guncelle');
+                let bookPrice = $(this).closest('td').closest('tr').find('.price').data('price');
                 let adet = input.val();
-
-                console.log($form)
 
                 adet++;
 
                 if (adet <= 10) {
                     input.val(adet);
                     input.attr('value', adet);
-                    console.log($form.serializeArray());
                 }
+
+                quantityUpdateCartDetail($(this), adet, bookPrice);
+
             });
 
             // Azalt
             $('.btn-azalt').click(function () {
                 let input = $(this).closest('.sepet-input-group').find('.adet');
+                let bookPrice = $(this).closest('td').closest('tr').find('.price').data('price');
                 let adet = input.val();
 
                 adet--;
@@ -161,32 +187,10 @@
                     input.val(adet);
                     input.attr('value', adet);
                 }
+
+                quantityUpdateCartDetail($(this), adet, bookPrice);
+
             });
-
-            // Sepeti Güncelle
-
-            {{--let $kitapID = $('.sepet-input-group').find('.adet').data('secilen-kitap');--}}
-            {{--$('.btn-guncelle').click(function () {--}}
-            {{--    console.log($kitapID);--}}
-            {{--    let url = '{{ route('books.quantityOfBookInCart', ['cartDetails' => '#kitapID']) }}'.replace('kitapID', $kitapID);--}}
-
-            {{--    $.ajax({--}}
-            {{--        url: url,--}}
-            {{--        method: "PUT",--}}
-            {{--        dataType: "JSON",--}}
-            {{--        headers: {--}}
-            {{--            'X-CSRF-TOKEN': "{{csrf_token()}}",--}}
-            {{--        },--}}
-            {{--        success: function (data) {--}}
-            {{--            if (data.status) {--}}
-            {{--                window.location.reload();--}}
-            {{--            }--}}
-            {{--        },--}}
-            {{--        error: function (xhr) {--}}
-            {{--            console.log('E => ', xhr)--}}
-            {{--        }--}}
-            {{--    });--}}
-            {{--})--}}
 
             // Sepeti Onayla
             $('#sepetiOnayla').click(function () {
@@ -216,6 +220,7 @@
                     }
                 });
             });
+
         });
     </script>
 @endsection
